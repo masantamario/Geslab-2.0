@@ -1,0 +1,1480 @@
+/* Microsoft SQL Server - Scripting			*/
+/* Server: CAMELOT					*/
+/* Database: DBLab					*/
+/* Creation Date 3/23/20 6:30:21 PM 			*/
+
+/****** Object:  Trigger dbo.ins_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ins_salida') and sysstat & 0xf = 8)
+	drop trigger dbo.ins_salida
+GO
+
+/****** Object:  Stored Procedure dbo.borrar_usuario    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.borrar_usuario') and sysstat & 0xf = 4)
+	drop procedure dbo.borrar_usuario
+GO
+
+/****** Object:  Stored Procedure dbo.crear_usuario    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.crear_usuario') and sysstat & 0xf = 4)
+	drop procedure dbo.crear_usuario
+GO
+
+/****** Object:  Stored Procedure dbo.num_centro    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.num_centro') and sysstat & 0xf = 4)
+	drop procedure dbo.num_centro
+GO
+
+/****** Object:  Stored Procedure dbo.num_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.num_entrada') and sysstat & 0xf = 4)
+	drop procedure dbo.num_entrada
+GO
+
+/****** Object:  Stored Procedure dbo.num_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.num_ficha') and sysstat & 0xf = 4)
+	drop procedure dbo.num_ficha
+GO
+
+/****** Object:  Stored Procedure dbo.num_proveedor    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.num_proveedor') and sysstat & 0xf = 4)
+	drop procedure dbo.num_proveedor
+GO
+
+/****** Object:  Stored Procedure dbo.num_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.num_salida') and sysstat & 0xf = 4)
+	drop procedure dbo.num_salida
+GO
+
+/****** Object:  Stored Procedure dbo.num_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.num_ubicacion') and sysstat & 0xf = 4)
+	drop procedure dbo.num_ubicacion
+GO
+
+/****** Object:  View dbo.bioqbm_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqbm_entrada') and sysstat & 0xf = 2)
+	drop view dbo.bioqbm_entrada
+GO
+
+/****** Object:  View dbo.bioqbm_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqbm_exist') and sysstat & 0xf = 2)
+	drop view dbo.bioqbm_exist
+GO
+
+/****** Object:  View dbo.bioqbm_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqbm_ficha') and sysstat & 0xf = 2)
+	drop view dbo.bioqbm_ficha
+GO
+
+/****** Object:  View dbo.bioqbm_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqbm_salida') and sysstat & 0xf = 2)
+	drop view dbo.bioqbm_salida
+GO
+
+/****** Object:  View dbo.bioqbm_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqbm_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.bioqbm_ubicacion
+GO
+
+/****** Object:  View dbo.bioqui_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqui_entrada') and sysstat & 0xf = 2)
+	drop view dbo.bioqui_entrada
+GO
+
+/****** Object:  View dbo.bioqui_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqui_exist') and sysstat & 0xf = 2)
+	drop view dbo.bioqui_exist
+GO
+
+/****** Object:  View dbo.bioqui_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqui_ficha') and sysstat & 0xf = 2)
+	drop view dbo.bioqui_ficha
+GO
+
+/****** Object:  View dbo.bioqui_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqui_salida') and sysstat & 0xf = 2)
+	drop view dbo.bioqui_salida
+GO
+
+/****** Object:  View dbo.bioqui_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.bioqui_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.bioqui_ubicacion
+GO
+
+/****** Object:  View dbo.edquagr_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.edquagr_entrada') and sysstat & 0xf = 2)
+	drop view dbo.edquagr_entrada
+GO
+
+/****** Object:  View dbo.edquagr_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.edquagr_exist') and sysstat & 0xf = 2)
+	drop view dbo.edquagr_exist
+GO
+
+/****** Object:  View dbo.edquagr_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.edquagr_ficha') and sysstat & 0xf = 2)
+	drop view dbo.edquagr_ficha
+GO
+
+/****** Object:  View dbo.edquagr_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.edquagr_salida') and sysstat & 0xf = 2)
+	drop view dbo.edquagr_salida
+GO
+
+/****** Object:  View dbo.edquagr_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.edquagr_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.edquagr_ubicacion
+GO
+
+/****** Object:  View dbo.exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.exist') and sysstat & 0xf = 2)
+	drop view dbo.exist
+GO
+
+/****** Object:  View dbo.exist_todos    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.exist_todos') and sysstat & 0xf = 2)
+	drop view dbo.exist_todos
+GO
+
+/****** Object:  View dbo.ficha_todos    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ficha_todos') and sysstat & 0xf = 2)
+	drop view dbo.ficha_todos
+GO
+
+/****** Object:  View dbo.fisapl_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.fisapl_entrada') and sysstat & 0xf = 2)
+	drop view dbo.fisapl_entrada
+GO
+
+/****** Object:  View dbo.fisapl_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.fisapl_exist') and sysstat & 0xf = 2)
+	drop view dbo.fisapl_exist
+GO
+
+/****** Object:  View dbo.fisapl_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.fisapl_ficha') and sysstat & 0xf = 2)
+	drop view dbo.fisapl_ficha
+GO
+
+/****** Object:  View dbo.fisapl_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.fisapl_salida') and sysstat & 0xf = 2)
+	drop view dbo.fisapl_salida
+GO
+
+/****** Object:  View dbo.fisapl_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.fisapl_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.fisapl_ubicacion
+GO
+
+/****** Object:  View dbo.imasd_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.imasd_entrada') and sysstat & 0xf = 2)
+	drop view dbo.imasd_entrada
+GO
+
+/****** Object:  View dbo.imasd_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.imasd_exist') and sysstat & 0xf = 2)
+	drop view dbo.imasd_exist
+GO
+
+/****** Object:  View dbo.imasd_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.imasd_ficha') and sysstat & 0xf = 2)
+	drop view dbo.imasd_ficha
+GO
+
+/****** Object:  View dbo.imasd_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.imasd_salida') and sysstat & 0xf = 2)
+	drop view dbo.imasd_salida
+GO
+
+/****** Object:  View dbo.imasd_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.imasd_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.imasd_ubicacion
+GO
+
+/****** Object:  View dbo.ingmec_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingmec_entrada') and sysstat & 0xf = 2)
+	drop view dbo.ingmec_entrada
+GO
+
+/****** Object:  View dbo.ingmec_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingmec_exist') and sysstat & 0xf = 2)
+	drop view dbo.ingmec_exist
+GO
+
+/****** Object:  View dbo.ingmec_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingmec_ficha') and sysstat & 0xf = 2)
+	drop view dbo.ingmec_ficha
+GO
+
+/****** Object:  View dbo.ingmec_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingmec_salida') and sysstat & 0xf = 2)
+	drop view dbo.ingmec_salida
+GO
+
+/****** Object:  View dbo.ingmec_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingmec_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.ingmec_ubicacion
+GO
+
+/****** Object:  View dbo.ingqu_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingqu_entrada') and sysstat & 0xf = 2)
+	drop view dbo.ingqu_entrada
+GO
+
+/****** Object:  View dbo.ingqu_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingqu_exist') and sysstat & 0xf = 2)
+	drop view dbo.ingqu_exist
+GO
+
+/****** Object:  View dbo.ingqu_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingqu_ficha') and sysstat & 0xf = 2)
+	drop view dbo.ingqu_ficha
+GO
+
+/****** Object:  View dbo.ingqu_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingqu_salida') and sysstat & 0xf = 2)
+	drop view dbo.ingqu_salida
+GO
+
+/****** Object:  View dbo.ingqu_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ingqu_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.ingqu_ubicacion
+GO
+
+/****** Object:  View dbo.microbiol_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.microbiol_entrada') and sysstat & 0xf = 2)
+	drop view dbo.microbiol_entrada
+GO
+
+/****** Object:  View dbo.microbiol_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.microbiol_exist') and sysstat & 0xf = 2)
+	drop view dbo.microbiol_exist
+GO
+
+/****** Object:  View dbo.microbiol_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.microbiol_ficha') and sysstat & 0xf = 2)
+	drop view dbo.microbiol_ficha
+GO
+
+/****** Object:  View dbo.microbiol_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.microbiol_salida') and sysstat & 0xf = 2)
+	drop view dbo.microbiol_salida
+GO
+
+/****** Object:  View dbo.microbiol_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.microbiol_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.microbiol_ubicacion
+GO
+
+/****** Object:  View dbo.nutrbr_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.nutrbr_entrada') and sysstat & 0xf = 2)
+	drop view dbo.nutrbr_entrada
+GO
+
+/****** Object:  View dbo.nutrbr_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.nutrbr_exist') and sysstat & 0xf = 2)
+	drop view dbo.nutrbr_exist
+GO
+
+/****** Object:  View dbo.nutrbr_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.nutrbr_ficha') and sysstat & 0xf = 2)
+	drop view dbo.nutrbr_ficha
+GO
+
+/****** Object:  View dbo.nutrbr_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.nutrbr_salida') and sysstat & 0xf = 2)
+	drop view dbo.nutrbr_salida
+GO
+
+/****** Object:  View dbo.nutrbr_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.nutrbr_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.nutrbr_ubicacion
+GO
+
+/****** Object:  View dbo.prrlab_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.prrlab_entrada') and sysstat & 0xf = 2)
+	drop view dbo.prrlab_entrada
+GO
+
+/****** Object:  View dbo.prrlab_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.prrlab_exist') and sysstat & 0xf = 2)
+	drop view dbo.prrlab_exist
+GO
+
+/****** Object:  View dbo.prrlab_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.prrlab_ficha') and sysstat & 0xf = 2)
+	drop view dbo.prrlab_ficha
+GO
+
+/****** Object:  View dbo.prrlab_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.prrlab_salida') and sysstat & 0xf = 2)
+	drop view dbo.prrlab_salida
+GO
+
+/****** Object:  View dbo.prrlab_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.prrlab_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.prrlab_ubicacion
+GO
+
+/****** Object:  View dbo.quan_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quan_entrada') and sysstat & 0xf = 2)
+	drop view dbo.quan_entrada
+GO
+
+/****** Object:  View dbo.quan_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quan_exist') and sysstat & 0xf = 2)
+	drop view dbo.quan_exist
+GO
+
+/****** Object:  View dbo.quan_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quan_ficha') and sysstat & 0xf = 2)
+	drop view dbo.quan_ficha
+GO
+
+/****** Object:  View dbo.quan_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quan_salida') and sysstat & 0xf = 2)
+	drop view dbo.quan_salida
+GO
+
+/****** Object:  View dbo.quan_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quan_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.quan_ubicacion
+GO
+
+/****** Object:  View dbo.qufis_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.qufis_entrada') and sysstat & 0xf = 2)
+	drop view dbo.qufis_entrada
+GO
+
+/****** Object:  View dbo.qufis_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.qufis_exist') and sysstat & 0xf = 2)
+	drop view dbo.qufis_exist
+GO
+
+/****** Object:  View dbo.qufis_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.qufis_ficha') and sysstat & 0xf = 2)
+	drop view dbo.qufis_ficha
+GO
+
+/****** Object:  View dbo.qufis_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.qufis_salida') and sysstat & 0xf = 2)
+	drop view dbo.qufis_salida
+GO
+
+/****** Object:  View dbo.qufis_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.qufis_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.qufis_ubicacion
+GO
+
+/****** Object:  View dbo.quieps_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quieps_entrada') and sysstat & 0xf = 2)
+	drop view dbo.quieps_entrada
+GO
+
+/****** Object:  View dbo.quieps_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quieps_exist') and sysstat & 0xf = 2)
+	drop view dbo.quieps_exist
+GO
+
+/****** Object:  View dbo.quieps_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quieps_ficha') and sysstat & 0xf = 2)
+	drop view dbo.quieps_ficha
+GO
+
+/****** Object:  View dbo.quieps_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quieps_salida') and sysstat & 0xf = 2)
+	drop view dbo.quieps_salida
+GO
+
+/****** Object:  View dbo.quieps_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quieps_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.quieps_ubicacion
+GO
+
+/****** Object:  View dbo.quin_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quin_entrada') and sysstat & 0xf = 2)
+	drop view dbo.quin_entrada
+GO
+
+/****** Object:  View dbo.quin_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quin_exist') and sysstat & 0xf = 2)
+	drop view dbo.quin_exist
+GO
+
+/****** Object:  View dbo.quin_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quin_ficha') and sysstat & 0xf = 2)
+	drop view dbo.quin_ficha
+GO
+
+/****** Object:  View dbo.quin_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quin_salida') and sysstat & 0xf = 2)
+	drop view dbo.quin_salida
+GO
+
+/****** Object:  View dbo.quin_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quin_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.quin_ubicacion
+GO
+
+/****** Object:  View dbo.quor_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quor_entrada') and sysstat & 0xf = 2)
+	drop view dbo.quor_entrada
+GO
+
+/****** Object:  View dbo.quor_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quor_exist') and sysstat & 0xf = 2)
+	drop view dbo.quor_exist
+GO
+
+/****** Object:  View dbo.quor_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quor_ficha') and sysstat & 0xf = 2)
+	drop view dbo.quor_ficha
+GO
+
+/****** Object:  View dbo.quor_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quor_salida') and sysstat & 0xf = 2)
+	drop view dbo.quor_salida
+GO
+
+/****** Object:  View dbo.quor_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.quor_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.quor_ubicacion
+GO
+
+/****** Object:  View dbo.sa_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.sa_entrada') and sysstat & 0xf = 2)
+	drop view dbo.sa_entrada
+GO
+
+/****** Object:  View dbo.sa_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.sa_exist') and sysstat & 0xf = 2)
+	drop view dbo.sa_exist
+GO
+
+/****** Object:  View dbo.sa_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.sa_ficha') and sysstat & 0xf = 2)
+	drop view dbo.sa_ficha
+GO
+
+/****** Object:  View dbo.sa_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.sa_salida') and sysstat & 0xf = 2)
+	drop view dbo.sa_salida
+GO
+
+/****** Object:  View dbo.sa_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.sa_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.sa_ubicacion
+GO
+
+/****** Object:  View dbo.tecalim_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.tecalim_entrada') and sysstat & 0xf = 2)
+	drop view dbo.tecalim_entrada
+GO
+
+/****** Object:  View dbo.tecalim_exist    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.tecalim_exist') and sysstat & 0xf = 2)
+	drop view dbo.tecalim_exist
+GO
+
+/****** Object:  View dbo.tecalim_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.tecalim_ficha') and sysstat & 0xf = 2)
+	drop view dbo.tecalim_ficha
+GO
+
+/****** Object:  View dbo.tecalim_salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.tecalim_salida') and sysstat & 0xf = 2)
+	drop view dbo.tecalim_salida
+GO
+
+/****** Object:  View dbo.tecalim_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.tecalim_ubicacion') and sysstat & 0xf = 2)
+	drop view dbo.tecalim_ubicacion
+GO
+
+/****** Object:  Table dbo.area    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.area') and sysstat & 0xf = 3)
+	drop table dbo.area
+GO
+
+/****** Object:  Table dbo.calidad    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.calidad') and sysstat & 0xf = 3)
+	drop table dbo.calidad
+GO
+
+/****** Object:  Table dbo.centro    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.centro') and sysstat & 0xf = 3)
+	drop table dbo.centro
+GO
+
+/****** Object:  Table dbo.centro_area    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.centro_area') and sysstat & 0xf = 3)
+	drop table dbo.centro_area
+GO
+
+/****** Object:  Table dbo.dpto    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.dpto') and sysstat & 0xf = 3)
+	drop table dbo.dpto
+GO
+
+/****** Object:  Table dbo.entrada    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.entrada') and sysstat & 0xf = 3)
+	drop table dbo.entrada
+GO
+
+/****** Object:  Table dbo.ficha    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ficha') and sysstat & 0xf = 3)
+	drop table dbo.ficha
+GO
+
+/****** Object:  Table dbo.marca    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.marca') and sysstat & 0xf = 3)
+	drop table dbo.marca
+GO
+
+/****** Object:  Table dbo.maximo    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.maximo') and sysstat & 0xf = 3)
+	drop table dbo.maximo
+GO
+
+/****** Object:  Table dbo.producto    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.producto') and sysstat & 0xf = 3)
+	drop table dbo.producto
+GO
+
+/****** Object:  Table dbo.prov_marca    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.prov_marca') and sysstat & 0xf = 3)
+	drop table dbo.prov_marca
+GO
+
+/****** Object:  Table dbo.proveedor    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.proveedor') and sysstat & 0xf = 3)
+	drop table dbo.proveedor
+GO
+
+/****** Object:  Table dbo.salida    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.salida') and sysstat & 0xf = 3)
+	drop table dbo.salida
+GO
+
+/****** Object:  Table dbo.ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+if exists (select * from sysobjects where id = object_id('dbo.ubicacion') and sysstat & 0xf = 3)
+	drop table dbo.ubicacion
+GO
+
+/****** Object:  Table dbo.area    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.area (
+	codarea char (15) NOT NULL ,
+	nombre varchar (40) NOT NULL ,
+	dpto char (25) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.calidad    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.calidad (
+	nombre char (10) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.centro    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.centro (
+	codcentro char (2) NOT NULL ,
+	nombre varchar (40) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.centro_area    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.centro_area (
+	centro char (2) NOT NULL ,
+	area char (15) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.dpto    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.dpto (
+	nombre char (25) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.entrada    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.entrada (
+	codentrada char (20) NOT NULL ,
+	ficha char (10) NOT NULL ,
+	fecha datetime NOT NULL ,
+	fechacaducidad datetime NULL ,
+	lote char (10) NULL ,
+	unidades decimal(6, 0) NOT NULL ,
+	capacidad decimal(11, 4) NOT NULL ,
+	g_ml char (2) NOT NULL ,
+	residuo char (1) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.ficha    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.ficha (
+	codficha char (10) NOT NULL ,
+	calidad char (10) NOT NULL ,
+	ubicacion char (4) NOT NULL ,
+	proveedor char (4) NOT NULL ,
+	marca char (20) NOT NULL ,
+	producto char (40) NOT NULL ,
+	oculta char (1) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.marca    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.marca (
+	nombre char (20) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.maximo    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.maximo (
+	centro char (2) NOT NULL ,
+	ubicacion char (4) NOT NULL ,
+	proveedor char (4) NOT NULL ,
+	ficha char (10) NOT NULL ,
+	entrada char (20) NOT NULL ,
+	salida char (20) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.producto    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.producto (
+	nombre char (40) NOT NULL ,
+	formula char (30) NOT NULL ,
+	precauciones varchar (40) NULL 
+)
+GO
+
+/****** Object:  Table dbo.prov_marca    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.prov_marca (
+	proveedor char (4) NOT NULL ,
+	marca char (20) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.proveedor    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.proveedor (
+	codproveedor char (4) NOT NULL ,
+	nombre varchar (40) NOT NULL ,
+	direccion varchar (40) NULL ,
+	tfno char (9) NULL ,
+	fax char (9) NULL ,
+	email varchar (40) NULL ,
+	contacto varchar (40) NULL 
+)
+GO
+
+/****** Object:  Table dbo.salida    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.salida (
+	codsalida char (20) NOT NULL ,
+	ficha char (10) NOT NULL ,
+	fecha datetime NOT NULL ,
+	fechacaducidad datetime NULL ,
+	lote char (10) NULL ,
+	unidades decimal(6, 0) NOT NULL ,
+	capacidad decimal(11, 4) NOT NULL ,
+	g_ml char (2) NOT NULL ,
+	residuo char (1) NOT NULL 
+)
+GO
+
+/****** Object:  Table dbo.ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE TABLE dbo.ubicacion (
+	codubicacion char (4) NOT NULL ,
+	nombre varchar (30) NOT NULL ,
+	area char (15) NOT NULL ,
+	centro char (2) NOT NULL ,
+	oculta char (1) NOT NULL 
+)
+GO
+
+/****** Object:  View dbo.bioqbm_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqbm_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqbm_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view bioqbm_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.bioqbm_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqbm_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqbm_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqbm_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqbm_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqbm"
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqui_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqui_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqui_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view bioqui_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.bioqui_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqui_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqui_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqui_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.bioqui_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.bioqui"
+	 with check option
+GO
+
+/****** Object:  View dbo.edquagr_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.edquagr_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.edquagr_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view edquagr_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.edquagr_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.edquagr_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.edquagr_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.edquagr_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.edquagr_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.edquagr"
+	 with check option
+GO
+
+/****** Object:  View dbo.exist    Script Date: 3/23/20 6:30:21 PM ******/
+--Vistas
+create view exist as 
+  select a.ficha, a.unidades - isnull (b.unidades, 0) total, a.capacidad, 
+         a.g_ml
+  from (select ficha, sum(unidades) unidades, capacidad, g_ml
+        from entrada
+        group by ficha, g_ml, capacidad) a left outer join  
+       (select ficha, sum (unidades) unidades, capacidad, g_ml
+        from salida
+        group by ficha, g_ml, capacidad) b 
+  on a.ficha = b.ficha
+  and a.g_ml = b.g_ml
+  and a.capacidad = b.capacidad
+
+
+GO
+
+/****** Object:  View dbo.exist_todos    Script Date: 3/23/20 6:30:21 PM ******/
+create view exist_todos as
+  select e.* 
+  from exist e, ficha_todos f
+  where f.codficha = e.ficha
+
+
+GO
+
+/****** Object:  View dbo.ficha_todos    Script Date: 3/23/20 6:30:21 PM ******/
+create view ficha_todos as
+  select f.codficha, f.calidad, f.proveedor, f.marca, f.producto,
+         p.formula, u.centro, u.area
+  from ficha f, ubicacion u, producto p
+  where p.nombre = f.producto
+  and u.codubicacion = f.ubicacion
+  and u.oculta = 'n'
+  and f.oculta = 'n'
+
+
+GO
+
+/****** Object:  View dbo.fisapl_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.fisapl_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.fisapl_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view fisapl_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.fisapl_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.fisapl_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.fisapl_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.fisapl_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.fisapl_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.fisapl"
+	 with check option
+GO
+
+/****** Object:  View dbo.imasd_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.imasd_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.imasd_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view imasd_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.imasd_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.imasd_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.imasd_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.imasd_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.imasd_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.imasd"
+	 with check option
+GO
+
+/****** Object:  View dbo.ingmec_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingmec_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.ingmec_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view ingmec_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.ingmec_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingmec_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.ingmec_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingmec_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.ingmec_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingmec"
+	 with check option
+GO
+
+/****** Object:  View dbo.ingqu_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingqu_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.ingqu_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view ingqu_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.ingqu_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingqu_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.ingqu_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingqu_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.ingqu_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.ingqu"
+	 with check option
+GO
+
+/****** Object:  View dbo.microbiol_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.microbiol_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.microbiol_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view microbiol_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.microbiol_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.microbiol_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.microbiol_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.microbiol_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.microbiol_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.microbiol"
+	 with check option
+GO
+
+/****** Object:  View dbo.nutrbr_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.nutrbr_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.nutrbr_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view nutrbr_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.nutrbr_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.nutrbr_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.nutrbr_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.nutrbr_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.nutrbr_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.nutrbr"
+	 with check option
+GO
+
+/****** Object:  View dbo.prrlab_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.prrlab_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.prrlab_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view prrlab_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.prrlab_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.prrlab_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.prrlab_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.prrlab_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.prrlab_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.prrlab"
+	 with check option
+GO
+
+/****** Object:  View dbo.quan_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quan_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quan_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view quan_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.quan_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quan_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.quan_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quan_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quan_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quan"
+	 with check option
+GO
+
+/****** Object:  View dbo.qufis_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.qufis_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.qufis_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view qufis_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.qufis_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.qufis_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.qufis_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.qufis_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.qufis_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.qufis"
+	 with check option
+GO
+
+/****** Object:  View dbo.quieps_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quieps_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quieps_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view quieps_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.quieps_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quieps_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.quieps_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quieps_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quieps_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quieps"
+	 with check option
+GO
+
+/****** Object:  View dbo.quin_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quin_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quin_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view quin_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.quin_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quin_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.quin_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quin_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quin_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quin"
+	 with check option
+GO
+
+/****** Object:  View dbo.quor_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quor_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quor_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view quor_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.quor_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quor_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.quor_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quor_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.quor_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.quor"
+	 with check option
+GO
+
+/****** Object:  View dbo.sa_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.sa_entrada as
+  select e.*
+  from entrada e
+
+GO
+
+/****** Object:  View dbo.sa_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view sa_exist as
+  select e.* 
+  from exist e
+
+GO
+
+/****** Object:  View dbo.sa_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.sa_ficha as
+  select f.*, p.formula
+  from ficha f, producto p
+  where p.nombre = f.producto
+
+GO
+
+/****** Object:  View dbo.sa_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.sa_salida as
+  select s.*
+  from salida s
+
+GO
+
+/****** Object:  View dbo.sa_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+--Creacion de las vistas para el administrador
+create view dbo.sa_ubicacion as
+  select * from ubicacion
+
+GO
+
+/****** Object:  View dbo.tecalim_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.tecalim_ficha f
+         where e.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.tecalim_exist    Script Date: 3/23/20 6:30:21 PM ******/
+create view tecalim_ficha f, exist e
+ 	 where  f.codficha = e.ficha
+GO
+
+/****** Object:  View dbo.tecalim_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.tecalim_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option
+GO
+
+/****** Object:  View dbo.tecalim_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.tecalim_ficha f
+         where s.ficha = f.codficha
+	 with check option
+GO
+
+/****** Object:  View dbo.tecalim_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create view dbo.tecalim"
+	 with check option
+GO
+
+/****** Object:  Stored Procedure dbo.borrar_usuario    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE PROCEDURE borrar_usuario
+  @usuario varchar(20)
+as
+
+  --Quitar espacios en blanco
+  select @usuario = ltrim (rtrim(@usuario))
+
+  --Quitar el usuario de la base de datos
+  exec sp_dropuser @usuario
+  exec sp_droplogin @usuario
+
+  --Borrar las vistas para el usuario
+  exec ('drop view dbo.' + @usuario + '_ubicacion')
+
+  exec ('drop view dbo.' + @usuario + '_ficha')
+
+  exec ('drop view dbo.' + @usuario + '_exist')
+
+  exec ('drop view dbo.' + @usuario + '_entrada')
+
+  exec ('drop view dbo.' + @usuario + '_salida')
+
+
+  --Commit
+  
+GO
+
+/****** Object:  Stored Procedure dbo.crear_usuario    Script Date: 3/23/20 6:30:21 PM ******/
+CREATE PROCEDURE crear_usuario
+  @usuario varchar(20),
+  @password varchar(20)
+as
+  --Quitar espacios en blanco
+  select @usuario = ltrim (rtrim(@usuario))
+  select @password = ltrim(rtrim(@password))
+
+  --Crear el usuario en la base de datos
+  exec sp_addlogin @usuario, @password, 'DBLab'
+  exec sp_adduser @usuario, @usuario, 'Usuarios'
+
+
+  --Creacion de las vistas para el usuario
+  exec ('create view dbo.' + @usuario + '_ubicacion as
+         select * from ubicacion
+         where area like "' + @usuario + '"
+	 with check option')
+
+  exec ('create view dbo.' + @usuario + '_ficha as
+         select f.*, p.formula
+         from ficha f, dbo.' + @usuario + '_ubicacion u, producto p
+         where f.ubicacion = u.codubicacion
+	 and p.nombre = f.producto
+	 with check option')
+
+  exec ('create view dbo.' + @usuario + '_entrada as
+         select e.*
+         from entrada e, dbo.' + @usuario + '_ficha f
+         where e.ficha = f.codficha
+	 with check option')
+
+  exec ('create view dbo.' + @usuario + '_salida as
+         select s.*
+         from salida s, dbo.' + @usuario + '_ficha f
+         where s.ficha = f.codficha
+	 with check option')
+
+  exec ('create view ' + @usuario + '_exist as
+         select e.* 
+         from ' + @usuario + '_ficha f, exist e
+ 	 where  f.codficha = e.ficha')
+
+  --Ahora los permisos
+  exec ('grant select, insert, update on dbo.producto to ' + @usuario)
+  exec ('grant all on dbo.' + @usuario + '_ubicacion to ' + @usuario)
+  exec ('grant select, insert, update  on dbo.' + @usuario + '_ficha to ' + @usuario)
+  exec ('grant select, insert, update  on dbo.' + @usuario + '_entrada to ' + @usuario)
+  exec ('grant select, insert, update  on dbo.' + @usuario + '_salida to ' + @usuario)
+  exec ('grant select on dbo.' + @usuario + '_exist to ' + @usuario)
+
+  --Los que se quitan
+  exec ('revoke delete on dbo.' + @usuario + '_ficha from ' + @usuario)
+  exec ('revoke delete on dbo.' + @usuario + '_entrada from ' + @usuario)
+  exec ('revoke delete on dbo.' + @usuario + '_salida from ' + @usuario)
+
+  --Los procedimientos
+  exec ('grant execute on dbo.num_centro to ' + @usuario)
+  exec ('grant execute on dbo.num_ubicacion to ' + @usuario)
+  exec ('grant execute on dbo.num_proveedor to ' + @usuario)
+  exec ('grant execute on dbo.num_ficha to ' + @usuario)
+  exec ('grant execute on dbo.num_entrada to ' + @usuario)
+  exec ('grant execute on dbo.num_salida to ' + @usuario)
+
+  --Commit
+  
+GO
+
+/****** Object:  Stored Procedure dbo.num_centro    Script Date: 3/23/20 6:30:21 PM ******/
+create procedure dbo.num_centro
+as
+  declare @aux char(2),
+  @salida decimal(2)
+
+  select @aux = centro from maximo
+  select @salida = convert(decimal(2), @aux)
+  if (select @salida) = 99
+    select @salida = 0
+  else
+    select @salida = @salida + 1
+
+  select @aux = convert(char(2), @salida)
+  update maximo
+    set centro = @aux
+  return @salida
+
+GO
+
+/****** Object:  Stored Procedure dbo.num_entrada    Script Date: 3/23/20 6:30:21 PM ******/
+create procedure dbo.num_entrada
+as
+  declare @aux char(20),
+  @salida decimal(20)
+  select @aux = entrada from maximo
+  select @salida = convert(decimal(10), @aux)
+  if (select @salida) = 99999999999999999999
+    select @salida = 0
+  else
+    select @salida = @salida + 1
+
+  select @aux = convert(char(10), @salida)
+  update maximo
+    set entrada = @aux
+  return @salida
+
+GO
+
+/****** Object:  Stored Procedure dbo.num_ficha    Script Date: 3/23/20 6:30:21 PM ******/
+create procedure dbo.num_ficha
+as
+  declare @aux char(10),
+  @salida decimal(10)
+  select @aux = ficha from maximo
+  select @salida = convert(decimal(10), @aux)
+  if (select @salida) = 9999999999
+    select @salida = 0
+  else
+    select @salida = @salida + 1
+
+  select @aux = convert(char(10), @salida)
+  update maximo
+    set ficha = @aux
+  return @salida
+
+GO
+
+/****** Object:  Stored Procedure dbo.num_proveedor    Script Date: 3/23/20 6:30:21 PM ******/
+create procedure dbo.num_proveedor
+as
+  declare @aux char(4),
+  @salida decimal(4)
+  select @aux = proveedor from maximo
+  select @salida = convert(decimal(4), @aux)
+  if (select @salida) = 9999
+    select @salida = 0
+  else  
+    select @salida = @salida + 1
+
+  select @aux = convert(char(4), @salida)
+  update maximo
+    set proveedor = @aux
+  return @salida
+
+GO
+
+/****** Object:  Stored Procedure dbo.num_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create procedure dbo.num_salida
+as
+  declare @aux char(20),
+  @salida decimal(20)
+  select @aux = salida from maximo
+  select @salida = convert(decimal(10), @aux)
+  if (select @salida) = 99999999999999999999
+    select @salida = 0
+  else
+    select @salida = @salida + 1
+
+  select @aux = convert(char(10), @salida)
+  update maximo
+    set salida = @aux
+  return @salida
+
+GO
+
+/****** Object:  Stored Procedure dbo.num_ubicacion    Script Date: 3/23/20 6:30:21 PM ******/
+create procedure dbo.num_ubicacion
+as
+  declare @aux char(4),
+  @salida decimal(4)
+  select @aux = ubicacion from maximo
+  select @salida = convert(decimal(4), @aux)
+  if (select @salida) = 9999
+    select @salida = 0
+  else  
+    select @salida = @salida + 1
+
+  select @aux = convert(char(4), @salida)
+  update maximo
+    set ubicacion = @aux
+  return @salida
+
+GO
+
+/****** Object:  Trigger dbo.ins_salida    Script Date: 3/23/20 6:30:21 PM ******/
+create trigger dbo.ins_salida
+on dbo.salida
+for insert, update
+as
+  declare @total int
+  select @total =  count (e.ficha)
+      from exist e, inserted i 
+      where e.ficha = i.ficha
+      and e.g_ml = i.g_ml
+      and e.capacidad = i.capacidad
+
+      and e.total < 0
+
+  --Si se ha sacado mas contenido del que habia
+  --se aborta la transaccion
+  if (@total > 0)
+    begin
+      print 'ERROR. No hay tantas existencias'
+      rollback transaction
+    end
+  else
+    begin
+      select @total =  count (e.ficha)
+      from entrada e, inserted i
+      where e.ficha = i.ficha
+      and e.g_ml = i.g_ml
+      and e.capacidad = i.capacidad
+
+      if (@total = 0)
+        begin
+          raiserror ('ERROR. No hay tantas existencias', 10, 1)
+          rollback transaction
+        end
+    end
+      
+
+
+GO
+
