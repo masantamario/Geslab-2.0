@@ -1,15 +1,41 @@
 PRIMERA REUNIÓN CON LA UNIVERSIDAD
-En la primera reunión realizada con la universidad, todas las partes involucradas en el proyecto nos presentamos, y pasamos directamente a hablar sobre la aplicación en cuestión. Se les comentó la nueva aplicación a desarrollar y se les pregunto sobre posibles requisitos funcionales que pudieran necesitar.  
+En la primera reunión realizada con la universidad, nos reunimos el decano de la facultad, Gonzalo Salazar, un técnico de laboratorio de química analítica, Pedro Renedo y Mario Santamaría vía online. Todas las partes involucradas en el proyecto nos presentamos, y pasamos directamente a hablar sobre la aplicación en cuestión. Se les comentó la nueva aplicación a desarrollar y se les pregunto sobre posibles requisitos funcionales que pudieran necesitar.  
+
 Se llegó a la conclusión de que lo más cómodo sería una aplicación web.
 Se comentó el tema de implementar una posible API para móviles para poder implementar en un futuro.
+
 Finalmente se pactó una siguiente reunión a la semana siguiente, para dar tiempo a los de la universidad para hablar con los usuarios reales actuales de la aplicación, para poder tener tanto opiniones como necesidades de la futura aplicación de primera mano. 
+
+
 
 SEGUNDA REUNIÓN CON LA UNIVERSIDAD
 La segunda reunión pactada con la universidad finalmente no se pudo realizar en la fecha estimada debido al COVID-19, que afecto a todos los organismos de la universidad y complicó la tarea de reunirse. 
 No obstante, las conversaciones con la universidad siguieron presentes y quedamos a la espera de que nos enviaran unos requisitos cuando finalmente pudieran hablar con los usuarios.
+
 Por otro lado, Pedro estuvo en contacto con ellos para poder obtener las tablas que se encontraban en el servidor de la universidad para poder replicarlas en un MySql e ir trabajando con ellas para ir trabajando en traspasar los datos a las tablas nuevas.
+
+
 
 EXPORTACIÓN DE TABLAS
 Cuando finalmente recibimos la información del servidor, lo recibimos en un formato de imagen de disco proveniente de Ghost Norton en formato VHD. Esto nos dejaba con una copia del disco duro en el que estaban las tablas que necesitábamos.
 Para montar la imagen utilizamos Virtual Vox NT4, pero por alguna razón la maquina no arrancaba. Tras muchas pruebas encontramos que la causa era la tarjeta de red, no era compatible. Tras esto se realizó una búsqueda de una compatible. Finalmente se utilizó AMD PC net family. 
+
 Con todo listo se pudo ejecutar la imagen, y a través de admin SQL exportamos los datos que necesitábamos.
+
+
+
+MYSQL
+Una vez obtenidas las tablas extraidas, se realizó la instalación de MYSQL.
+
+El primer paso para instalar MYSQL es descargar el software de su página oficial. Desde la página buscaremos el "MySQL Comunnity Server" y después seleccionar la plataforma en la que lo vamos a instalar.
+
+Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En mi caso selecciono "Developer Default" ya que quiero instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
+
+
+
+REQUISITOS FUNCIONALES
+La tarea de recoger unos nuevos rerquisitos funcionales claros fue complicada. Con todo lo sucedido por el confinamiento, las reuniones entre los usuarios de la aplicación fueron imposibles. debido a ello, la única manera de comunicarse fue a través de una serie de correos que los propios usuarios enviaron a Gonzalo. Pedro Renedo recopiló esos correos y me los envío a mi.
+
+En los correos la información es poco específica y caótica, por lo que hizo falta realizar una tarea de análisis para poder extraer unos requisitos funcionales claros. 
+
+Tras esta tarea de análisis e investigación tanto de la aplicación como de conceptos de química utilizados, se extrajeron unas historias de usuario a medio completar, con el objetivo de que o bien Gonzalo, o bien los usuarios, aportaran más información, y sobre todo información más específica. 
