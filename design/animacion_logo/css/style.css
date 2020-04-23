@@ -1,0 +1,120 @@
+body {
+	background-color: beige;
+    padding-top: 1px;
+}
+
+#cabecera{
+	width: auto;
+    height:55px;
+    background-color: dimgray;
+}
+
+#tituloHolder{
+    width: 50%;
+    height:55px;
+    vertical-align: middle;
+    float : left
+}
+
+#kikoibo{
+    font-family: Quicksand;
+    color : white;
+    font-size: 27px;
+    line-height: 0px;
+    padding-left: 20px;
+    padding-right: 10px;
+    float: left;
+}
+
+#titulo{
+    font-family: Quicksand;
+    color : darkgrey;
+    font-size: 20px;
+    line-height: 0px;
+    padding-top: 8px;
+    padding-right: 10px;
+    float: left;
+}
+
+#comandosHolder{
+    width: 48%;
+    height:48px;
+    vertical-align: middle;
+    float : right;
+    padding-top: 7px;
+    padding-right: 10px
+}
+
+div#comandosHolder button{
+    display: inline-block;
+    height: 40px;
+    float:right;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-left: 10px
+}
+
+#dimensionesHolder{
+    width: 65%;
+    height:40px;  
+}
+
+#dimensiones{
+    line-height: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: lato;
+    font-size: 20px;
+    float: right;
+}
+#dimensionesHolder .input{
+    font-family: lato;
+    font-size: 15px;
+    margin-top: 5px;
+    height: 25px;
+    width: 70px;
+    text-align: center;
+    border-radius: 3px; 
+    float: right;
+}
+#x{
+    font-family: lato;
+    font-size: 15px;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    float: right;
+    line-height: 0px;
+}
+
+#aplicar{
+    display: inline-block;
+    margin-top: 8px;
+    height: 25px;
+    float:right;
+    border-radius: 3px;
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px
+}
+
+#canvas_holder{
+    width: 65%;
+    height: 65%;
+    background-color: darkgrey;
+    float: left;
+    padding-top: 3px
+}
+
+.canvas{
+    padding: 1%;
+    max-width: 98%;
+}
+
+#parametros{
+    width: 35%;
+    height: 65%;
+    background-color: bisque;
+    float: left;
+    font-family: lato;
+}

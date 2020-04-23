@@ -39,3 +39,48 @@ La tarea de recoger unos nuevos rerquisitos funcionales claros fue complicada. C
 En los correos la información es poco específica y caótica, por lo que hizo falta realizar una tarea de análisis para poder extraer unos requisitos funcionales claros. 
 
 Tras esta tarea de análisis e investigación tanto de la aplicación como de conceptos de química utilizados, se extrajeron unas historias de usuario a medio completar, con el objetivo de que o bien Gonzalo, o bien los usuarios, aportaran más información, y sobre todo información más específica. 
+
+(21/04/2020)
+
+Al no recibir respuesta por parte de la universidad (por motivo del confinamiento) se decidió investigar los requisitos por cuenta propia y establecer unos requisitos finales para poder ir trabajando sobre ellos. Los requisitos finalmente elegidos no son definitivos y quedan abiertos a posibles cambios en un futuro.
+
+
+
+CAMBIOS EN LA BASE DE DATOS
+Con unos requisitos ya establecidos, se realizaron los primeros cambios en la estructura de la base de datos. Los cambios incluyen la creación de nuevos campos, la eliminación de campos y la creación de nuevas tablas.
+
+De estos cambios se obtiene el nuevo diagrama entidad-relacion.
+
+
+
+DISEÑO DE LA APLICACIÓN (23/04/2020)
+
+Para realizar el diseño de la aplicación se comenzo por crear un logotipo, elegir unos colores y una tipografía. Con todo ello, se creo un primer prototipo de la página de inicio (login). Tambien se diseño una pequeña animación con el logotipo creado para poder utilizar en la webapp.
+
+Para la creación tanto del logotipo como del primer diseño de la página de login se ha utilizado la herramienta Illustrator. Adobe illustrator es un editor de gráficos vectoriales destinada a la creación artística de dibujo e ilustración.
+
+La animación se ha realizado con p5.js. P5.js es una biblioteca de JavaScript basada en Processing que permite programar sitios web interactivos, de forma que no limita el diseño a un canvas, sino que puede utilizar cualquier elemento del navegador como sketch.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
