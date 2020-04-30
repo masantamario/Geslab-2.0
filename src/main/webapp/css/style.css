@@ -1,0 +1,68 @@
+.container-fluid{
+    background: #ffffff url("../images/bg-lines.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    background-size: cover;
+}
+
+.logo-img {
+    margin-left: -12px;
+}
+
+.descripcion-txt{
+    font-family: AT Osmose;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.9rem;
+    /* or 120% */
+    letter-spacing: 0.08em;
+    color: #4D69F4;
+}
+
+.login-container{
+/*
+    width: 385px;
+    height: 194px;
+*/
+    
+    background: #F2F2F2;
+    border-radius: 23px;
+}
+
+.login-label{
+    font-family: AT Osmose;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.6rem;
+/*    font-size: 25.82px;*/
+    /* or 65% */
+    color: #000000;
+    margin-bottom: 0px;
+}
+
+.login-input{
+    height: 34px;
+    background: #C5D0F9;
+    border: none;
+    border-radius: 11px;
+    font-family: AT Osmose;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.6rem;
+    color: #000000;
+}
+
+.login-button{
+    font-family: AT Osmose;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.6rem;
+    text-align: center;
+
+    color: #ffffff;
+    
+    background: #13D7BC;
+    border: none;
+    border-radius: 11px;
+}
