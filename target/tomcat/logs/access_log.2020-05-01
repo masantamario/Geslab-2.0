@@ -1,0 +1,11 @@
+127.0.0.1 - - [01/May/2020:13:50:27 +0200] "GET / HTTP/1.1" 200 5072 http-bio-8080-exec-1 81
+127.0.0.1 - - [01/May/2020:13:50:27 +0200] "GET / HTTP/1.1" 200 5072 http-bio-8080-exec-2 81
+127.0.0.1 - - [01/May/2020:13:50:27 +0200] "GET /css/style.css HTTP/1.1" 200 1265 http-bio-8080-exec-3 16
+127.0.0.1 - - [01/May/2020:13:50:27 +0200] "GET /css/bootstrap.min.css HTTP/1.1" 200 159515 http-bio-8080-exec-4 21
+127.0.0.1 - - [01/May/2020:13:50:27 +0200] "GET /images/logo-geslab.svg HTTP/1.1" 200 5300 http-bio-8080-exec-6 4
+127.0.0.1 - - [01/May/2020:13:50:27 +0200] "GET /js/bootstrap.min.js HTTP/1.1" 200 60010 http-bio-8080-exec-7 6
+0:0:0:0:0:0:0:1 - - [01/May/2020:13:50:27 +0200] "GET /images/logo-ubu.svg HTTP/1.1" 200 123738 http-bio-8080-exec-8 6
+0:0:0:0:0:0:0:1 - - [01/May/2020:13:50:27 +0200] "GET /images/bg-lines.svg HTTP/1.1" 200 3596 http-bio-8080-exec-8 4
+0:0:0:0:0:0:0:1 - - [01/May/2020:13:50:27 +0200] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-8 3
+0:0:0:0:0:0:0:1 - - [01/May/2020:13:50:38 +0200] "GET /js/bootstrap.min.js.map HTTP/1.1" 304 - http-bio-8080-exec-8 12
+0:0:0:0:0:0:0:1 - - [01/May/2020:13:50:38 +0200] "GET /css/bootstrap.min.css.map HTTP/1.1" 304 - http-bio-8080-exec-8 9

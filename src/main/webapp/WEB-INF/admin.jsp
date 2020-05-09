@@ -18,48 +18,64 @@
 	</head>
 	
 	<body>
-        <div  class="container-fluid-login">
+        <div  class="container-fluid">
             <div class="container">
-                <div class="row">
-                    <div class="col-12 py-5">
-                        <img class="logo-img" src="../images/logo-geslab-login.svg"> 
+                <div class="row py-5 align-items-center">
+                    <div class="col-3">
+                        <img class="logo-img" src="../images/logo-geslab.svg"> 
+                    </div>
+                    
+                    <div class="col-6">
+<!--                         <p class="col-12 descripcion-txt">Aplicación de gestión del inventario de los laboratorios de química desarrollada para la Universidad de Burgos</p>  -->
+                        <p class="col-12 descripcion-txt">Bienvenido, ${nombre}</p> 
                     </div>
                 </div>
 
-                <div class="row align-items-center py-4">
-                    <div class="col-12 col-md-5 ubu">
-                        <img class="ubu-img" src="../images/logo-ubu.svg"> 
-                        <p class="col-sm-12 col-lg-8 descripcion-txt mt-3 pl-0">Aplicación de gestión del inventario de los laboratorios de química desarrollada para la Universidad de Burgos</p>
-                    </div>
-                    
-                    <div class="col-12 col-md-7">
-                        <div class="row">
-                            <div class="col-12 col-lg-8 login-container py-3 px-4">
-                                <form action="/login.do" method="post">
-                                    <div class="row align-items-center">
-                                        <label for="usuario-ip" class="col-4 login-label">Usuario</label>
-                                        <div class="col-8">
-                                          <input type="text" class="col-12 login-input" name="usuario" id="usuario-ip" placeholder="bioqbm">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row align-items-center mt-2">
-                                        <label for="password-ip" class="col-6 login-label">Contraseña</label>
-                                        <div class="col-6">
-                                          <input type="password" class="col-12 login-input" name="password" id="password-ip" placeholder="********">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row justify-content-end mt-4 px-3">
-                                        <button type="submit" class="btn login-button py-0 px-3">Entrar</button>
-                                    </div>
-                                          
-                                </form>                        
-                            </div>
-                            
-                        </div>    
-                    </div>
+                <div class="row">
+                	<div class="col-3">
+                		<div class="row">
+                			<div class="col-12">
+                				<button class="btn boton-grande py-2 px-5">Usuarios</button>
+                			</div>
+                		</div>
+                		
+                		<div class="row pt-2">
+                			<div class="col-12">
+                				<button class="btn boton-grande py-2 px-5">Departamentos</button>
+                			</div>
+                		</div>
+                		
+                		<div class="row pt-2">
+                			<div class="col-12">
+                				<button class="btn boton-grande py-2 px-5">Áreas</button>
+                			</div>
+                		</div>
+                		
+                		<div class="row pt-2">
+                			<div class="col-12">
+                				<button class="btn boton-grande py-2 px-5">Centros</button>
+                			</div>
+                		</div>
+                		
+                	</div>
+                	
+                	<div class="col-9 px-3 py-3 container-admin">
+                		<div class="row">
+                			<div class= "col-12 justify-content-center">
+                				<p class="label">Usuarios</p>
+                				<p class="label">${usuarios}</p>
+                			</div>
+                		</div>
+                		
+                		<div class="row pt-4">
+                			<div class= "col-12 justify-content-center">
+                				<p class="label">Areas</p>
+                				<p class="label">${areas}</p>
+                			</div>
+                		</div>
+                	</div>
                 </div>
+                
             </div>
         </div>
 	

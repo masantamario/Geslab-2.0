@@ -62,11 +62,35 @@ Para la creación tanto del logotipo como del primer diseño de la página de lo
 La animación se ha realizado con p5.js. P5.js es una biblioteca de JavaScript basada en Processing que permite programar sitios web interactivos, de forma que no limita el diseño a un canvas, sino que puede utilizar cualquier elemento del navegador como sketch.
 
 
+(30/04/2020)
+
+CAMBIOS EN LA BASE DE DATOS 
+
+Se han añadido nuevas tablas a la base de datos, pertenecientes a los usuarios y a los roles.
 
 
+CREACIÓN DE LA LOGIN PAGE CON BOOTSTRAP
+
+Se ha creado la página de login utilizando bootstrap. Solamente se ha creado la parte gráfica de la aplicación, sirviendo a modo de "práctica" en la utilización de bootstrap. Para ello se ha realizado una formación en bootstrap a través de la documentación de su página web, y de diversos tutoriales de los que disponen.
+
+Se han descargado todos los archivos pertinentes (css's y javascripts) y se han importado en el proyecto. Para trasladar el diseño creado en illustrator, se ha utilizado una herramienta intermedia llamada Figma.
+
+Figma te brinda todas las herramientas necesarias para la fase de diseño del proyecto, incluidas las herramientas vectoriales capaces de ilustrar completamente, así como aquellas para la creación de prototipos y la generación de código para el traspaso (hand-off).
 
 
+(07/05/2020)
 
+
+CONEXION DE ECLIPSE CON MYSQL
+
+Se han realizado las primeras conexiones de java con mysql. Se ha importado en el proyecto el conector java-mysql, lo que permite realizar consultas en la base de datos desde java. Se ha creado la clase conexion para realizar todas las configuraciones pertinentes a la conexión.
+
+Hubo problemas a la hora de hacer funcionar la conexión, ya que si se hacía desde una clase de java funcionaba, pero al incluirla en el proyecto maven, la conexión no se podía realizar. Tras un trabajo de debug y de investigación, se llego a encontrar el error. Faltaba añadir la dependencia pertinente en el archivo pom.xml
+
+
+IMPLEMENTADA FUNCIONALIDAD EN LA PAGINA DE LOGIN
+
+Se ha añadido la funcionalidad de login a la página de login. Cuando se introduce el usuario, consulta en la base de datos si el usuario existe, y redirecciona a otra página en casa afirmativo.
 
 
 

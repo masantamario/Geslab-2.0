@@ -21,19 +21,20 @@ DROP TABLE IF EXISTS
 	centro, 
 	area,  
 	dpto;
-
-
+   
+   
 CREATE TABLE dpto(
+	coddpto int auto_increment,
 	nombre char(25),
-    constraint PK_dpto primary key clustered (nombre)
+    constraint PK_dpto primary key clustered (coddpto)
 );
     
 CREATE TABLE area(
 	codarea int auto_increment,
     nombre varchar(40),
-    dpto char(25),
+    dpto int,
     constraint PK_area primary key clustered (codarea),
-    constraint FK_dpto_area foreign key (dpto) references dpto(nombre),
+    constraint FK_dpto_area foreign key (dpto) references dpto(coddpto),
     constraint UNQ_area unique(nombre, dpto)
 );
 
@@ -153,7 +154,7 @@ CREATE TABLE prov_marca(
     marca int,
     constraint PK_prov_marca primary key clustered(proveedor, marca),
     constraint FK_proveedor_pm foreign key (proveedor) references proveedor(codproveedor),
-    constraint FK_marca_pm foreign key (marca) references marca(nombre)
+    constraint FK_marca_pm foreign key (marca) references marca(codmarca)
 );
 
 CREATE TABLE ficha(
@@ -201,6 +202,12 @@ CREATE TABLE salida(
     constraint CK_s_n_salida check ((residuo = 's') OR (residuo = 'n'))
 );
 
+CREATE TABLE roles(
+	idrol int auto_increment,
+    rol varchar(20),
+    constraint PK_roles primary key usuarios(idrol)
+);
+
 CREATE TABLE usuarios(
 	idusuario int auto_increment,
     usuario varchar(50),
@@ -209,19 +216,12 @@ CREATE TABLE usuarios(
     mail varchar(50),
     federada char(1),
     rol int,
+    area int,
     fecha_creacion datetime,
     constraint PK_usuarios primary key (idusuario),
     constraint UNQ_usuarios_usuario unique(usuario),
     constraint UNQ_usuarios_mail unique(mail),
     constraint CK_usuarios_fed check ((federada = 's') OR (federada = 'n')),
-    constraint FK_usuarios foreign key (rol) references roles(idrol)
+    constraint FK_usuarios_rol foreign key (rol) references roles(idrol),
+    constraint FK_usuarios_area foreign key (area) references area(codarea)
 );
-
-CREATE TABLE roles(
-	idrol int auto_increment,
-    rol varchar(20)
-);
-
-
-
-    
