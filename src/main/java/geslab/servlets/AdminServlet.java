@@ -1,6 +1,8 @@
 package geslab.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
+import geslab.database.modelo.Area;
 import geslab.database.modelo.Usuario;
 
 import javax.servlet.ServletException;
@@ -24,9 +27,14 @@ public class AdminServlet extends HttpServlet {
 		request.setAttribute("nombre", usuario.getNombre());
 		
 		Conexion cn = new Conexion();
-		request.setAttribute("usuarios", cn.leerUsuarios());
-		request.setAttribute("areas", cn.leerAreas());
+		ArrayList<Usuario> usuarios = cn.leerUsuarios();
+		ArrayList<Area> areas = cn.leerAreas();
+				
 		cn.cerrarConexion();
+		
+		
+		request.setAttribute("usuarios", usuarios);
+		request.setAttribute("areas", areas);
 		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
 		
 	}

@@ -215,6 +215,7 @@ CREATE TABLE usuarios(
     nombre varchar(50),
     mail varchar(50),
     federada char(1),
+    activo char(1),
     rol int,
     area int,
     fecha_creacion datetime,
@@ -222,6 +223,7 @@ CREATE TABLE usuarios(
     constraint UNQ_usuarios_usuario unique(usuario),
     constraint UNQ_usuarios_mail unique(mail),
     constraint CK_usuarios_fed check ((federada = 's') OR (federada = 'n')),
+    constraint CK_usuarios_act check ((activo = 's') OR (activo = 'n')),
     constraint FK_usuarios_rol foreign key (rol) references roles(idrol),
     constraint FK_usuarios_area foreign key (area) references area(codarea)
 );

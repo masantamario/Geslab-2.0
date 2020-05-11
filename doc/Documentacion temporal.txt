@@ -47,6 +47,7 @@ Al no recibir respuesta por parte de la universidad (por motivo del confinamient
 
 
 CAMBIOS EN LA BASE DE DATOS
+
 Con unos requisitos ya establecidos, se realizaron los primeros cambios en la estructura de la base de datos. Los cambios incluyen la creación de nuevos campos, la eliminación de campos y la creación de nuevas tablas.
 
 De estos cambios se obtiene el nuevo diagrama entidad-relacion.
@@ -93,9 +94,26 @@ IMPLEMENTADA FUNCIONALIDAD EN LA PAGINA DE LOGIN
 Se ha añadido la funcionalidad de login a la página de login. Cuando se introduce el usuario, consulta en la base de datos si el usuario existe, y redirecciona a otra página en casa afirmativo.
 
 
+CREADA LA PÁGINA DE MANTENIMIENTO DEL ADMINISTRADOR
+
+La primera funcionalidad a implementar es la de crear una página para que el usuario administrador pueda consultar y editar la información de la base de datos a la que solo el puede acceder. Para ello se ha creado un nuevo servlet, una página jsp y las clases para usuario, departamento, centro y area. 
+
+Cuando el usuario entra en el sistema, el servlet trae desde la base de datos unas listas de objetos con los datos a mostrar, y se los pasa a la página jsp para que los muestre.
 
 
+CAMBIOS EN LA BASE DE DATOS
 
+Se han añadido campos en las tablas de usuarios y departamentos. Tambien se ha creado el nuevo diagrama E-R. Además, para la realización de pruebas, se ha creado un script que contiene unos inserts muy básicos, que añaden a la base de datos roles, usuarios, departamentos, areas y centros.
+
+
+DISEÑO PÁGINA DE MANTENIMIENTO
+
+Se ha creado un primer diseño muy básico sobre como será la página de mantenimiento en Adobe Illustrator. Usando Figma, se ha adaptado a la página jsp para poder ir visualizando algo.
+
+
+REFACTORIZADO DE LOS PAQUETES
+
+Se ha cambiado el nombre a los paquetes del proyecto para facilitar su comprensión y su orden.
 
 
 

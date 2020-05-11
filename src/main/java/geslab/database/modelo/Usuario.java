@@ -8,104 +8,40 @@ public class Usuario {
 	private String nombre;
 	private String mail;
 	private boolean federada;
+	private boolean activo;
 	private int rol;
 	private int area;
 	private Date fecha_creacion;
 	
-	
-	public Usuario(String usuario, String contrasena) {
-		this.usuario = usuario;
-		this.contrasena = contrasena;
-	}
-
-
-	public int getIdusuario() {
-		return idusuario;
-	}
-
-
-	public void setIdusuario(int idusuario) {
+		
+	public Usuario(int idusuario, String usuario, String contrasena, String nombre, String mail, String federada, String activo, int rol, int area, Date fecha_creacion) {
 		this.idusuario = idusuario;
-	}
-
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-
-	public void setUsuario(String usuario) {
 		this.usuario = usuario;
-	}
-
-
-	public String getContrasena() {
-		return contrasena;
-	}
-
-
-	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-
-	public String getMail() {
-		return mail;
-	}
-
-
-	public void setMail(String mail) {
 		this.mail = mail;
-	}
-
-
-	public boolean isFederada() {
-		return federada;
-	}
-
-
-	public void setFederada(boolean federada) {
-		this.federada = federada;
-	}
-
-
-	public int getRol() {
-		return rol;
-	}
-
-
-	public void setRol(int rol) {
+		this.federada = federada == "s";
+		this.activo = activo == "s";
 		this.rol = rol;
-	}
-
-
-	public int getArea() {
-		return area;
-	}
-
-
-	public void setArea(int area) {
 		this.area = area;
-	}
-
-
-	public Date getFecha_creacion() {
-		return fecha_creacion;
-	}
-
-
-	public void setFecha_creacion(Date fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
+	}
+
+	public String[] toArray() {
+		String[] usuarioArray = new String[10];
+		
+		usuarioArray[0] = "" + this.usuario;
+		usuarioArray[1] = this.usuario;
+		usuarioArray[2] = this.contrasena ;
+		usuarioArray[3] = this.nombre;
+		usuarioArray[4] = this.mail;
+		usuarioArray[5] = "" + this.federada;
+		usuarioArray[6] = "" + this.federada;
+		usuarioArray[7] = "" + this.rol;
+		usuarioArray[8] = "" + this.area;
+		usuarioArray[9] = "" + this.fecha_creacion;
+		
+		return usuarioArray;
 	}
 	
 	public void imprimir() {
@@ -115,9 +51,30 @@ public class Usuario {
 		System.out.println("- Nombre: " + this.nombre);
 		System.out.println("- Email: " + this.mail);
 		System.out.println("- Federada: " + this.federada);
+		System.out.println("- Activo: " + this.activo);
 		System.out.println("- Rol: " + this.rol);
 		System.out.println("- Area: " + this.area);
 		System.out.println("- Fecha creación: " + this.fecha_creacion);
 	}
+
 	
+	public String getUsuario() {
+		return this.usuario;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public int getRol() {
+		return this.rol;
+	}
+	
+	public boolean getFederada() {
+		return this.federada;
+	}
+	
+	public boolean getActivo() {
+		return this.activo;
+	}
 }
