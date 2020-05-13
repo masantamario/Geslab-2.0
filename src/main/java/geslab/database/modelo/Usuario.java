@@ -1,36 +1,61 @@
 package geslab.database.modelo;
+
 import java.util.Date;
 
 public class Usuario {
-	private int idusuario;
-	private String usuario;
-	private String contrasena;
-	private String nombre;
-	private String mail;
-	private boolean federada;
-	private boolean activo;
-	private int rol;
-	private int area;
-	private Date fecha_creacion;
+	private int idusuario = 0;
+	private String usuario = "";
+	private String contrasena = "";
+	private String nombre = "";
+	private String mail = "";
+	private boolean federada = false;
+	private boolean activo = false;
+	private Rol rol = null;
+	private int area = 0;
+	private Date fecha_creacion = null;
 	
 		
-	public Usuario(int idusuario, String usuario, String contrasena, String nombre, String mail, String federada, String activo, int rol, int area, Date fecha_creacion) {
+	public Usuario(int idusuario, String usuario, String contrasena, String nombre, String mail, boolean federada, boolean activo, int rol, int area, Date fecha_creacion) {
 		this.idusuario = idusuario;
 		this.usuario = usuario;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.mail = mail;
-		this.federada = federada == "s";
-		this.activo = activo == "s";
-		this.rol = rol;
+		this.federada = federada;
+		this.activo = activo;
+//		this.activo = Boolean.parseBoolean(activo);
+		
+		if(rol == 1) {
+			this.rol = Rol.ADMINISTRADOR;
+		}else if(rol == 2) {
+			this.rol = Rol.GESTOR;
+		}else if(rol == 3) {
+			this.rol = Rol.USUARIO;
+		}
+		
 		this.area = area;
 		this.fecha_creacion = fecha_creacion;
 	}
+	
+	public Usuario(String usuario, int rol, boolean federada, boolean activo) {
+		this.usuario = usuario;
+		this.federada = federada;
+		this.activo = activo;
+		if(rol == 1) {
+			this.rol = Rol.ADMINISTRADOR;
+		}else if(rol == 2) {
+			this.rol = Rol.GESTOR;
+		}else if(rol == 3) {
+			this.rol = Rol.USUARIO;
+		}
+	
+	}
+
 
 	public String[] toArray() {
 		String[] usuarioArray = new String[10];
 		
-		usuarioArray[0] = "" + this.usuario;
+		usuarioArray[0] = "" + this.idusuario;
 		usuarioArray[1] = this.usuario;
 		usuarioArray[2] = this.contrasena ;
 		usuarioArray[3] = this.nombre;
@@ -66,7 +91,7 @@ public class Usuario {
 		return this.nombre;
 	}
 	
-	public int getRol() {
+	public Rol getRol() {
 		return this.rol;
 	}
 	
@@ -77,4 +102,5 @@ public class Usuario {
 	public boolean getActivo() {
 		return this.activo;
 	}
+
 }

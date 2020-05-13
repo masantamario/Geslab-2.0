@@ -58,10 +58,10 @@ CREATE TABLE ubicacion(
     nombre varchar(30),
     area int,
     centro int,
-    oculta char(1),
+    oculta char(5),
     constraint PK_ubicacion primary key(codubicacion),
     constraint FK_centro_area_ub foreign key (area, centro) references centro_area(area, centro),
-    constraint CK_oculta check((oculta='s') or (oculta='n')),
+    constraint CK_oculta check((oculta='true') or (oculta='false')),
     constraint UNQ_ubicacion unique (nombre, centro, area)    
 );
 
@@ -181,10 +181,10 @@ CREATE TABLE entrada (
     unidades decimal(6),
     capacidad decimal(11,4),
     g_ml char(2),
-    residuo char(1),
+    residuo char(5),
     constraint PK_entrada primary key (codentrada),
     constraint FK_ficha_entrada foreign key (ficha) references ficha(codficha),
-    constraint CK_s_n_entrada check ((residuo = 's') OR (residuo = 'n'))
+    constraint CK_s_n_entrada check ((residuo = 'true') OR (residuo = 'false'))
 );
 
 CREATE TABLE salida(
@@ -196,10 +196,10 @@ CREATE TABLE salida(
     unidades decimal(6),
     capacidad decimal(11, 4),
     g_ml char(2),
-    residuo char(1),
+    residuo char(5),
     constraint PK_salida primary key (codsalida),
     constraint FK_ficha_salida foreign key (ficha) references ficha(codficha),
-    constraint CK_s_n_salida check ((residuo = 's') OR (residuo = 'n'))
+    constraint CK_s_n_salida check ((residuo = 'true') OR (residuo = 'false'))
 );
 
 CREATE TABLE roles(
@@ -214,16 +214,16 @@ CREATE TABLE usuarios(
     contrasena varchar(50),
     nombre varchar(50),
     mail varchar(50),
-    federada char(1),
-    activo char(1),
+    federada char(5),
+    activo char(5),
     rol int,
     area int,
     fecha_creacion datetime,
     constraint PK_usuarios primary key (idusuario),
     constraint UNQ_usuarios_usuario unique(usuario),
     constraint UNQ_usuarios_mail unique(mail),
-    constraint CK_usuarios_fed check ((federada = 's') OR (federada = 'n')),
-    constraint CK_usuarios_act check ((activo = 's') OR (activo = 'n')),
+    constraint CK_usuarios_fed check ((federada = 'true') OR (federada = 'false')),
+    constraint CK_usuarios_act check ((activo = 'true') OR (activo = 'false')),
     constraint FK_usuarios_rol foreign key (rol) references roles(idrol),
     constraint FK_usuarios_area foreign key (area) references area(codarea)
 );

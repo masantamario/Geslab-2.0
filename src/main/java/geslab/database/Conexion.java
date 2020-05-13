@@ -7,8 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import geslab.database.modelo.Area;
-import geslab.database.modelo.Usuario;
+import geslab.database.modelo.*;
 
 public class Conexion {
 	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
@@ -87,8 +86,8 @@ public class Conexion {
 		rs = pstm.executeQuery();
 		
 		if (rs.next()) {
-			usuario = new Usuario(rs.getInt("idusuario"), rs.getString("nombre"), rs.getString("contrasena"),
-					rs.getString("nombre"), rs.getString("mail"), rs.getString("federada"), rs.getString("activo"), rs.getInt("rol"),
+			usuario = new Usuario(rs.getInt("idusuario"), rs.getString("usuario"), rs.getString("contrasena"),
+					rs.getString("nombre"), rs.getString("mail"), Boolean.valueOf(rs.getString("federada")), Boolean.valueOf(rs.getString("activo")), rs.getInt("rol"),
 					rs.getInt("area"), rs.getDate("fecha_creacion"));
 		}
 		cerrarRsPstm(rs, pstm, "leerUsuario");
@@ -119,6 +118,27 @@ public class Conexion {
 
 		return usuarios;
 	}
+	
+	public boolean insertarUsuario(Usuario u) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+		pstm = conexion.prepareStatement("INSERT INTO usuarios (usuario, contrasena, rol, federada, activo) VALUES (?, ?, ?, ?, ?)");
+		pstm.setString(1, u.getUsuario());
+		pstm.setString(2, "");
+		pstm.setInt(3, u.getRol().getId());
+		pstm.setString(4, Boolean.toString(u.getFederada()));
+		pstm.setString(5, Boolean.toString(u.getActivo()));
+		pstm.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Error al añadir usuario");
+		} finally {
+			cerrarRsPstm(null, pstm, "leerUsuarios");
+		}
+		
+		return correcto;
+	}
 
 	public ArrayList<Area> leerAreas() {
 		PreparedStatement pstm = null;
@@ -139,16 +159,11 @@ public class Conexion {
 			System.out.println("Error en la lectura de las areas");
 
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstm != null)
-					pstm.close();
-			} catch (SQLException e) {
-				System.out.println("Error al cerrar resulSet o PreparedStament");
-			}
+			cerrarRsPstm(rs, pstm, "leerUsuarios");
 		}
 
 		return areas;
 	}
+	
+	
 }

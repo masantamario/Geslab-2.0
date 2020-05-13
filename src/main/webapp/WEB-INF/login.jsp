@@ -66,63 +66,10 @@
 <!-- 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
 <!-- 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
 <!--		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>-->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 	</body>
 
 </html>
-
-<!-- <html>
-
-    <head>
-        <meta charset="UTF-8">    
-        Librerias online 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.js"></script>
-        
-        <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-        <style> body {padding: 0; margin: 0;} </style>
-    </head>
-    
-    <body>
-        <script type="text/javascript" src="../../resources/js/sketch.js"></script>
-
-
-		<script>
-		let angulo = 0;
-		let velocidad = 0.03;
-		let radio = 235;
-		let centroX;
-		let centroY;
-		
-		function setup() {
-		  createCanvas(800, 800);
-		  centroX = width/2;
-		  centroY = height/2;
-		}
-		
-		function draw() {
-		  background(255, 255, 255);
-		  noFill();
-		  stroke(112, 130, 247);
-		  strokeWeight(10);
-		  ellipse(centroX, centroY, radio*2);
-		  
-		  fill(112, 130, 247);
-		  noStroke();
-		  ellipseMode(CENTER);
-		  ellipse(centroX, centroY, 200);
-		  
-		  let x = centroX + radio * cos(angulo);
-		  let y = centroY + radio * sin(angulo);
-		  
-		  ellipse(x, y, 50);
-		  
-		  angulo = angulo + velocidad; 
-		}
-		</script>
-       
-    </body>
-    
-    
-</html> -->
 
