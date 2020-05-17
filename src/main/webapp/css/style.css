@@ -1,103 +1,153 @@
-.container-fluid-login{
-    background: #ffffff url("../images/bg-lines.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
-    background-size: cover;
+.container-fluid-login {
+	/*     background: #ffffff url("../images/bg-lines.svg"); */
+	/*     background-repeat: no-repeat; */
+	/*     background-position: center; */
+	/*     height: 100vh; */
+	/*     background-size: cover; */
+	
 }
 
-.container-admin{
-    background: #F2F2F2 ;
-    height: 70vh;
-    border-radius: 10px;
-    
+.animacion {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.st0 {
+	fill: none;
+	stroke: #ED6B9B;
+	stroke-miterlimit: 10;
+}
+
+.st1 {
+	fill: none;
+	stroke: #6B7BBB;
+	stroke-miterlimit: 10;
+}
+
+.container-admin {
+	background: #F2F2F2;
+	height: 70vh;
+	border-radius: 10px;
 }
 
 .logo-img {
-    margin-left: -12px;
+	margin-left: -12px;
 }
 
-.descripcion-txt{
-    font-family: AT Osmose;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 0.9rem;
-    letter-spacing: 0.08em;
-    color: #4D69F4;
-    margin-bottom:0px;
+.descripcion-txt {
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 0.9rem;
+	letter-spacing: 0.08em;
+	color: #4D69F4;
+	margin-bottom: 0px;
 }
 
-
-.login-container{
-/*
+.login-container {
+	/*
     width: 385px;
     height: 194px;
 */
-    
-    background: #F2F2F2;
-    border-radius: 23px;
+	background: #F2F2F2;
+	border-radius: 23px;
 }
 
-.login-label{
-    font-family: AT Osmose;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.6rem;
-/*    font-size: 25.82px;*/
-    /* or 65% */
-    color: #000000;
-    margin-bottom: 0px;
+.login-label {
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.6rem;
+	/*    font-size: 25.82px;*/
+	/* or 65% */
+	color: #000000;
+	margin-bottom: 0px;
 }
 
-.login-input{
-    height: 34px;
-    background: #C5D0F9;
+.login-input {
+	height: 34px;
+	background: #C5D0F9;
+	border: none;
+	border-radius: 11px;
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.6rem;
+	color: #000000;
+}
+
+.login-button {
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.6rem;
+	text-align: center;
+	color: #ffffff;
+	background: #13D7BC;
+	border: none;
+	border-radius: 11px;
+}
+
+.boton-grande {
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.4rem;
+	text-align: left;
+	/*     padding-left: 47px; */
+	color: #ffffff;
+	background: #4D69F4;
+	border: none;
+	border-radius: 7px;
+	width: 100%;
+}
+
+.boton-accion {
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 0.8rem;
+	text-align: center;
+	color: #ffffff;
+	background: #ff6a9c;
+	border: none;
+	border-radius: 7px;
+}
+
+.label {
+	font-family: AT Osmose;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.6rem;
+	color: #4d69f4;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.input-info {
+    background-color:rgba(0,0,0,0);
+    border: 0;
+}
+
+.input-elemento {
+}
+
+.select-info{
+    appearance: none;
+    background-color:rgba(0,0,0,0);
+    -webkit-appearance: none;
+    -moz-appearance: none; 
     border: none;
-    border-radius: 11px;
-    font-family: AT Osmose;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.6rem;
-    color: #000000;
+    /* needed for Firefox: */
+    overflow:hidden;
 }
 
-.login-button{
-    font-family: AT Osmose;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.6rem;
-    text-align: center;
-
-    color: #ffffff;
-    
-    background: #13D7BC;
-    border: none;
-    border-radius: 11px;
+.select-elemento{
+	
 }
 
-.boton-grande{
-    font-family: AT Osmose;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.4rem;
-    text-align: left;
-/*     padding-left: 47px; */
 
-    color: #ffffff;
-    
-    background: #4D69F4;
-    border: none;
-    border-radius: 7px;
-    width: 100%;
-    
+.table>tbody>tr>td {
+	vertical-align: middle;
 }
-
-.label{
-    font-family: AT Osmose;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.6rem;
-    color: #4d69f4;
-    text-align: center;
-    margin-bottom: 0px;
-   }

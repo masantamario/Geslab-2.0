@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html;" pageEncoding="UTF-8"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 
@@ -19,14 +19,21 @@
 <title>Geslab 2.0</title>
 </head>
 
+
+
 <body>
-	<%@page import="java.util.ArrayList"%>     
-	<%@page import= "java.util.Iterator"%> 
-	<%@page import= "geslab.database.modelo.*;"%> 
-	<% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
-	<% ArrayList<Area> areas = (ArrayList<Area>) request.getAttribute("areas"); %>
+	<%@page import="java.util.ArrayList"%>
+	<%@page import="java.util.Iterator"%>
+	<%@page import="geslab.database.modelo.*"%>
 	
-	
+	<%
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios");
+		ArrayList<Area> areas = (ArrayList<Area>) request.getAttribute("areas");
+		ArrayList<Departamento> departamentos = (ArrayList<Departamento>) request.getAttribute("departamentos");
+		ArrayList<Centro> centros = (ArrayList<Centro>) request.getAttribute("centros");
+		String tabla = (String) request.getAttribute("mostrarTabla");
+	%>
+
 	<div class="container-fluid">
 		<div class="container">
 			<div class="row py-5 align-items-center">
@@ -35,150 +42,329 @@
 				</div>
 
 				<div class="col-6">
-					<p class="col-12 descripcion-txt">Bienvenido, ${nombre}</p>
+					<p class="col-12 descripcion-txt">Bienvenido</p>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-3">
-					<div class="row">
-						<div class="col-12">
-							<button onclick="mostrarElementos('usuario')" class="btn boton-grande py-2 px-5">Usuarios</button>
-						</div>
-					</div>
 
-					<div class="row pt-2">
-						<div class="col-12">
-							<button class="btn boton-grande py-2 px-5">Departamentos</button>
+					<form id="mostrarTabla" action="/admin.do" method="get">
+						<input type="hidden" id="tabla" name="tabla" value="" />
+						<div class="row">
+							<div class="col-12">
+								<button value="centros" onclick="mostrarElemento('centro')"
+									class="btn boton-grande py-2 px-5">Centros</button>
+							</div>
 						</div>
-					</div>
 
-					<div class="row pt-2">
-						<div class="col-12">
-							<button onclick="mostrarElementos('area')" class="btn boton-grande py-2 px-5">Áreas</button>
+						<div class="row pt-2">
+							<div class="col-12">
+								<button value="departamentos"
+									onclick="mostrarElemento('departamento')"
+									class="btn boton-grande py-2 px-5">Departamentos</button>
+							</div>
 						</div>
-					</div>
 
-					<div class="row pt-2">
-						<div class="col-12">
-							<button class="btn boton-grande py-2 px-5">Centros</button>
+						<div class="row pt-2">
+							<div class="col-12">
+								<button value="areas" onclick="mostrarElemento('area')"
+									class="btn boton-grande py-2 px-5">Áreas</button>
+							</div>
 						</div>
-					</div>
+
+						<div class="row pt-2">
+							<div class="col-12">
+								<button value="usuarios" onclick="mostrarElemento('usuario')"
+									class="btn boton-grande py-2 px-5">Usuarios</button>
+							</div>
+						</div>
+					</form>
 
 				</div>
-				
-								
+
+
 
 				<div class="col-9 container-admin">
-				
 
-					<div class="row py-3" id="tabla" style="height: 100%">  
+
+					<div class="row py-3" id="container-tabla" style="height: 100%">
 						<div class="container px-5">
-							<form id="form-confirmar" name="form-confirmar" action="/admin.do" method="post" style="height: 100%">
-							<div class="row" style="height: 85%">
-							
-								<table id="tabla-usuarios"class="table table-borderless table-hover ">
-									<thead>
-										<tr>
-											<th scope="col">Usuario</th>
-											<th scope="col">Rol</th>
-											<th scope="col">Federada</th>
-											<th scope="col">Activo</th>
-										</tr>
-									</thead>
-									<tbody>
-										
-<%-- 										<c:forEach var="u" items="${usuarios}"> --%>
-<!-- 											<tr> -->
-<%-- 												<td>${u.getUsuario()}</td> --%>
-<%-- 												<td>${u.getRol().getRol()}</td> --%>
-<%-- 												<td><input id="${u.getUsuario()}" type="checkbox" checked disabled></td> --%>
-<%-- 												<td>${u.getActivo()}</td> --%>
-<!-- 											</tr> -->
-<%-- 										</c:forEach> --%>
-										
-										<%for(Usuario u:usuarios){ %>
-											<tr>
-												<td><%=u.getUsuario()%></td>
-												<td><%=u.getRol().getRol()%></td>
-												<td><input type="checkbox" onclick="javascript: return false;" <%if(u.getFederada()){%>checked<%} %>></td>
-												<td><input type="checkbox" onclick="javascript: return false;" <%if(u.getActivo()){%>checked<%} %>></td>
-											</tr>
-										<%} %>
-										<tr class="form-nuevo-elemento " id="form-nuevo-usuario" style="display: none">
-											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-usuario" placeholder="Usuario"></td>
-<!-- 											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-rol" placeholder="Rol"></td> -->
-											<td>
-												<select onchange="comprobarCampos()" class="input-elemento" name="nuevo-rol" id="nuevo-rol">
-												    <c:forEach var="r" items="${roles}">
-										        		<option value="${r.getId()}">${r.getRol()}</option>
-													</c:forEach>
-												</select>					
-											</td>
-<!-- 											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-federada" placeholder="Federada"></td> -->
-<!-- 											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-activo" placeholder="Activo"></td> -->
-											<td><input type="checkbox" class="check-elemento" name="nuevo-federada" value="true"></td>
-											<td><input type="checkbox" class="check-elemento" name="nuevo-activo" value="true"></td>
-										</tr>
-									</tbody>
-								</table>
+							<form id="form-confirmar" name="form-confirmar"
+								action="/admin.do" method="post" style="height: 100%">
+
+								<div id="variables" style="display: none;">
+									<input id="accion" name="accion"></input> <input id="elemento"
+										name="elemento"></input> <input id="codigo" name="codigo"></input>
+								</div>
+
+								<div class="row" style="height: 85%">
 								
-								<table id="tabla-areas" class="table table-borderless table-hover ">
-									<thead>
-										<tr>
-											<th scope="col">Código</th>
-											<th scope="col">Área</th>
-											<th scope="col">Departamento</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="a" items="${areas}">
+									<%if(tabla.equals("centro")){ %>
+									<table id="tabla-centros"
+										class="table table-borderless table-hover ">
+										<thead>
 											<tr>
-												<td>${a.getCodarea()}</td>
-												<td>${a.getNombre()}</td>
-												<td>${a.getDpto()}</td>
+												<th scope="col">Centro</th>
+												<th style="text-align: right" scope="col">Acciones</th>
 											</tr>
-										</c:forEach>
-										
-										
-										<tr class="form-nuevo-elemento" id="form-nuevo-area" style="display: none">
-											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-codarea-area" placeholder="Codigo"></td>
-											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-nombre-area" placeholder="Nombre"></td>
-											<td><input type="text" onchange="comprobarCampos()" class="input-elemento" name="nuevo-depto-area" placeholder="Departamento"></td>
-										</tr>
-										
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											<%for (Centro c : centros) {%>
+											<tr class="centro-<%=c.getCodcentro()%>">
+												<td><input type="text" class="input-info"
+													name="centro-<%=c.getCodcentro()%>"
+													value="<%=c.getNombre()%>" placeholder="<%=c.getNombre()%>"
+													disabled></td>
+
+												<td style="text-align: right"
+													id="editar-centro-<%=c.getCodcentro()%>">
+													<button type="button"
+														onclick="editar(<%=c.getCodcentro()%>)"
+														id="btn-editar-centro-<%=c.getCodcentro()%>"
+														class="btn boton-accion">Editar</button>
+												</td>
+												<td style="text-align: right; display: none"
+													id="conf-canc-editar-centro-<%=c.getCodcentro()%>">
+													<button type="button"
+														onclick="cancelarEditar(<%=c.getCodcentro()%>)"
+														id="btn-cancelar-centro-<%=c.getCodcentro()%>"
+														class="btn boton-accion">Cancelar</button>
+													<button type="submit"
+														id="btn-confirmar-centro-<%=c.getCodcentro()%>"
+														class="btn boton-accion">Confirmar</button>
+												</td>
+											</tr>
+											<%}%>
+											<tr class="form-nuevo-elemento" id="form-nuevo-centro"
+												style="display: none">
+												<td><input type="text" onchange="comprobarCampos()"
+													class="input-elemento" name="centro-nuevo"
+													placeholder="Centro"></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<%} else if(tabla.equals("departamento")){ %>
+
+									<table id="tabla-departamentos"
+										class="table table-borderless table-hover ">
+										<thead>
+											<tr>
+												<th scope="col">Departamento</th>
+												<th style="text-align: right" scope="col">Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											<%for (Departamento d : departamentos) {%>
+											<tr class="departamento-<%=d.getCoddpto()%>">
+												<td><input type="text" class="input-info"
+													name="departamento-<%=d.getCoddpto()%>"
+													value="<%=d.getNombre()%>" placeholder="<%=d.getNombre()%>"
+													disabled></td>
+
+												<td style="text-align: right"
+													id="editar-departamento-<%=d.getCoddpto()%>">
+													<button type="button" onclick="editar(<%=d.getCoddpto()%>)"
+														id="btn-editar-departamento-<%=d.getCoddpto()%>"
+														class="btn boton-accion">Editar</button>
+												</td>
+												<td style="text-align: right; display: none"
+													id="conf-canc-editar-departamento-<%=d.getCoddpto()%>">
+													<button type="button"
+														onclick="cancelarEditar(<%=d.getCoddpto()%>)"
+														id="btn-cancelar-departamento-<%=d.getCoddpto()%>"
+														class="btn boton-accion">Cancelar</button>
+													<button type="submit"
+														id="btn-confirmar-departamento-<%=d.getCoddpto()%>"
+														class="btn boton-accion">Confirmar</button>
+												</td>
+											</tr>
+											<%} %>
+
+											<tr class="form-nuevo-elemento" id="form-nuevo-departamento"
+												style="display: none">
+												<td><input type="text" onchange="comprobarCampos()"
+													class="input-elemento" name="departamento-nuevo"
+													placeholder="Departamento"></td>
+											</tr>
+
+										</tbody>
+									</table>
+
+									<%} else if(tabla.equals("area")){ %>
+
+									<table id="tabla-areas"
+										class="table table-borderless table-hover ">
+										<thead>
+											<tr>
+												<th scope="col">Área</th>
+												<th scope="col">Departamento</th>
+												<th style="text-align: right" scope="col">Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<%for (Area a : areas) {%>
+											<tr class="area-<%=a.getCodarea()%>">
+												<td><input type="text" class="input-info"
+													name="area-<%=a.getCodarea()%>" value="<%=a.getNombre()%>"
+													placeholder="<%=a.getNombre()%>" disabled></td>
+												<td>
+													<select class="select-info"
+														name="dpto-area-<%=a.getCodarea()%>" disabled>
+															<%for (Departamento d : departamentos) {%>
+															<option value="<%=d.getNombre()%>"
+																<%if (d.getNombre().equals(a.getDpto())) {%> selected
+																<%}%>><%=d.getNombre()%></option>
+															<%}%>
+													</select>
+												</td>
+
+												<td style="text-align: right"
+													id="editar-area-<%=a.getCodarea()%>">
+													<button type="button" onclick="editar(<%=a.getCodarea()%>)"
+														id="btn-editar-area-<%=a.getCodarea()%>"
+														class="btn boton-accion">Editar</button>
+												</td>
+												<td style="text-align: right; display: none"
+													id="conf-canc-editar-area-<%=a.getCodarea()%>">
+													<button type="button"
+														onclick="cancelarEditar(<%=a.getCodarea()%>)"
+														id="btn-cancelar-area-<%=a.getCodarea()%>"
+														class="btn boton-accion">Cancelar</button>
+													<button type="submit"
+														id="btn-confirmar-area-<%=a.getCodarea()%>"
+														class="btn boton-accion">Confirmar</button>
+												</td>
+											</tr>
+											<%}%>
+
+											<tr class="form-nuevo-elemento" id="form-nuevo-area"
+												style="display: none">
+												<td><input type="text" onchange="comprobarCampos()"
+													class="input-elemento" name="area-nuevo"
+													placeholder="Nombre"></td>
+												<td><select onchange="comprobarCampos()"
+													class="input-elemento" name="dpto-area-nuevo">
+														<%for (Departamento d : departamentos) {%>
+														<option value="<%=d.getNombre()%>"><%=d.getNombre()%>>
+														</option>
+														<%} %>
+												</select></td>
+
+											</tr>
+
+										</tbody>
+									</table>
+
+									<%} else if(tabla.equals("usuario")){ %>
+
+									<table id="tabla-usuarios"
+										class="table table-borderless table-hover ">
+										<thead>
+											<tr>
+												<th scope="col">Usuario</th>
+												<th scope="col">Rol</th>
+												<th scope="col">Federada</th>
+												<th scope="col">Activo</th>
+												<th style="text-align: right" scope="col">Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											<%for (Usuario u : usuarios) {%>
+											<tr class="usuario-<%=u.getIdusuario()%>">
+												<td><input type="text" class="input-info"
+													name="usuario-<%=u.getIdusuario()%>"
+													value="<%=u.getUsuario()%>"
+													placeholder="<%=u.getUsuario()%>" disabled></td>
+												<td><select class="select-info"
+													name="rol-usuario-<%=u.getIdusuario()%>" disabled>
+														<%for (Rol r : Rol.values()) {%>
+														<option value="<%=r.getId()%>"
+															<%if (r.getRol().equals(u.getRol().getRol())) {%>
+															selected <%}%>><%=r.getRol()%></option>
+														<%}%>
+												</select></td>
+												<td><input type="checkbox"
+													name="federada-usuario-<%=u.getIdusuario()%>"
+													onclick="javascript: return false;"
+													<%if (u.getFederada()) {%> checked <%}%>></td>
+												<td><input type="checkbox"
+													name="activo-usuario-<%=u.getIdusuario()%>"
+													onclick="javascript: return false;"
+													<%if (u.getActivo()) {%> checked <%}%>></td>
+
+												<td style="text-align: right"
+													id="editar-usuario-<%=u.getIdusuario()%>">
+													<button type="button"
+														onclick="editar(<%=u.getIdusuario()%>)"
+														id="btn-editar-usuario-<%=u.getIdusuario()%>"
+														class="btn boton-accion">Editar</button>
+												</td>
+												<td style="text-align: right; display: none"
+													id="conf-canc-editar-usuario-<%=u.getIdusuario()%>">
+													<button type="button"
+														onclick="cancelarEditar(<%=u.getIdusuario()%>)"
+														id="btn-cancelar-usuario-<%=u.getIdusuario()%>"
+														class="btn boton-accion">Cancelar</button>
+													<button type="submit"
+														id="btn-confirmar-area-<%=u.getIdusuario()%>"
+														class="btn boton-accion">Confirmar</button>
+												</td>
+
+											</tr>
+											<%}%>
+											<tr class="form-nuevo-elemento " id="form-nuevo-usuario"
+												style="display: none">
+												<td><input type="text" onchange="comprobarCampos()"
+													class="input-elemento" name="usuario-nuevo"
+													placeholder="Usuario"></td>
+												<td><select onchange="comprobarCampos()"
+													class="input-elemento" name="rol-usuario-nuevo" id="nuevo-rol">
+														<%for(Rol r : Rol.values()){ %>
+														<option value="<%=r.getId()%>"><%=r.getRol()%></option>
+														<%} %>
+												</select></td>
+												<td><input type="checkbox" class="check-elemento"
+													name="federada-usuario-nuevo" value="true"></td>
+												<td><input type="checkbox" class="check-elemento"
+													name="activo-usuario-nuevo" value="true"></td>
+											</tr>
+										</tbody>
+									</table>
+								<%} %>
 								
-							</div>
-							
-							<div class="row justify-content-end" id="fila-añadir">
-								<button type="button" onclick="añadir()" id="btn-añadir" class="btn login-button py-2 px-3"></button>
-							</div>
-							
-							<div class="row justify-content-end" id="fila-confirmar" style="display: none">
-									<button type="button" onclick="cancelar()" id="btn-cancelar" class="btn login-button py-2 px-3 mr-3">Cancelar</button>	
-									<button type="submit" id="btn-confirmar" name="btn-confirmar" class="btn login-button py-2 px-3">Confirmar</button>
-							</div>
+								</div>
+
+								<div class="row justify-content-end" id="fila-añadir">
+									<button type="button" onclick="añadir()" id="btn-añadir"
+										class="btn login-button py-2 px-3"></button>
+								</div>
+
+								<div class="row justify-content-end" id="fila-confirmar"
+									style="display: none">
+									<button type="button" onclick="cancelar()" id="btn-cancelar"
+										class="btn login-button py-2 px-3 mr-3">Cancelar</button>
+									<button type="submit" id="btn-confirmar" name="btn-confirmar"
+										class="btn login-button py-2 px-3">Confirmar</button>
+								</div>
 							</form>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 
 		</div>
 	</div>
 
-<!-- 			<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-<!-- 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
-	<!--		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>-->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/admin.js"></script>
-	<script> mostrarElementos('usuario'); </script>
-	
+	<script> inicializar('<%=tabla%>'); </script>
+
 </body>
 
 </html>

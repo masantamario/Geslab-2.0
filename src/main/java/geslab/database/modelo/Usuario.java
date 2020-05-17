@@ -37,7 +37,8 @@ public class Usuario {
 		this.fecha_creacion = fecha_creacion;
 	}
 	
-	public Usuario(String usuario, int rol, boolean federada, boolean activo) {
+	public Usuario(int idusuario, String usuario, int rol, boolean federada, boolean activo) {
+		this.idusuario = idusuario;
 		this.usuario = usuario;
 		this.federada = federada;
 		this.activo = activo;
@@ -82,6 +83,9 @@ public class Usuario {
 		System.out.println("- Fecha creación: " + this.fecha_creacion);
 	}
 
+	public int getIdusuario() {
+		return this.idusuario;
+	}
 	
 	public String getUsuario() {
 		return this.usuario;

@@ -1,37 +1,33 @@
 package geslab.database.modelo;
+//import java.util.ArrayList;
 
 public class Area {
 	private int codarea;
 	private String nombre;
 	private String dpto;
+//	private ArrayList<String> centros;
 	
 	public Area(int codarea, String nombre, String dpto) {
-		this.setCodarea(codarea);
-		this.setNombre(nombre);
-		this.setDpto(dpto);
+		this.codarea = codarea;
+		this.nombre = nombre;
+		this.dpto = dpto;
+		//this.centros = centros;
 	}
 
 	public int getCodarea() {
 		return codarea;
 	}
 
-	public void setCodarea(int codarea) {
-		this.codarea = codarea;
-	}
-
 	public String getNombre() {
 		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getDpto() {
 		return dpto;
 	}
 
-	public void setDpto(String dpto) {
-		this.dpto = dpto;
-	}
+//	public ArrayList<String> getCentros() {
+//		return centros;
+//	}
+
 }

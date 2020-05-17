@@ -79,6 +79,7 @@ Se han descargado todos los archivos pertinentes (css's y javascripts) y se han 
 Figma te brinda todas las herramientas necesarias para la fase de diseño del proyecto, incluidas las herramientas vectoriales capaces de ilustrar completamente, así como aquellas para la creación de prototipos y la generación de código para el traspaso (hand-off).
 
 
+
 (07/05/2020)
 
 
@@ -117,8 +118,31 @@ Se ha cambiado el nombre a los paquetes del proyecto para facilitar su comprensi
 
 
 
+(17/05/2020)
 
 
+FUNCIONALIDAD DE LA PÁGINA DE MANTENIMIENTO
+
+Desde la página de mantenimiento ya se pueden tanto añadir como editar centros, departamentos, areas y usuarios.
+
+Para implementar la construcción de la página jsp y sus funcionalidades, se ha utilizado javascript. La labor ha sido larga y minuciosa, pasando por diferentes cambios y reestructuraciones del código. Se ha hecho de manera que todos los métodos sean lo más genéricos posibles, para evitar la repetición de código.
+
+La página muestra solamente una tabla en funcion del parametro que se le pasa a traves de un método GET. Si no recibe ningun parámetro, muestra la tabla por defecto. 
+
+Cada vez que se pide mostrar otra tabla, la página se recarga mostrando solo los datos correspondientes.
+
+A la hora de editar o añadir un campo a una tabla, se llama al método POST pasándole los campos del formulario de editar o los del formulario de añadir.  El propio método POST llama a un método de la clase conexión pasandole el objeto a insertar/editar. 
+
+Este método diferencia si el objeto ya esta en la base de datos o no, y entonces llama al método insertar o update, el cual hace la consulta sobre la base de datos.
+
+Finalmente la página se recarga y muestra los datos actualizados.
+
+
+ANIMACION PÁGINA DE LOGIN
+
+Se ha añadido una la libreria javascript "animation.js". Esta librería es una biblioteca de animación JavaScript que funciona con propiedades CSS, transformaciones CSS individuales, SVG o cualquier atributo DOM y objetos JavaScript.
+
+Con ella se ha creado una simple animacion para la página de login a modo de prueba.
 
 
 
