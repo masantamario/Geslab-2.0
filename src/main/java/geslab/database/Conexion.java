@@ -76,22 +76,33 @@ public class Conexion {
 		return usuario;
 	}
 
-	public Usuario leerUsuario(String u) throws SQLException {
+	public Usuario leerUsuario(String u) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Usuario usuario = null;
 
-		pstm = conexion.prepareStatement("select * from usuarios where usuario = ?");
+		try {
+			pstm = conexion.prepareStatement("SELECT usuarios.idusuario, usuarios.contrasena, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion\r\n" + 
+					"FROM usuarios \r\n" + 
+					"INNER JOIN area ON usuarios.area = area.codarea\r\n" + 
+					"WHERE usuario = ?;");
+		
 		pstm.setString(1, u);
 		rs = pstm.executeQuery();
 
 		if (rs.next()) {
 			usuario = new Usuario(rs.getInt("idusuario"), rs.getString("usuario"), rs.getString("contrasena"),
 					rs.getString("nombre"), rs.getString("mail"), Boolean.valueOf(rs.getString("federada")),
-					Boolean.valueOf(rs.getString("activo")), rs.getInt("rol"), rs.getInt("area"),
+					Boolean.valueOf(rs.getString("activo")), rs.getInt("rol"), rs.getString("area"),
 					rs.getDate("fecha_creacion"));
 		}
 		cerrarRsPstm(rs, pstm, "leerUsuario");
+		} catch (SQLException e) {
+			printSQLException(e, "LEER USUARIO");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerUsuario");
+		}
+		
 		return usuario;
 
 	}
@@ -245,14 +256,16 @@ public class Conexion {
 		if (a.getCodarea() == 0) {
 			try {
 				pstm = conexion.prepareStatement("INSERT INTO area (nombre, dpto) VALUES (?, ?)");
+//				pstm = conexion.prepareStatement("INSERT INTO area (nombre, dpto) VALUES (?, (SELECT coddpto FROM dpto WHERE nombre=?))");
 				pstm.setString(1, a.getNombre());
-				// pstm.setString(2, a.getDpto());
+				int codDpto = 0;
 				for (Departamento dpto : leerDepartamentos()) {
 					if (dpto.getNombre().equals(a.getDpto())) {
-						pstm.setInt(2, dpto.getCoddpto());
+						codDpto = dpto.getCoddpto();
 					}
 				}
-
+				pstm.setInt(2, codDpto);
+//				pstm.setString(2, a.getDpto());
 				pstm.executeUpdate();
 
 			} catch (SQLException e) {
@@ -272,12 +285,17 @@ public class Conexion {
 		if (u.getIdusuario() == 0) {
 			try {
 				pstm = conexion.prepareStatement(
-						"INSERT INTO usuarios (usuario, contrasena, rol, federada, activo, fecha_creacion) VALUES (?, ?, ?, ?, ?, NOW())");
+						"INSERT INTO usuarios (usuario, contrasena, rol, area, federada, activo, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?, NOW())");
 				pstm.setString(1, u.getUsuario());
 				pstm.setString(2, "");
 				pstm.setInt(3, u.getRol().getId());
-				pstm.setString(4, Boolean.toString(u.getFederada()));
-				pstm.setString(5, Boolean.toString(u.getActivo()));
+				for (Area area : leerAreas()) {
+					if (area.getNombre().equals(u.getArea())) {
+						pstm.setInt(4, area.getCodarea());
+					}
+				}
+				pstm.setString(5, Boolean.toString(u.getFederada()));
+				pstm.setString(6, Boolean.toString(u.getActivo()));
 				pstm.executeUpdate();
 
 			} catch (SQLException e) {
@@ -355,12 +373,17 @@ public class Conexion {
 		boolean correcto = false;
 		try {
 			pstm = conexion
-					.prepareStatement("UPDATE usuarios SET usuario = ?, rol=?, federada=?, activo=? WHERE idusuario= ?");
+					.prepareStatement("UPDATE usuarios SET usuario = ?, rol=?, area=?, federada=?, activo=? WHERE idusuario= ?");
 			pstm.setString(1, u.getUsuario());
 			pstm.setInt(2, u.getRol().getId());
-			pstm.setString(3, String.valueOf(u.getFederada()));
-			pstm.setString(4, String.valueOf(u.getActivo()));
-			pstm.setInt(5, u.getIdusuario());
+			for (Area area : leerAreas()) {
+				if (area.getNombre().equals(u.getArea())) {
+					pstm.setInt(3, area.getCodarea());
+				}
+			}
+			pstm.setString(4, String.valueOf(u.getFederada()));
+			pstm.setString(5, String.valueOf(u.getActivo()));
+			pstm.setInt(6, u.getIdusuario());
 			pstm.executeUpdate();
 
 		} catch (SQLException e) {

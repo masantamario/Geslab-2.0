@@ -11,11 +11,11 @@ public class Usuario {
 	private boolean federada = false;
 	private boolean activo = false;
 	private Rol rol = null;
-	private int area = 0;
+	private String area = "";
 	private Date fecha_creacion = null;
 	
 		
-	public Usuario(int idusuario, String usuario, String contrasena, String nombre, String mail, boolean federada, boolean activo, int rol, int area, Date fecha_creacion) {
+	public Usuario(int idusuario, String usuario, String contrasena, String nombre, String mail, boolean federada, boolean activo, int rol, String area, Date fecha_creacion) {
 		this.idusuario = idusuario;
 		this.usuario = usuario;
 		this.contrasena = contrasena;
@@ -37,7 +37,7 @@ public class Usuario {
 		this.fecha_creacion = fecha_creacion;
 	}
 	
-	public Usuario(int idusuario, String usuario, int rol, boolean federada, boolean activo) {
+	public Usuario(int idusuario, String usuario, int rol, String area, boolean federada, boolean activo) {
 		this.idusuario = idusuario;
 		this.usuario = usuario;
 		this.federada = federada;
@@ -49,6 +49,7 @@ public class Usuario {
 		}else if(rol == 3) {
 			this.rol = Rol.USUARIO;
 		}
+		this.area = area;
 	
 	}
 
@@ -97,6 +98,10 @@ public class Usuario {
 	
 	public Rol getRol() {
 		return this.rol;
+	}
+	
+	public String getArea() {
+		return this.area;
 	}
 	
 	public boolean getFederada() {

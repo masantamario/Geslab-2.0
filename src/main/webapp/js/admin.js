@@ -4,13 +4,13 @@ var codigo = "";
 
 function inicializar(e){
 	elemento = e;
-	document.getElementById("btn-añadir").innerText = "Añadir " + elemento
+	document.getElementById("btn-insertar").innerText = "Nuevo " + elemento
 	document.getElementById("elemento").value = elemento;
 }
 
 function mostrarElemento(e){
 	elemento = e;
-	document.getElementById("btn-añadir").innerText = "Añadir " + elemento
+	document.getElementById("btn-insertar").innerText = "Nuevo " + elemento
 	document.getElementById("btn-confirmar").value = elemento;
 	document.getElementById("elemento").value = elemento;
 	document.getElementById("tabla").value = e;
@@ -18,12 +18,12 @@ function mostrarElemento(e){
 }
 
 
-function añadir() {
+function insertar() {
 	accion = "insertando";
 	codigo = "nuevo";
 	actualizarVariables();
 	$(".form-nuevo-elemento").css('display', '');
-	document.getElementById("fila-añadir").style.display = 'none';
+	document.getElementById("fila-insertar").style.display = 'none';
 	document.getElementById("fila-confirmar").style.display = '';
 	comprobarCampos();
 }
@@ -33,7 +33,7 @@ function cancelar() {
 	codigo = "";
 	actualizarVariables();
 	$(".form-nuevo-elemento").css('display', 'none');
-	document.getElementById("fila-añadir").style.display = '';
+	document.getElementById("fila-insertar").style.display = '';
 	document.getElementById("fila-confirmar").style.display = 'none';
 	$(".input-elemento").val('');
 }
@@ -69,7 +69,7 @@ function editar(e) {
 		$(this).attr("onclick", "");
 	});
 	
-	document.getElementById("btn-añadir").disabled = true;
+	document.getElementById("btn-insertar").disabled = true;
 }
 
 function cancelarEditar(e) {
@@ -97,7 +97,7 @@ function cancelarEditar(e) {
 //		$(this).attr("onclick", "javascript: return false");
 //	});
 //
-//	document.getElementById("btn-añadir").disabled = false;
+//	document.getElementById("btn-insertar").disabled = false;
 }
 
 function confirmar(c) {

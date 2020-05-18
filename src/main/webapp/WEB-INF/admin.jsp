@@ -1,11 +1,14 @@
-<%@ page language="java" contentType="text/html;" pageEncoding="UTF-8"%>
+<%-- <%@ page language="java" contentType="text/html;" pageEncoding="UTF-8"%> --%>
+<%@page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<!-- <meta charset="UTF-8"> -->
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -69,7 +72,7 @@
 						<div class="row pt-2">
 							<div class="col-12">
 								<button value="areas" onclick="mostrarElemento('area')"
-									class="btn boton-grande py-2 px-5">√Åreas</button>
+									class="btn boton-grande py-2 px-5">¡reas</button>
 							</div>
 						</div>
 
@@ -198,7 +201,7 @@
 										class="table table-borderless table-hover ">
 										<thead>
 											<tr>
-												<th scope="col">√Årea</th>
+												<th scope="col">¡rea</th>
 												<th scope="col">Departamento</th>
 												<th style="text-align: right" scope="col">Acciones</th>
 											</tr>
@@ -248,7 +251,7 @@
 												<td><select onchange="comprobarCampos()"
 													class="input-elemento" name="dpto-area-nuevo">
 														<%for (Departamento d : departamentos) {%>
-														<option value="<%=d.getNombre()%>"><%=d.getNombre()%>>
+														<option value="<%=d.getNombre()%>"><%=d.getNombre()%>
 														</option>
 														<%} %>
 												</select></td>
@@ -266,6 +269,7 @@
 											<tr>
 												<th scope="col">Usuario</th>
 												<th scope="col">Rol</th>
+												<th scope="col">¡rea</th>
 												<th scope="col">Federada</th>
 												<th scope="col">Activo</th>
 												<th style="text-align: right" scope="col">Acciones</th>
@@ -284,6 +288,14 @@
 														<option value="<%=r.getId()%>"
 															<%if (r.getRol().equals(u.getRol().getRol())) {%>
 															selected <%}%>><%=r.getRol()%></option>
+														<%}%>
+												</select></td>
+												<td><select class="select-info"
+													name="area-usuario-<%=u.getIdusuario()%>" disabled>
+														<%for (Area a : areas) {%>
+														<option value="<%=a.getNombre()%>"
+															<%if (a.getNombre().equals(u.getArea())) {%>
+															selected <%}%>><%=a.getNombre()%></option>
 														<%}%>
 												</select></td>
 												<td><input type="checkbox"
@@ -326,6 +338,12 @@
 														<option value="<%=r.getId()%>"><%=r.getRol()%></option>
 														<%} %>
 												</select></td>
+												<td><select onchange="comprobarCampos()"
+													class="input-elemento" name="area-usuario-nuevo" id="nuevo-area">
+														<%for(Area a : areas){ %>
+														<option value="<%=a.getNombre()%>"><%=a.getNombre()%></option>
+														<%} %>
+												</select></td>
 												<td><input type="checkbox" class="check-elemento"
 													name="federada-usuario-nuevo" value="true"></td>
 												<td><input type="checkbox" class="check-elemento"
@@ -337,8 +355,8 @@
 								
 								</div>
 
-								<div class="row justify-content-end" id="fila-a√±adir">
-									<button type="button" onclick="a√±adir()" id="btn-a√±adir"
+								<div class="row justify-content-end" id="fila-insertar">
+									<button type="button" onclick="insertar()" id="btn-insertar"
 										class="btn login-button py-2 px-3"></button>
 								</div>
 

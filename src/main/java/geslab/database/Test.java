@@ -7,8 +7,8 @@ import geslab.database.modelo.Rol;
 
 public class Test {
 	public static void main(String[] args) {
-//		Conexion cn = new Conexion();
-//		cn.conectar();
+		Conexion cn = new Conexion();
+		cn.conectar();
 //		System.out.println(cn.existeUsuario("admin", "admin"));
 //		cn.cerrarConexion();
 		
@@ -23,7 +23,7 @@ public class Test {
 //		fd = (f!= null);
 		
 //		System.out.println(fd);
-		ArrayList<Departamento> departamentos = new ArrayList<Departamento>();
+//		ArrayList<Departamento> departamentos = new ArrayList<Departamento>();
 		
 //		departamentos.add(new Departamento(1, "Ciencia"));
 //		departamentos.add(new Departamento(2, "Química"));
@@ -42,12 +42,14 @@ public class Test {
 //		for(Rol r : Rol.values()){
 //			System.out.println(r.getRol());
 //		}
-		String codigo = "2";
 		
-		int cod = codigo.equals("nuevo") ? 0 : Integer.parseInt(codigo);
-		
-		System.out.println(cod);
-		
+		int codDpto = 0;
+		for (Departamento dpto : cn.leerDepartamentos()) {
+			if (dpto.getNombre().equals("Quemica")) {
+				codDpto = dpto.getCoddpto();
+			}
+		}
+		System.out.println(codDpto);
 	}
 	
 }

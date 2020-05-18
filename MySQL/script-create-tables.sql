@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS 
-	roles, 
 	usuarios, 
 	salida, 
 	entrada, 
@@ -17,7 +16,6 @@ DROP TABLE IF EXISTS
 	producto, 
 	calidad, 
 	ubicacion, 
-	centro_area,
 	centro, 
 	area,  
 	dpto;
@@ -45,14 +43,6 @@ CREATE TABLE centro(
     constraint UNQ_centro unique (nombre)
 );
 
-CREATE TABLE centro_area(
-	centro int,
-    area int,
-    constraint PK_centro_area primary key(centro, area),
-    constraint FK_centro_ca foreign key (centro) references centro(codcentro),
-    constraint FK_area_ca foreign key (area) references area(codarea)
-);
-
 CREATE TABLE ubicacion(
 	codubicacion int auto_increment,
     nombre varchar(30),
@@ -60,7 +50,8 @@ CREATE TABLE ubicacion(
     centro int,
     oculta char(5),
     constraint PK_ubicacion primary key(codubicacion),
-    constraint FK_centro_area_ub foreign key (area, centro) references centro_area(area, centro),
+    constraint FK_centro_ub foreign key (centro) references centro(codcentro),
+    constraint FK_area_ub foreign key (area) references area(codarea),
     constraint CK_oculta check((oculta='true') or (oculta='false')),
     constraint UNQ_ubicacion unique (nombre, centro, area)    
 );
@@ -202,28 +193,21 @@ CREATE TABLE salida(
     constraint CK_s_n_salida check ((residuo = 'true') OR (residuo = 'false'))
 );
 
-CREATE TABLE roles(
-	idrol int auto_increment,
-    rol varchar(20),
-    constraint PK_roles primary key usuarios(idrol)
-);
-
 CREATE TABLE usuarios(
 	idusuario int auto_increment,
     usuario varchar(50),
     contrasena varchar(50),
     nombre varchar(50),
     mail varchar(50),
-    federada char(5),
-    activo char(5),
     rol int,
     area int,
+    federada char(5),
+    activo char(5),
     fecha_creacion datetime,
     constraint PK_usuarios primary key (idusuario),
     constraint UNQ_usuarios_usuario unique(usuario),
     constraint UNQ_usuarios_mail unique(mail),
     constraint CK_usuarios_fed check ((federada = 'true') OR (federada = 'false')),
     constraint CK_usuarios_act check ((activo = 'true') OR (activo = 'false')),
-    constraint FK_usuarios_rol foreign key (rol) references roles(idrol),
     constraint FK_usuarios_area foreign key (area) references area(codarea)
 );

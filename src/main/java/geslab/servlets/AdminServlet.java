@@ -103,7 +103,8 @@ public class AdminServlet extends HttpServlet {
 		int cod = codigo.equals("nuevo") ? 0 : Integer.parseInt(codigo);
 		String a = (String) request.getParameter("area-" + codigo);
 		String d = (String) request.getParameter("dpto-area-" + codigo);
-		System.out.println("-- Area: " + d);
+		System.out.println("-- Area: " + a);
+		System.out.println("-- Departamento: " + d);
 		cn.insertarArea(new Area(cod, a, d));
 		System.out.println("Departamento añadido");
 
@@ -114,6 +115,7 @@ public class AdminServlet extends HttpServlet {
 		int id = codigo.equals("nuevo") ? 0 : Integer.parseInt(codigo);
 		String u = (String) request.getParameter("usuario-" + codigo);
 		int r = Integer.parseInt(request.getParameter("rol-usuario-" + codigo));
+		String ar = (String) request.getParameter("area-usuario-" + codigo);
 		boolean f = (request.getParameter("federada-usuario-" + codigo) != null);
 		boolean a = (request.getParameter("activo-usuario-" + codigo) != null);
 
@@ -121,7 +123,7 @@ public class AdminServlet extends HttpServlet {
 		System.out.println("-- ROL: " + r);
 		System.out.println("-- FEDERADA: " + f);
 		System.out.println("-- ACTIVO: " + a);
-		cn.insertarUsuario(new Usuario(id, u, r, f, a));
+		cn.insertarUsuario(new Usuario(id, u, r, ar, f, a));
 		System.out.println("Usuario añadido");
 
 		return response;
