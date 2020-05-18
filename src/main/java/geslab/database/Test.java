@@ -43,13 +43,12 @@ public class Test {
 //			System.out.println(r.getRol());
 //		}
 		
-		int codDpto = 0;
-		for (Departamento dpto : cn.leerDepartamentos()) {
-			if (dpto.getNombre().equals("Quemica")) {
-				codDpto = dpto.getCoddpto();
-			}
-		}
-		System.out.println(codDpto);
+		String prueba = "mario";
+		System.out.println(prueba);
+		String encrypt = cn.encriptar(prueba);
+		System.out.println(encrypt);
+		String desencrypt = cn.desencriptar(encrypt);
+		System.out.println(desencrypt);
 	}
 	
 }

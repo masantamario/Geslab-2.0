@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS 
-	usuarios, 
+      	usuarios, 
 	salida, 
 	entrada, 
 	ficha, 

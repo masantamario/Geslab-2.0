@@ -1,11 +1,20 @@
 package geslab.database;
 
+import java.security.spec.KeySpec;
+import javax.crypto.spec.PBEKeySpec;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import geslab.database.modelo.*;
 
@@ -15,6 +24,9 @@ public class Conexion {
 	private static final String USER = "root";
 	private static final String PASS = "geslabMarioSantamaria";
 	private static Connection conexion = null;
+	
+	private static String secretKey = "GeslabGeslab2.0";
+	private static String salt = "MarioSantamariaArias";
 
 	public Conexion() {
 		conectar();
@@ -53,7 +65,51 @@ public class Conexion {
 			System.err.println("Error al cerrar resulSet o PreparedStament en " + metodo);
 		}
 	}
+	
+	public String encriptar(String strToEncrypt) 
+	{
+	    try
+	    {
+	        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	        IvParameterSpec ivspec = new IvParameterSpec(iv);
+	         
+	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+	        KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
+	        SecretKey tmp = factory.generateSecret(spec);
+	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+	         
+	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+	        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
+	        return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+	    } 
+	    catch (Exception e) 
+	    {
+	        System.out.println("Error while encrypting: " + e.toString());
+	    }
+	    return null;
+	} 
 
+	public String desencriptar(String strToDecrypt) {
+	    try
+	    {
+	        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	        IvParameterSpec ivspec = new IvParameterSpec(iv);
+	         
+	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+	        KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
+	        SecretKey tmp = factory.generateSecret(spec);
+	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+	         
+	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+	        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+	        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+	    } 
+	    catch (Exception e) {
+	        System.out.println("Error while decrypting: " + e.toString());
+	    }
+	    return null;
+	}
+	
 	public Usuario existeUsuario(String u, String p) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

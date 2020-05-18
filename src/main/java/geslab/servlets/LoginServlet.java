@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 		
 		Conexion cn = new Conexion();
 		String u = request.getParameter("usuario");
-		String p = request.getParameter("password");
+		String p = cn.encriptar(request.getParameter("password"));
 		Usuario usuario = cn.existeUsuario(u, p);
 		cn.cerrarConexion();
 		

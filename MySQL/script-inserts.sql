@@ -1,9 +1,9 @@
 INSERT INTO roles (rol) values ('Administrador'), ('Gestor'), ('Usuario');
 
-INSERT INTO usuarios (usuario, contrasena) VALUES ('admin', 'admin');
+INSERT INTO usuarios (usuario, contrasena) VALUES ('admin', 'Y1ZAbRz18/ZxnLRt0CMMYA==');
 UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, area=1, fecha_creacion = NOW() WHERE idusuario = 1;
 
-INSERT INTO usuarios (usuario, contrasena) VALUES ('mario', 'mario');
+INSERT INTO usuarios (usuario, contrasena) VALUES ('mario', 'npbXu0+HIDNUaTa5bTQI1g==');
 UPDATE usuarios SET nombre = 'Mario ', mail = 'mario@prueba.es', federada = 'true', activo = 'false', rol = 3, area=1, fecha_creacion = NOW() WHERE idusuario = 2;
 
 UPDATE centro SET nombre = 'Económicas' WHERE nombre = "Economicas";
@@ -17,6 +17,7 @@ INSERT INTO centro (nombre) values ("EPS");
 INSERT INTO centro_area (centro, area) values (1, 1);
 INSERT INTO centro_area (centro, area) values (2, 1);
 
+select * from usuarios where usuario = 'admin' and contrasena = 'admin';
 
 DELETE FROM usuarios WHERE idusuario>1;
 
@@ -32,8 +33,6 @@ select * from area;
 
 select * from usuarios;
 
-select * from roles;
-
 -- Todas las areas con su respectivo nombre departamento y el centro al que pertenecen
 SELECT area.codarea, area.nombre AS Area, area.dpto AS coddpto, dpto.nombre AS Departamento, centro.codcentro, centro.nombre AS Centro
 FROM area 
@@ -45,6 +44,12 @@ INNER JOIN centro ON centro_area.centro = centro.codcentro;
 SELECT area.codarea, area.nombre AS Area, area.dpto AS coddpto, dpto.nombre AS Departamento
 FROM area 
 INNER JOIN dpto ON area.dpto = dpto.coddpto;
+
+-- Todas los usuarios con sus respectivos nombre area
+SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.fecha_creacion
+FROM usuarios 
+INNER JOIN area ON usuarios.area = area.codarea
+WHERE usuario = 'admin';
 
 -- Centros que tiene el area X
 SELECT centro_area.area AS codarea, centro_area.centro AS codcentro, centro.nombre AS centro 
@@ -65,3 +70,7 @@ INNER JOIN area ON centro_area.area = area.codarea
 INNER JOIN dpto ON area.dpto = dpto.coddpto
 where centro = 1;
 
+select codarea from area where nombre='Inorgánica';
+
+INSERT INTO usuarios (usuario, contrasena, rol, area, federada, activo, fecha_creacion) VALUES ('luis', '', 3, (select codarea from area where nombre='Inorgánica')
+, 'false', 'false', NOW());
