@@ -43,7 +43,7 @@ public class Test {
 //			System.out.println(r.getRol());
 //		}
 		
-		String prueba = "mario";
+		String prueba = "";
 		System.out.println(prueba);
 		String encrypt = cn.encriptar(prueba);
 		System.out.println(encrypt);

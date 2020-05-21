@@ -19,13 +19,15 @@ public class AdminServlet extends HttpServlet {
 	private HttpServletRequest request = null;
 	private HttpServletResponse response = null;
 	private Conexion cn = null;
+	private HttpSession sesion = null;
+	private Usuario usuario = null;
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		sesion = request.getSession();
+		usuario = (Usuario) sesion.getAttribute("usuario");
 		request.setAttribute("nombre", usuario.getNombre());
 		String mostrarTabla = "centro";
 		if (request.getParameter("tabla") != null)

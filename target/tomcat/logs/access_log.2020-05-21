@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:03 +0200] "GET / HTTP/1.1" 200 3635 http-bio-8080-exec-1 63
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:03 +0200] "GET /css/style.css HTTP/1.1" 304 - http-bio-8080-exec-3 18
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:03 +0200] "GET /js/animation.js HTTP/1.1" 304 - http-bio-8080-exec-4 18
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:03 +0200] "GET /js/anime.min.js HTTP/1.1" 304 - http-bio-8080-exec-2 48
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:03 +0200] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-7 5
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:10 +0200] "POST /login.do HTTP/1.1" 302 - http-bio-8080-exec-8 716
+0:0:0:0:0:0:0:1 - - [21/May/2020:12:02:10 +0200] "GET /index.do HTTP/1.1" 200 3047 http-bio-8080-exec-9 112

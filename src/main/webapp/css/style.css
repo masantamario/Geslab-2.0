@@ -4,7 +4,10 @@
 	/*     background-position: center; */
 	/*     height: 100vh; */
 	/*     background-size: cover; */
-	
+}
+
+p{
+	margin-bottom: 0em;
 }
 
 .animacion {

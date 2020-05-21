@@ -24,7 +24,7 @@ public class Conexion {
 	private static final String USER = "root";
 	private static final String PASS = "geslabMarioSantamaria";
 	private static Connection conexion = null;
-	
+
 	private static String secretKey = "GeslabGeslab2.0";
 	private static String salt = "MarioSantamariaArias";
 
@@ -65,51 +65,45 @@ public class Conexion {
 			System.err.println("Error al cerrar resulSet o PreparedStament en " + metodo);
 		}
 	}
-	
-	public String encriptar(String strToEncrypt) 
-	{
-	    try
-	    {
-	        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	        IvParameterSpec ivspec = new IvParameterSpec(iv);
-	         
-	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-	        KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
-	        SecretKey tmp = factory.generateSecret(spec);
-	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
-	         
-	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-	        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
-	        return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
-	    } 
-	    catch (Exception e) 
-	    {
-	        System.out.println("Error while encrypting: " + e.toString());
-	    }
-	    return null;
-	} 
+
+	public String encriptar(String strToEncrypt) {
+		try {
+			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			IvParameterSpec ivspec = new IvParameterSpec(iv);
+
+			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+			KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
+			SecretKey tmp = factory.generateSecret(spec);
+			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
+			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+		} catch (Exception e) {
+			System.out.println("Error while encrypting: " + e.toString());
+		}
+		return null;
+	}
 
 	public String desencriptar(String strToDecrypt) {
-	    try
-	    {
-	        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	        IvParameterSpec ivspec = new IvParameterSpec(iv);
-	         
-	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-	        KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
-	        SecretKey tmp = factory.generateSecret(spec);
-	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
-	         
-	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-	        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
-	        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-	    } 
-	    catch (Exception e) {
-	        System.out.println("Error while decrypting: " + e.toString());
-	    }
-	    return null;
+		try {
+			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			IvParameterSpec ivspec = new IvParameterSpec(iv);
+
+			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+			KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
+			SecretKey tmp = factory.generateSecret(spec);
+			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+		} catch (Exception e) {
+			System.out.println("Error while decrypting: " + e.toString());
+		}
+		return null;
 	}
-	
+
 	public Usuario existeUsuario(String u, String p) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -138,27 +132,27 @@ public class Conexion {
 		Usuario usuario = null;
 
 		try {
-			pstm = conexion.prepareStatement("SELECT usuarios.idusuario, usuarios.contrasena, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion\r\n" + 
-					"FROM usuarios \r\n" + 
-					"INNER JOIN area ON usuarios.area = area.codarea\r\n" + 
-					"WHERE usuario = ?;");
-		
-		pstm.setString(1, u);
-		rs = pstm.executeQuery();
+			pstm = conexion.prepareStatement(
+					"SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion\r\n"
+							+ "FROM usuarios \r\n" + "INNER JOIN area ON usuarios.area = area.codarea\r\n"
+							+ "WHERE usuario = ?;");
 
-		if (rs.next()) {
-			usuario = new Usuario(rs.getInt("idusuario"), rs.getString("usuario"), rs.getString("contrasena"),
-					rs.getString("nombre"), rs.getString("mail"), Boolean.valueOf(rs.getString("federada")),
-					Boolean.valueOf(rs.getString("activo")), rs.getInt("rol"), rs.getString("area"),
-					rs.getDate("fecha_creacion"));
-		}
-		cerrarRsPstm(rs, pstm, "leerUsuario");
+			pstm.setString(1, u);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				usuario = new Usuario(rs.getInt("idusuario"), rs.getString("usuario"),
+						rs.getString("nombre"), rs.getString("mail"), Boolean.valueOf(rs.getString("federada")),
+						Boolean.valueOf(rs.getString("activo")), rs.getInt("rol"), rs.getString("area"),
+						rs.getDate("fecha_creacion"));
+			}
+			cerrarRsPstm(rs, pstm, "leerUsuario");
 		} catch (SQLException e) {
 			printSQLException(e, "LEER USUARIO");
 		} finally {
 			cerrarRsPstm(rs, pstm, "leerUsuario");
 		}
-		
+
 		return usuario;
 
 	}
@@ -311,17 +305,9 @@ public class Conexion {
 		boolean correcto = false;
 		if (a.getCodarea() == 0) {
 			try {
-				pstm = conexion.prepareStatement("INSERT INTO area (nombre, dpto) VALUES (?, ?)");
-//				pstm = conexion.prepareStatement("INSERT INTO area (nombre, dpto) VALUES (?, (SELECT coddpto FROM dpto WHERE nombre=?))");
+				pstm = conexion.prepareStatement("INSERT INTO area (nombre, dpto) VALUES (?, (SELECT coddpto FROM dpto WHERE nombre=?))");
 				pstm.setString(1, a.getNombre());
-				int codDpto = 0;
-				for (Departamento dpto : leerDepartamentos()) {
-					if (dpto.getNombre().equals(a.getDpto())) {
-						codDpto = dpto.getCoddpto();
-					}
-				}
-				pstm.setInt(2, codDpto);
-//				pstm.setString(2, a.getDpto());
+				pstm.setString(2, a.getDpto());
 				pstm.executeUpdate();
 
 			} catch (SQLException e) {
@@ -341,15 +327,11 @@ public class Conexion {
 		if (u.getIdusuario() == 0) {
 			try {
 				pstm = conexion.prepareStatement(
-						"INSERT INTO usuarios (usuario, contrasena, rol, area, federada, activo, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+						"INSERT INTO usuarios (usuario, contrasena, rol, area, federada, activo, fecha_creacion) VALUES (?, ?, ?, (SELECT codarea FROM area WHERE nombre=?), ?, ?, NOW())");
 				pstm.setString(1, u.getUsuario());
-				pstm.setString(2, "");
+				pstm.setString(2, encriptar(u.getUsuario()));
 				pstm.setInt(3, u.getRol().getId());
-				for (Area area : leerAreas()) {
-					if (area.getNombre().equals(u.getArea())) {
-						pstm.setInt(4, area.getCodarea());
-					}
-				}
+				pstm.setString(4, u.getArea());
 				pstm.setString(5, Boolean.toString(u.getFederada()));
 				pstm.setString(6, Boolean.toString(u.getActivo()));
 				pstm.executeUpdate();
@@ -403,16 +385,9 @@ public class Conexion {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
-			pstm = conexion.prepareStatement("UPDATE area SET nombre = ?, dpto=? WHERE codarea = ?");
+			pstm = conexion.prepareStatement("UPDATE area SET nombre = ?, dpto=(SELECT coddpto FROM dpto WHERE nombre=?) WHERE codarea = ?");
 			pstm.setString(1, a.getNombre());
-			int coddpto = 0;
-			for (Departamento d : leerDepartamentos()) {
-				if (d.getNombre().equals(a.getDpto())) {
-					coddpto = d.getCoddpto();
-					break;
-				}
-			}
-			pstm.setInt(2, coddpto);
+			pstm.setString(2, a.getDpto());
 			pstm.setInt(3, a.getCodarea());
 			pstm.executeUpdate();
 
@@ -428,18 +403,16 @@ public class Conexion {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
-			pstm = conexion
-					.prepareStatement("UPDATE usuarios SET usuario = ?, rol=?, area=?, federada=?, activo=? WHERE idusuario= ?");
+			pstm = conexion.prepareStatement(
+					"UPDATE usuarios SET usuario = ?, nombre = ?, mail = ?, rol=?, area=(SELECT codarea FROM area WHERE nombre=?), federada=?, activo=? WHERE idusuario= ?");
 			pstm.setString(1, u.getUsuario());
-			pstm.setInt(2, u.getRol().getId());
-			for (Area area : leerAreas()) {
-				if (area.getNombre().equals(u.getArea())) {
-					pstm.setInt(3, area.getCodarea());
-				}
-			}
-			pstm.setString(4, String.valueOf(u.getFederada()));
-			pstm.setString(5, String.valueOf(u.getActivo()));
-			pstm.setInt(6, u.getIdusuario());
+			pstm.setString(2, u.getNombre());
+			pstm.setString(3, u.getMail());
+			pstm.setInt(4, u.getRol().getId());
+			pstm.setString(5, u.getArea());
+			pstm.setString(6, String.valueOf(u.getFederada()));
+			pstm.setString(7, String.valueOf(u.getActivo()));
+			pstm.setInt(8, u.getIdusuario());
 			pstm.executeUpdate();
 
 		} catch (SQLException e) {
@@ -450,54 +423,39 @@ public class Conexion {
 		return correcto;
 	}
 
-//	public ArrayList<Centro> leerCentrosDeArea(int codarea) {
-//		System.out.println("Leyendo centros de area");
-//		PreparedStatement pstm = null;
-//		ResultSet rs = null;
-//		ArrayList<Centro> centros = new ArrayList<Centro>();
-//		try {
-//			pstm = conexion.prepareStatement(
-//					"SELECT centro_area.area AS codarea, centro_area.centro AS codcentro, centro.nombre AS centro \r\n"
-//							+ "from centro_area \r\n" + "INNER JOIN centro ON centro_area.centro = centro.codcentro\r\n"
-//							+ "where area = ?;");
-//
-//			pstm.setInt(1, codarea);
-//			rs = pstm.executeQuery();
-//			while (rs.next()) {
-//				centros.add(new Centro(rs.getInt("codcentro"), rs.getString("centro"),
-//						leerAreasDeCentro(rs.getInt("codcentro"))));
-//			}
-//		} catch (SQLException e) {
-//			printSQLException(e, "LEER CENTROS DE AREA");
-//		}
-//		return centros;
-//	}
+	public boolean cambiarContrasena(Usuario u, String p) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement("UPDATE usuarios SET contrasena = ? WHERE idusuario= ?");
+			pstm.setString(1, p);
+			pstm.setInt(2, u.getIdusuario());
+			pstm.executeUpdate();
 
-//	public ArrayList<Area> leerAreasDeCentro(int codcentro) {
-//		System.out.println("Leyendo areas de centro");
-//		PreparedStatement pstm = null;
-//		ResultSet rs = null;
-//		ArrayList<Area> areas = new ArrayList<Area>();
-//		try {
-//			pstm = conexion.prepareStatement(
-//					"SELECT centro_area.centro AS codcentro, centro_area.area AS codarea, area.nombre AS area, area.dpto AS coddpto, dpto.nombre AS dpto\r\n"
-//							+ "from centro_area \r\n" + "INNER JOIN area ON centro_area.area = area.codarea\r\n"
-//							+ "INNER JOIN dpto ON area.dpto = dpto.coddpto\r\n" + "where centro = ?;");
-//
-//			pstm.setInt(1, codcentro);
-//			rs = pstm.executeQuery();
-//			while (rs.next()) {
-//				int cod = rs.getInt("codarea");
-//				String area = rs.getString("area");
-//				Departamento dpto = new Departamento(rs.getInt("coddpto"), rs.getString("dpto"));
-//				//ArrayList<Centro> centros = leerCentrosDeArea(rs.getInt("codarea"));
-//				//areas.add(new Area(cod, area, dpto, centros));
-//			}
-//		} catch (SQLException e) {
-//			printSQLException(e, "LEER AREAS DE CENTRO");
-//		}
-//		return areas;
-//	}
+		} catch (SQLException e) {
+			printSQLException(e, "CAMBIAR CONTRASEÑA");
+		} finally {
+			cerrarRsPstm(null, pstm, "cambiarContrasena");
+		}
+		return correcto;
+	}
+
+	public boolean resetearContrasena(Usuario u) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement("UPDATE usuarios SET contrasena = ? WHERE idusuario= ?");
+			pstm.setString(1, encriptar(u.getUsuario()));
+			pstm.setInt(2, u.getIdusuario());
+			pstm.executeUpdate();
+
+		} catch (SQLException e) {
+			printSQLException(e, "RESETEAR CONTRASEÑA");
+		} finally {
+			cerrarRsPstm(null, pstm, "resetearContrasena");
+		}
+		return correcto;
+	}
 
 	public static void printSQLException(SQLException ex, String mensaje) {
 
