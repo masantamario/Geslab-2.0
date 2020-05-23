@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
-import geslab.database.modelo.Usuario;
+import geslab.database.admin.Usuario;
 
 /**
  * Servlet implementation class RegistroServlet
@@ -24,7 +24,13 @@ public class RegistroServlet extends HttpServlet {
 			throws ServletException, IOException {
     	sesion = request.getSession();
 		usuario = (Usuario) sesion.getAttribute("usuario");
-		request.getRequestDispatcher("/WEB-INF/registro.jsp").forward(request, response);
+		
+		if(usuario != null) {
+			request.getRequestDispatcher("/WEB-INF/registro.jsp").forward(request, response);
+		}else {
+			response.sendRedirect("/login.do");
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,11 +45,13 @@ public class RegistroServlet extends HttpServlet {
 		
 		usuario.setNombre(nombre);
 		usuario.setMail(correo);
+//		usuario.cambiarContrasena(pass);
 		cn.cambiarContrasena(usuario, pass);
 		
 		System.out.println(usuario.getNombre());
 		System.out.println(usuario.getMail());
 		
+//		usuario.update();
 		cn.updateUsuario(usuario);
 		
 		sesion.setAttribute("usuario", cn.leerUsuario(usuario.getUsuario()));

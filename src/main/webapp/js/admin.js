@@ -6,15 +6,23 @@ function inicializar(e){
 	elemento = e;
 	document.getElementById("btn-insertar").innerText = "Nuevo " + elemento
 	document.getElementById("elemento").value = elemento;
+	$('#bt-'+elemento+'s').addClass('filtro_admin__boton--active');
+	$("input").attr("spellcheck", "false");
+
 }
 
 function mostrarElemento(e){
 	elemento = e;
-	document.getElementById("btn-insertar").innerText = "Nuevo " + elemento
+	document.getElementById("btn-insertar").innerText = "Nuevo " + elemento;
 	document.getElementById("btn-confirmar").value = elemento;
 	document.getElementById("elemento").value = elemento;
 	document.getElementById("tabla").value = e;
 	document.getElementById("mostrarTabla").submit();
+}
+
+function cerrarSesion(){
+	document.getElementById("accion").value = "logout";
+	document.getElementById("opciones-usuario").submit();
 }
 
 
@@ -57,12 +65,12 @@ function editar(e) {
 
 	$("." + elemento + "-" + e + " > td > input").each(function(index) {
 		$(this).prop("disabled", false);
-		$(this).prop("className", "input-elemento");
+		$(this).prop("className", "label-tabla__input");
 	});
 
 	$("." + elemento + "-" + e + " > td > select").each(function(index) {
 		$(this).prop("disabled", false);
-		$(this).prop("className", "select-elemento");
+		$(this).prop("className", "label-tabla__select");
 	});
 
 	$("." + elemento + "-" + e + " > td > input[type='checkbox']").each(function(index) {
@@ -77,27 +85,6 @@ function cancelarEditar(e) {
 	el = elemento;
 	actualizarVariables();
 	location.reload();
-//	console.log("hola");
-//	mostrarElementos(el);
-//	document.getElementById("editar-" + elemento + "-" + e).style.display = '';
-//	document.getElementById("conf-canc-editar-" + elemento + "-" + e).style.display = 'none';
-//
-//	$("." + elemento + "-" + e + " > td > input").each(function(index) {
-//		$(this).prop("disabled", true);
-//		$(this).prop("className", "input-info");
-//	});
-//
-//	$("." + elemento + "-" + e + " > td > select").each(function(index) {
-//		$(this).prop("disabled", true);
-//		$(this).prop("className", "select-info");
-//	});
-//	
-//	$("." + elemento + "-" + e + " > td > input[type='checkbox']").each(function(index) {
-//		$(this).prop("disabled", false);
-//		$(this).attr("onclick", "javascript: return false");
-//	});
-//
-//	document.getElementById("btn-insertar").disabled = false;
 }
 
 function confirmar(c) {

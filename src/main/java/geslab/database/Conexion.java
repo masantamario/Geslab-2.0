@@ -1,5 +1,6 @@
 package geslab.database;
 
+import java.math.BigDecimal;
 import java.security.spec.KeySpec;
 import javax.crypto.spec.PBEKeySpec;
 import java.sql.Connection;
@@ -7,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -16,14 +18,15 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import geslab.database.modelo.*;
+import geslab.database.admin.*;
+import geslab.database.user.*;
 
 public class Conexion {
 	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/dbo?serverTimezone=UTC";
 	private static final String USER = "root";
 	private static final String PASS = "geslabMarioSantamaria";
-	private static Connection conexion = null;
+	protected static Connection conexion = null;
 
 	private static String secretKey = "GeslabGeslab2.0";
 	private static String salt = "MarioSantamariaArias";
@@ -32,7 +35,7 @@ public class Conexion {
 		conectar();
 	}
 
-	public void conectar() {
+	public Connection conectar() {
 		try {
 			Class.forName(CONTROLADOR);
 			conexion = DriverManager.getConnection(URL, USER, PASS);
@@ -43,6 +46,7 @@ public class Conexion {
 			System.err.println("Error en la conexión");
 			e.printStackTrace();
 		}
+		return conexion;
 	}
 
 	public void cerrarConexion() {
@@ -156,6 +160,73 @@ public class Conexion {
 		return usuario;
 
 	}
+	
+	public Producto leerProducto(String cas) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Producto producto = null;
+
+		try {
+			pstm = conexion.prepareStatement(
+					"SELECT producto.*, nombre_producto.nombre from producto \r\n" + 
+					"inner join nombre_producto on producto.cas = nombre_producto.cas\r\n" + 
+					"where producto.cas=?;");
+			pstm.setString(1, cas);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				String formula = rs.getString("formula");
+				String formula_des = rs.getString("form_desarrollada");
+				String n_einecs = rs.getString("numero_einecs");
+				String n_ec = rs.getString("numero_ec");
+				String precauciones = rs.getString("precauciones");
+				String nombre = rs.getString("nombre");
+				
+				producto = new Producto(cas, nombre, formula, formula_des, n_einecs, n_ec, precauciones);
+			}
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PRODUCTO");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerProducto");
+		}
+
+		return producto;
+
+	}
+	
+	public Ubicacion leerUbicacion(int codubicacion) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Ubicacion ubicacion = null;
+
+		try {
+			pstm = conexion.prepareStatement(
+					"SELECT ubicacion.nombre, area.nombre as area, centro.nombre as centro, oculta\r\n" + 
+					"from ubicacion \r\n" + 
+					"inner join area on ubicacion.area = area.codarea\r\n" + 
+					"inner join centro on ubicacion.centro = centro.codcentro\r\n" + 
+					"where codubicacion = ?");
+			pstm.setInt(1, codubicacion);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String area = rs.getString("area");
+				String centro = rs.getString("centro");
+				boolean oculta = rs.getBoolean("oculta");
+
+				ubicacion = new Ubicacion(codubicacion, nombre, area, centro, oculta);
+			}
+		} catch (SQLException e) {
+			printSQLException(e, "LEER UBICACION");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerUbicacion");
+		}
+
+		return ubicacion;
+
+	}
+	
 
 	public ArrayList<Centro> leerCentros() {
 		PreparedStatement pstm = null;
@@ -259,6 +330,130 @@ public class Conexion {
 
 		return usuarios;
 	}
+	
+	public ArrayList<Ficha> leerFichas() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Ficha> fichas = new ArrayList<Ficha>();
+
+		try {
+			pstm = conexion.prepareStatement("select codficha, calidad.nombre AS calidad, ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, producto \r\n" + 
+					"from ficha\r\n" + 
+					"inner join calidad on ficha.calidad = calidad.codcalidad\r\n" + 
+					"inner join proveedor on ficha.proveedor = proveedor.codproveedor\r\n" + 
+					"inner join marca on ficha.marca = marca.codmarca");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				int cod = rs.getInt("codficha");
+				String calidad = rs.getString("calidad");
+				Ubicacion ubicacion = leerUbicacion(rs.getInt("ubicacion"));
+				String proveedor = rs.getString("proveedor");
+				String marca = rs.getString("marca");
+				Producto producto = leerProducto(rs.getString("producto"));
+
+				fichas.add(new Ficha(cod, calidad, ubicacion, proveedor, marca, producto));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER FICHAS");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerFichas");
+		}
+
+		return fichas;
+	}
+	
+	public ArrayList<Entrada> leerEntradasFicha(Ficha ficha) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from entrada where ficha=?");
+			pstm.setInt(1, ficha.getCodficha());
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				int codentrada = rs.getInt("codentrada");
+//				int codficha = rs.getInt("ficha");
+				Timestamp fecha = rs.getTimestamp("fecha");
+				Timestamp caducidad = rs.getTimestamp("fechacaducidad");
+				String lote = rs.getString("lote");
+				BigDecimal unidades = rs.getBigDecimal("unidades");
+				BigDecimal capacidad = rs.getBigDecimal("capacidad");
+				String g_ml = rs.getString("g_ml");
+				Boolean residuo = rs.getBoolean("residuo"); 
+//				Boolean.toString(u.getFederada()));
+				
+				entradas.add(new Entrada(codentrada, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER ENTRADAS-FICHA");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerEntradasFicha");
+		}
+
+		return entradas;
+	}
+	
+	public ArrayList<Salida> leerSalidasFicha(Ficha ficha) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Salida> salidas = new ArrayList<Salida>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from entrada where ficha=?");
+			pstm.setInt(1, ficha.getCodficha());
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				int codentrada = rs.getInt("codsalida");
+//				int codficha = rs.getInt("ficha");
+				Timestamp fecha = rs.getTimestamp("fecha");
+				Timestamp caducidad = rs.getTimestamp("caducidad");
+				String lote = rs.getString("lote");
+				BigDecimal unidades = rs.getBigDecimal("unidades");
+				BigDecimal capacidad = rs.getBigDecimal("capacidad");
+				String g_ml = rs.getString("g_ml");
+				Boolean residuo = rs.getBoolean("residuo"); 
+//				Boolean.toString(u.getFederada()));
+				
+				salidas.add(new Salida(codentrada, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER SALIDAS-FICHA");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerSalidasFicha");
+		}
+
+		return salidas;
+	}
+	
+	public ArrayList<Entrada> leerEntradas(){
+		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
+		ArrayList<Ficha> fichas = leerFichas();
+		for(Ficha  f : fichas) {
+			entradas.addAll(leerEntradasFicha(f));
+		}
+		return entradas;
+	}
+	
+	public ArrayList<Salida> leerSalidas(){
+		ArrayList<Salida> salidas = new ArrayList<Salida>();
+		ArrayList<Ficha> fichas = leerFichas();
+		for(Ficha  f : fichas) {
+			salidas.addAll(leerSalidasFicha(f));
+		}
+		return salidas;
+	}
+	
+	
 
 	public boolean insertarCentro(Centro c) {
 		PreparedStatement pstm = null;

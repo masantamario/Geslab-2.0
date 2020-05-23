@@ -1,13 +1,23 @@
+
+
+p{
+	margin-bottom: 0em;
+}
+
+body{
+	font-family: AT Osmose;
+	background-color: #fcfcfe;
+}
+
+/* PÁGINA LOGIN ------------------------- */
+
 .container-fluid-login {
 	/*     background: #ffffff url("../images/bg-lines.svg"); */
 	/*     background-repeat: no-repeat; */
 	/*     background-position: center; */
-	/*     height: 100vh; */
 	/*     background-size: cover; */
-}
-
-p{
-	margin-bottom: 0em;
+	    height: 100vh;
+	    background: #ffffff;
 }
 
 .animacion {
@@ -16,74 +26,50 @@ p{
 	left: 0px;
 }
 
-.st0 {
+.animacion__pink-wave {
 	fill: none;
 	stroke: #ED6B9B;
 	stroke-miterlimit: 10;
 }
 
-.st1 {
+.animacion__purple-wave {
 	fill: none;
 	stroke: #6B7BBB;
 	stroke-miterlimit: 10;
 }
 
-.container-admin {
-	background: #F2F2F2;
-	height: 70vh;
-	border-radius: 10px;
-}
-
-.logo-img {
-	margin-left: -12px;
-}
-
-.descripcion-txt {
-	font-family: AT Osmose;
-	font-style: normal;
-	font-weight: normal;
+.login-info__texto{
 	font-size: 0.9rem;
 	letter-spacing: 0.08em;
 	color: #4D69F4;
 	margin-bottom: 0px;
 }
 
-.login-container {
-	/*
-    width: 385px;
-    height: 194px;
-*/
+.login-form{
 	background: #F2F2F2;
 	border-radius: 23px;
 }
 
-.login-label {
-	font-family: AT Osmose;
-	font-style: normal;
-	font-weight: normal;
+.login-form__label{
 	font-size: 1.6rem;
-	/*    font-size: 25.82px;*/
-	/* or 65% */
 	color: #000000;
 	margin-bottom: 0px;
 }
 
-.login-input {
+.login-form__input{
 	height: 34px;
 	background: #C5D0F9;
 	border: none;
 	border-radius: 11px;
-	font-family: AT Osmose;
-	font-style: normal;
-	font-weight: normal;
 	font-size: 1.6rem;
 	color: #000000;
 }
 
-.login-button {
-	font-family: AT Osmose;
-	font-style: normal;
-	font-weight: normal;
+.login-form__input:focus{
+	outline: none;
+}
+
+.login-form__button {
 	font-size: 1.6rem;
 	text-align: center;
 	color: #ffffff;
@@ -92,21 +78,72 @@ p{
 	border-radius: 11px;
 }
 
-.boton-grande {
-	font-family: AT Osmose;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 1.4rem;
-	text-align: left;
-	/*     padding-left: 47px; */
-	color: #ffffff;
-	background: #4D69F4;
-	border: none;
-	border-radius: 7px;
-	width: 100%;
+
+/* PÁGINA ADMINISTRACION ------------------------- */
+
+.header__logo {
+	margin-left: -12px;
 }
 
-.boton-accion {
+.header__dropdown{
+	color: #4d69f4;
+	background: rgba(0,0,0,0);
+}
+
+.header__dropdown-item{
+	color: #000000;
+}
+
+.header__dropdown-item--logout, .header__dropdown-item--logout:hover{
+	color: #ff6a9c;
+}
+
+.filtro_admin__boton {
+	font-size: 1.3rem;
+	text-align: left;
+	color: #ffffff;
+	border: none;
+	background: #c5d0f9;
+	border-radius: 11px;
+	width: 100%;
+	padding-left: 1.3rem;
+}
+
+.filtro_admin__boton:hover{
+	background: #4d69f4;
+	color: #ffffff;
+}
+
+.filtro_admin__boton--active{
+	background: #4d69f4;
+}
+
+.container-info {
+	background: #ffffff;
+	height: 70vh;
+	border-radius: 20px;
+	box-shadow: 0px 0px 0.3rem rgba(77,105,204,0.3);
+}
+.tabla-header{
+	border-bottom: 2px solid #c5d0f9;
+		
+}
+
+.tabla-header--item{
+	color: #4d69f4;
+	font-weight: normal;
+	font-size: 1rem;
+	padding-top: .75rem !important;
+	padding-bottom: .8rem !important;
+}
+
+.tabla-body--row{
+	color: #000000;
+	font-size: 1rem;
+	padding:0px;	
+}
+
+.boton-tabla__accion{
 	font-family: AT Osmose;
 	font-style: normal;
 	font-weight: normal;
@@ -118,26 +155,67 @@ p{
 	border-radius: 7px;
 }
 
-.label {
-	font-family: AT Osmose;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 1.6rem;
-	color: #4d69f4;
-	text-align: center;
-	margin-bottom: 0px;
+.boton-tabla__accion--success{
+	color: #ffffff;
+	background: #13d7bc;
 }
 
-.input-info {
-    background-color:rgba(0,0,0,0);
+.boton-tabla__añadir{
+	border-radius: 6px;
+	font-size: 1.3rem;
+	text-align: center;
+	color: #ffffff;
+	background: #13D7BC;
+	border: none;
+	border-radius: 6px;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.boton-tabla__cancelar{
+	border-radius: 6px;
+	font-size: 1.3rem;
+	text-align: center;
+	color: #ffffff;
+	background: #ff6a9c;
+	border: none;
+	border-radius: 6px;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.label-tabla__text{
+	background-color:rgba(0,0,0,0);
     border: 0;
 }
 
-.input-elemento {
+.label-tabla__input{
+	border-radius:6px;
+	color: #000000;
+	background-color: #ededed;
+	box-sizing: border-box;
+	border-style: solid;
+	border: 0;
+	padding-left: .75rem;
 }
 
-.select-info{
-    appearance: none;
+.label-tabla__input:focus{
+	outline: none;
+}
+
+.label-tabla__select{
+	border-radius:6px;
+	color: #000000;
+	background-color: #ededed;
+	box-sizing: border-box;
+	border-style: solid;
+	border: 0;
+	padding-left: .75rem;
+	height: 24px;
+}
+
+.label-tabla__select--text{
+	appearance: none;
     background-color:rgba(0,0,0,0);
     -webkit-appearance: none;
     -moz-appearance: none; 
@@ -146,11 +224,104 @@ p{
     overflow:hidden;
 }
 
-.select-elemento{
-	
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #f9f9f9;
 }
-
 
 .table>tbody>tr>td {
 	vertical-align: middle;
 }
+
+
+/* PÁGINA INDEX ----------------------------- */
+
+.filtros{
+	background: #4d69f4;
+	border-radius: 17px;
+	height: 100%;
+}
+
+.filtros__label{
+	color: #ffffff;
+	font-size: 1rem;
+}
+
+.filtros__input{
+	font-size: 1rem;
+	border-radius: 5px;
+	background: #ffffff;
+	color: #000000;
+	border: none;
+	width: 100%;
+	padding-left: .55rem;
+	margin-bottom: 0.3rem;
+	height: 1.4rem;
+}
+
+.filtros__input:focus{
+	outline: none;
+}
+
+.filtros__select{
+	font-size: 1rem;
+	border-radius: 5px;
+	background: #ffffff;
+	color: #000000;
+	border: none;
+	width: 100%;
+	padding-left: .55rem;
+	margin-bottom: 0.3rem;
+	height: 1.4rem;
+}
+
+.fila-pestañas{
+	vertical-align: middle;
+}
+
+.fila-pestañas__pestaña{
+	font-size: 1.3rem;
+	text-align: center;
+	color: #ffffff;
+	border: none;
+	background: #c5d0f9;
+	border-radius: 11px;
+	height: 2.8rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.fila-pestanas__pestana--active{
+	background: #4d69f4;
+	color: #ffffff;
+}
+
+.fila-pestañas__pestaña:hover{
+	background: #4d69f4;
+	color: #ffffff;
+}
+
+
+
+/* .boton-accion { */
+/* 	font-family: AT Osmose; */
+/* 	font-style: normal; */
+/* 	font-weight: normal; */
+/* 	font-size: 0.8rem; */
+/* 	text-align: center; */
+/* 	color: #ffffff; */
+/* 	background: #ff6a9c; */
+/* 	border: none; */
+/* 	border-radius: 7px; */
+/* } */
+
+/* .label { */
+/* 	font-family: AT Osmose; */
+/* 	font-style: normal; */
+/* 	font-weight: normal; */
+/* 	font-size: 1.6rem; */
+/* 	color: #4d69f4; */
+/* 	text-align: center; */
+/* 	margin-bottom: 0px; */
+/* } */
+
+

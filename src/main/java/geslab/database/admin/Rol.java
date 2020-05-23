@@ -1,4 +1,4 @@
-package geslab.database.modelo;
+package geslab.database.admin;
 
 
 public enum Rol{

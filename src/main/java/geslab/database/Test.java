@@ -2,8 +2,8 @@ package geslab.database;
 
 import java.util.ArrayList;
 
-import geslab.database.modelo.Departamento;
-import geslab.database.modelo.Rol;
+import geslab.database.admin.Departamento;
+import geslab.database.admin.Rol;
 
 public class Test {
 	public static void main(String[] args) {

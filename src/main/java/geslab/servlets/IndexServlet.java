@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
-import geslab.database.modelo.Area;
-import geslab.database.modelo.Centro;
-import geslab.database.modelo.Departamento;
-import geslab.database.modelo.Usuario;
+import geslab.database.admin.Area;
+import geslab.database.admin.Centro;
+import geslab.database.admin.Departamento;
+import geslab.database.admin.Usuario;
+import geslab.database.user.*;
 
 /**
  * Servlet implementation class IndexServlet
@@ -29,21 +30,29 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException {
 		sesion = request.getSession();
 		usuario = (Usuario) sesion.getAttribute("usuario");
+		
 		if (usuario != null) {
 			if (usuario.getNombre().equals("")) {
 				response.sendRedirect("/registro.do");
 			} else {
-				Conexion cn = new Conexion();
-				ArrayList<Departamento> departamentos = cn.leerDepartamentos();
-				ArrayList<Centro> centros = cn.leerCentros();
-				ArrayList<Area> areas = cn.leerAreas();
-				cn.cerrarConexion();
+				String mostrarTabla = "entrada";
+				if (request.getParameter("tabla") != null)
+					mostrarTabla = request.getParameter("tabla");
 				
-				request.setAttribute("departamentos", departamentos);
-				request.setAttribute("areas", areas);
-				request.setAttribute("centros", centros);
+				Conexion cn = new Conexion();
+
+				request.setAttribute("mostrarTabla", mostrarTabla);
+				request.setAttribute("departamentos", cn.leerDepartamentos());
+				request.setAttribute("areas", cn.leerAreas());
+				request.setAttribute("centros", cn.leerCentros());
+				request.setAttribute("entradas", cn.leerEntradas());
+//				request.setAttribute("salidas", cn.leerSalidas());
+				
 				request.setAttribute("usuario", usuario);
+				
 				request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+				
+				cn.cerrarConexion();
 			}
 		} else {
 			response.sendRedirect("/login.do");

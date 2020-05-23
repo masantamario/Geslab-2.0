@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
-import geslab.database.modelo.*;
+import geslab.database.admin.*;
 
 import javax.servlet.ServletException;
 
@@ -28,27 +28,33 @@ public class AdminServlet extends HttpServlet {
 			throws ServletException, IOException {
 		sesion = request.getSession();
 		usuario = (Usuario) sesion.getAttribute("usuario");
-		request.setAttribute("nombre", usuario.getNombre());
-		String mostrarTabla = "centro";
-		if (request.getParameter("tabla") != null)
-			mostrarTabla = request.getParameter("tabla");
+		
+		if(usuario != null) {
+			request.setAttribute("nombre", usuario.getNombre());
+			String mostrarTabla = "centro";
+			if (request.getParameter("tabla") != null)
+				mostrarTabla = request.getParameter("tabla");
 
-		Conexion cn = new Conexion();
-		ArrayList<Usuario> usuarios = cn.leerUsuarios();
-		ArrayList<Departamento> departamentos = cn.leerDepartamentos();
-		ArrayList<Centro> centros = cn.leerCentros();
-		ArrayList<Area> areas = cn.leerAreas();
-		Rol[] roles = Rol.values();
+			Conexion cn = new Conexion();
+			ArrayList<Usuario> usuarios = cn.leerUsuarios();
+			ArrayList<Departamento> departamentos = cn.leerDepartamentos();
+			ArrayList<Centro> centros = cn.leerCentros();
+			ArrayList<Area> areas = cn.leerAreas();
+			Rol[] roles = Rol.values();
+			cn.cerrarConexion();
 
-		cn.cerrarConexion();
-
-		request.setAttribute("mostrarTabla", mostrarTabla);
-		request.setAttribute("usuarios", usuarios);
-		request.setAttribute("departamentos", departamentos);
-		request.setAttribute("areas", areas);
-		request.setAttribute("centros", centros);
-		request.setAttribute("roles", roles);
-		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+			request.setAttribute("usuario", usuario);
+			request.setAttribute("mostrarTabla", mostrarTabla);
+			request.setAttribute("usuarios", usuarios);
+			request.setAttribute("departamentos", departamentos);
+			request.setAttribute("areas", areas);
+			request.setAttribute("centros", centros);
+			request.setAttribute("roles", roles);
+			request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+		}else {
+			response.sendRedirect("/login.do");
+		}
+		
 
 	}
 
@@ -79,7 +85,7 @@ public class AdminServlet extends HttpServlet {
 			response = accionCentro(accion, codigo);
 			break;
 		}
-
+		cn.cerrarConexion();
 		response.sendRedirect("/admin.do?tabla=" + elemento);
 
 	}
@@ -88,6 +94,7 @@ public class AdminServlet extends HttpServlet {
 		int cod = codigo.equals("nuevo") ? 0 : Integer.parseInt(codigo);
 		String c = (String) request.getParameter("centro-" + codigo);
 		Centro centro = new Centro(cod, c);
+//		centro.insertar();
 		cn.insertarCentro(centro);
 		return response;
 	}
@@ -96,6 +103,7 @@ public class AdminServlet extends HttpServlet {
 		int cod = codigo.equals("nuevo") ? 0 : Integer.parseInt(codigo);
 		String d = (String) request.getParameter("departamento-" + codigo);
 		System.out.println("-- Departamento: " + d);
+//		new Departamento(cod, d).insertar();
 		cn.insertarDepartamento(new Departamento(cod, d));
 		System.out.println("Departamento añadido");
 		return response;
@@ -107,6 +115,7 @@ public class AdminServlet extends HttpServlet {
 		String d = (String) request.getParameter("dpto-area-" + codigo);
 		System.out.println("-- Area: " + a);
 		System.out.println("-- Departamento: " + d);
+//		new Area(cod, a, d).insertar();
 		cn.insertarArea(new Area(cod, a, d));
 		System.out.println("Departamento añadido");
 
@@ -125,6 +134,7 @@ public class AdminServlet extends HttpServlet {
 		System.out.println("-- ROL: " + r);
 		System.out.println("-- FEDERADA: " + f);
 		System.out.println("-- ACTIVO: " + a);
+//		new Usuario(id, u, r, ar, f, a).insertar();
 		cn.insertarUsuario(new Usuario(id, u, r, ar, f, a));
 		System.out.println("Usuario añadido");
 

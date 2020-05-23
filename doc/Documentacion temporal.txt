@@ -7,7 +7,6 @@ Se comentó el tema de implementar una posible API para móviles para poder impl
 Finalmente se pactó una siguiente reunión a la semana siguiente, para dar tiempo a los de la universidad para hablar con los usuarios reales actuales de la aplicación, para poder tener tanto opiniones como necesidades de la futura aplicación de primera mano. 
 
 
-
 SEGUNDA REUNIÓN CON LA UNIVERSIDAD
 La segunda reunión pactada con la universidad finalmente no se pudo realizar en la fecha estimada debido al COVID-19, que afecto a todos los organismos de la universidad y complicó la tarea de reunirse. 
 No obstante, las conversaciones con la universidad siguieron presentes y quedamos a la espera de que nos enviaran unos requisitos cuando finalmente pudieran hablar con los usuarios.
@@ -15,13 +14,11 @@ No obstante, las conversaciones con la universidad siguieron presentes y quedamo
 Por otro lado, Pedro estuvo en contacto con ellos para poder obtener las tablas que se encontraban en el servidor de la universidad para poder replicarlas en un MySql e ir trabajando con ellas para ir trabajando en traspasar los datos a las tablas nuevas.
 
 
-
 EXPORTACIÓN DE TABLAS
 Cuando finalmente recibimos la información del servidor, lo recibimos en un formato de imagen de disco proveniente de Ghost Norton en formato VHD. Esto nos dejaba con una copia del disco duro en el que estaban las tablas que necesitábamos.
 Para montar la imagen utilizamos Virtual Vox NT4, pero por alguna razón la maquina no arrancaba. Tras muchas pruebas encontramos que la causa era la tarjeta de red, no era compatible. Tras esto se realizó una búsqueda de una compatible. Finalmente se utilizó AMD PC net family. 
 
 Con todo listo se pudo ejecutar la imagen, y a través de admin SQL exportamos los datos que necesitábamos.
-
 
 
 MYSQL
@@ -32,7 +29,6 @@ El primer paso para instalar MYSQL es descargar el software de su página oficia
 Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En mi caso selecciono "Developer Default" ya que quiero instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
 
 
-
 REQUISITOS FUNCIONALES
 La tarea de recoger unos nuevos rerquisitos funcionales claros fue complicada. Con todo lo sucedido por el confinamiento, las reuniones entre los usuarios de la aplicación fueron imposibles. debido a ello, la única manera de comunicarse fue a través de una serie de correos que los propios usuarios enviaron a Gonzalo. Pedro Renedo recopiló esos correos y me los envío a mi.
 
@@ -40,10 +36,12 @@ En los correos la información es poco específica y caótica, por lo que hizo f
 
 Tras esta tarea de análisis e investigación tanto de la aplicación como de conceptos de química utilizados, se extrajeron unas historias de usuario a medio completar, con el objetivo de que o bien Gonzalo, o bien los usuarios, aportaran más información, y sobre todo información más específica. 
 
-(21/04/2020)
+
+
+(21/04/2020) -----------------------------------
+
 
 Al no recibir respuesta por parte de la universidad (por motivo del confinamiento) se decidió investigar los requisitos por cuenta propia y establecer unos requisitos finales para poder ir trabajando sobre ellos. Los requisitos finalmente elegidos no son definitivos y quedan abiertos a posibles cambios en un futuro.
-
 
 
 CAMBIOS EN LA BASE DE DATOS
@@ -51,7 +49,6 @@ CAMBIOS EN LA BASE DE DATOS
 Con unos requisitos ya establecidos, se realizaron los primeros cambios en la estructura de la base de datos. Los cambios incluyen la creación de nuevos campos, la eliminación de campos y la creación de nuevas tablas.
 
 De estos cambios se obtiene el nuevo diagrama entidad-relacion.
-
 
 
 DISEÑO DE LA APLICACIÓN (23/04/2020)
@@ -63,7 +60,9 @@ Para la creación tanto del logotipo como del primer diseño de la página de lo
 La animación se ha realizado con p5.js. P5.js es una biblioteca de JavaScript basada en Processing que permite programar sitios web interactivos, de forma que no limita el diseño a un canvas, sino que puede utilizar cualquier elemento del navegador como sketch.
 
 
-(30/04/2020)
+
+(30/04/2020) -----------------------------------
+
 
 CAMBIOS EN LA BASE DE DATOS 
 
@@ -80,7 +79,7 @@ Figma te brinda todas las herramientas necesarias para la fase de diseño del pr
 
 
 
-(07/05/2020)
+(07/05/2020) -----------------------------------
 
 
 CONEXION DE ECLIPSE CON MYSQL
@@ -118,7 +117,7 @@ Se ha cambiado el nombre a los paquetes del proyecto para facilitar su comprensi
 
 
 
-(17/05/2020)
+(17/05/2020) -----------------------------------
 
 
 FUNCIONALIDAD DE LA PÁGINA DE MANTENIMIENTO
@@ -143,6 +142,89 @@ ANIMACION PÁGINA DE LOGIN
 Se ha añadido una la libreria javascript "animation.js". Esta librería es una biblioteca de animación JavaScript que funciona con propiedades CSS, transformaciones CSS individuales, SVG o cualquier atributo DOM y objetos JavaScript.
 
 Con ella se ha creado una simple animacion para la página de login a modo de prueba.
+
+
+
+(18/05/2020) -----------------------------------
+
+
+CAMBIOS EN LA BASE DE DATOS
+
+Se ha eliminado de la base de datos la tabla "roles" y la tabla "centro_area", al ser esta última redundante con la tabla "ubicacion".
+
+
+MEJORAS EN LA PÁGINA DE MANTENIMIENTO
+
+Se ha cambiado la codificacion del jsp para evitar conflicto con los campos que contienen caracteres especiales. 
+
+
+ENCRIPTACION DE CONTRASEÑAS
+
+Se han creado los métodos encriptar y desencriptar para hacer una correcta manipulación de las contraseñas. De esta forma, en la base de datos solo se almacena el hash de la contraseña, y cuando hay que validar algun usuario, unicamente se comparan los hash, y en ningún momento se almacena el string original.
+
+
+
+(21/05/2020) -----------------------------------
+
+
+CREADA PÁGINA DE REGISTRO
+
+Cuando el administrador crea un nuevo usuario, este solo ha de introducir el nombre de usuario, el rol, si la cuenta es federada y si la cuenta va a estar activa, el resto de campos de usuario (nombre, email, contraseña) los ha de introducir el usuario la primera vez que inicie la aplicación.
+
+Se ha creado esa página de registro, con su JSP y su Servlet correspondientes.
+
+
+CREADA PÁGINA DE GESTION (INDEX)
+
+Se ha creado la estructura inicial de la página principal a la que accede el usuario. La página muestra las fichas de entrada y de salida que se han realizado, y deja realizar un filtrado por diferentes parámetros.
+
+
+
+(23/05/2020) -----------------------------------
+
+
+CAMBIO EN EL DISEÑO GENERAL Y PÁGINA DE GESTION
+
+Se ha realizado cambios en el diseño de la aplicación. Se ha actualizado ligeramente el diseño de la página de mantenimiento y se ha creado todo el diseño para la página de gestión y la página de registro. El diseño una vez más se ha realizado en Adobe Illustrator.
+
+
+IMPLEMENTADO CONTROL DE SESION
+
+Se ha añadido a todos las páginas unas comprobaciones para asegurar que el usuario es redirigido a donde tiene que ir. De esta forma, si un usuario no ha iniciado sesion, no podra acceder a ninguna otra página. Además cada usuario solo podrá acceder a las páginas adecuadas según su rol.
+
+
+CAMBIO FALLIDO EN LA ESTRUCTURA DEL PROYECTO
+
+Se intento hacer un cambio en la estructura del proyecto. Con el fin de mejorar el orden de los paquetes del proyecto, se intento mover todos los métodos que conectan con la base de datos, de la clase "Conexion" a sus respectivas clases. De esta forma cada clase que representa una tabla (Usuarios, Areas, Centros, etc) heredaba de la clase Conexion y tenia sus sus métodos insertar y actualizar.
+
+Finalmente y por problemas de control sobre la apertura y cierre de la conexion, se revirtió todo el proceso y se dejo como estaba en un principio. Con idea de refactorizar más adelante si fuera necesario.
+
+No obstante, los métodos creados quedan comentados en cada clase, a espera de saber si serán utilizados finalmente o no.
+
+
+CAMBIO EN LA METODOLOGÍA CSS
+
+Aprovechando los cambios en el diseño realizados, se ha comenzado a utilizar una metodología BEM en el css personalizado.
+
+BEM es una metodología que se utiliza para para nombrar y clasificar selectores CSS de manera estricta, transparente e informativa. Este método se basa en nombrar las clases en un modo muy específico, ayudando a distinguir de manera simple de qué objeto hablamos y si tiene o no aplicado algún tipo de modificador en su estilo, ya sea por interacción del usuario, o por tipología del objeto. Cuando se utiliza la metodología BEM, hay que tener en en cuenta que solamente se usará nombres de clases, nunca IDs, para fomentar así la reutilización de código.
+
+Como su nombre indica, BEM distingue claramente 3 conceptos: el Bloque, el Elemento y el Modificador.
+
+Siguiendo esta metodología, se ha refactorizado todo el código de las páginas creadas hasta ahora.
+
+
+IMPLEMENTADA PÁGINA DE GESTION
+
+Con el diseño de la nueva página ya listo, y con la nueva metodología BEM, se ha creado la pa´gina de gestión, y se le ha aplicado la funcionalidad de mostrar las entradas disponibles, de momento sin poder aplicar ningún filtro.
+
+Para ello se han creado las clases Ficha, Entrada, Salida, Producto y Ubicacion.
+
+
+NUEVOS DATOS EN LA BASE DE DATOS
+
+Para poder trabajar con las nuevas tablas, se han añadido unos inserts para introducir unos datos de prueba en la base de datos.
+
+
 
 
 
