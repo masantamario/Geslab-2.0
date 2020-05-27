@@ -201,9 +201,10 @@ public class Conexion {
 
 		try {
 			pstm = conexion.prepareStatement(
-					"SELECT ubicacion.nombre, area.nombre as area, centro.nombre as centro, oculta\r\n" + 
-					"from ubicacion \r\n" + 
+					"SELECT ubicacion.nombre, area.nombre as area, dpto.nombre as dpto, centro.nombre as centro, oculta\r\n" + 
+					"from ubicacion\r\n" + 
 					"inner join area on ubicacion.area = area.codarea\r\n" + 
+					"inner join dpto on area.dpto = dpto.coddpto\r\n" + 
 					"inner join centro on ubicacion.centro = centro.codcentro\r\n" + 
 					"where codubicacion = ?");
 			pstm.setInt(1, codubicacion);
@@ -212,10 +213,11 @@ public class Conexion {
 			if (rs.next()) {
 				String nombre = rs.getString("nombre");
 				String area = rs.getString("area");
+				String dpto = rs.getString("dpto");
 				String centro = rs.getString("centro");
 				boolean oculta = rs.getBoolean("oculta");
 
-				ubicacion = new Ubicacion(codubicacion, nombre, area, centro, oculta);
+				ubicacion = new Ubicacion(codubicacion, nombre, area, dpto, centro, oculta);
 			}
 		} catch (SQLException e) {
 			printSQLException(e, "LEER UBICACION");
@@ -363,6 +365,114 @@ public class Conexion {
 		}
 
 		return fichas;
+	}
+	
+	public ArrayList<Ubicacion> leerUbicaciones() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
+
+		try {
+			pstm = conexion.prepareStatement("select codubicacion from ubicacion");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				ubicaciones.add(leerUbicacion(rs.getInt("codubicacion")));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER UBICACIONES");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerUbicaciones");
+		}
+
+		return ubicaciones;
+	}
+	
+	public ArrayList<Proveedor> leerProveedores() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from proveedor");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				int cod = rs.getInt("codproveedor");
+				String nombre = rs.getString("nombre");
+				String direccion = rs.getString("direccion");
+				String telefono = rs.getString("tfno");
+				String fax = rs.getString("fax");
+				String mail = rs.getString("email");
+				String contacto = rs.getString("contacto");
+
+				proveedores.add(new Proveedor(cod, nombre, direccion, telefono, fax, mail, contacto));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PROVEEDORES");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerProveedores");
+		}
+
+		return proveedores;
+	}
+	
+	public ArrayList<Marca> leerMarcas() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Marca> marcas = new ArrayList<Marca>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from marca");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				int cod = rs.getInt("codmarca");
+				String nombre = rs.getString("nombre");
+				String descripcion = rs.getString("descripcion");
+				String telefono = rs.getString("telefono");
+				String direccion = rs.getString("direccion");
+
+				marcas.add(new Marca(cod, nombre, descripcion, telefono, direccion));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER MARCAS");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerMarcas");
+		}
+
+		return marcas;
+	}
+	
+	public ArrayList<Calidad> leerCalidades() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Calidad> calidades = new ArrayList<Calidad>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from calidad");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				int cod = rs.getInt("codcalidad");
+				String nombre = rs.getString("nombre");
+				calidades.add(new Calidad(cod, nombre));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER CALIDADES");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerCalidades");
+		}
+
+		return calidades;
 	}
 	
 	public ArrayList<Entrada> leerEntradasFicha(Ficha ficha) {

@@ -152,7 +152,7 @@ public class Usuario extends Conexion{
 
 	public String toString() {
 		String cadena = "\n----------------------------------\n  -Id: " + idusuario + "\n  -Usuario: " + usuario + "\n  -Nombre: "
-				+ nombre + "\n  -Correo: " + mail + "\n  -Federada: " + "\n  -Rol: " + rol + "\n  -Area: " + area + federada
+				+ nombre + "\n  -Correo: " + mail + "\n  -Federada: " + "\n  -Rol: " + rol + "\n  -Area: " + area +"\n  -Federada: " + federada
 				+ "\n  -Activo: " + activo + "\n  -Fecha creacion: " + fecha_creacion + "\n----------------------------------\n\n";
 		return cadena;
 	}

@@ -1,7 +1,6 @@
 package geslab.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
-import geslab.database.admin.Area;
-import geslab.database.admin.Centro;
-import geslab.database.admin.Departamento;
 import geslab.database.admin.Usuario;
-import geslab.database.user.*;
 
 /**
  * Servlet implementation class IndexServlet
@@ -45,6 +40,11 @@ public class IndexServlet extends HttpServlet {
 				request.setAttribute("departamentos", cn.leerDepartamentos());
 				request.setAttribute("areas", cn.leerAreas());
 				request.setAttribute("centros", cn.leerCentros());
+				request.setAttribute("ubicaciones", cn.leerUbicaciones());
+				request.setAttribute("proveedores", cn.leerProveedores());
+				request.setAttribute("marcas", cn.leerMarcas());
+				request.setAttribute("calidades", cn.leerCalidades());
+				
 				request.setAttribute("entradas", cn.leerEntradas());
 //				request.setAttribute("salidas", cn.leerSalidas());
 				

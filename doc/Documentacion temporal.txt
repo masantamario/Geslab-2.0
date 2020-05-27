@@ -192,6 +192,8 @@ IMPLEMENTADO CONTROL DE SESION
 
 Se ha añadido a todos las páginas unas comprobaciones para asegurar que el usuario es redirigido a donde tiene que ir. De esta forma, si un usuario no ha iniciado sesion, no podra acceder a ninguna otra página. Además cada usuario solo podrá acceder a las páginas adecuadas según su rol.
 
+De igual manera, se ha añadido la opción de cerrar sesion en todas las páginas.
+
 
 CAMBIO FALLIDO EN LA ESTRUCTURA DEL PROYECTO
 

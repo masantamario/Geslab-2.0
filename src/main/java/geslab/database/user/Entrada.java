@@ -7,8 +7,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class Entrada {
-	private DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-	
+	private DateFormat formatoFechaCal = new SimpleDateFormat("yyyy-MM-dd");
+	private DateFormat formatoFechaImp = new SimpleDateFormat("dd-MM-yyyy");
+
 	private int codentrada;
 	private Ficha ficha;
 	private Timestamp fecha;
@@ -18,7 +19,7 @@ public class Entrada {
 	private BigDecimal capacidad;
 	private String g_ml;
 	private boolean residuo;
-	
+
 	public Entrada(int codentrada, Ficha ficha, Timestamp fecha, Timestamp caducidad, String lote, BigDecimal unidades,
 			BigDecimal capacidad, String g_ml, Boolean residuo) {
 		this.codentrada = codentrada;
@@ -41,14 +42,29 @@ public class Entrada {
 	}
 
 	public String getFecha() {
-        String f = formatoFecha.format(fecha);
-        return f;
-		
+		String f = formatoFechaImp.format(fecha);
+		return f;
+
+	}
+
+	public String getFechaCal() {
+		String f = formatoFechaCal.format(fecha);
+		return f;
+
 	}
 
 	public String getCaducidad() {
-        String cad = formatoFecha.format(caducidad);
-        return cad;
+		String cad = "N/D";
+		if (caducidad != null)
+			cad = formatoFechaImp.format(caducidad);
+		return cad;
+	}
+
+	public String getCaducidadCal() {
+		String cad = "N/D";
+		if (caducidad != null)
+			cad = formatoFechaCal.format(caducidad);
+		return cad;
 	}
 
 	public String getLote() {
@@ -70,5 +86,9 @@ public class Entrada {
 	public boolean isResiduo() {
 		return residuo;
 	}
-	
+
+	public String esResiduo() {
+		return (residuo) ? "Si" : "No";
+	}
+
 }

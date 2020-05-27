@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="../css/style.css">
 
 <title>Geslab 2.0</title>
+<link rel="shortcut icon" type="image/png" href="../images/favicon.png"/>
+
 </head>
 
 <body>

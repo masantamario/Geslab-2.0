@@ -20,6 +20,8 @@
 <script src="https://kit.fontawesome.com/e907f1c9ed.js" crossorigin="anonymous"></script>
 
 <title>Geslab 2.0</title>
+<link rel="shortcut icon" type="image/png" href="../images/favicon.png"/>
+
 </head>
 
 
@@ -144,13 +146,14 @@
 												</td>
 												<td class="tabla-body--row" style="text-align: right; display: none"
 													id="conf-canc-editar-centro-<%=c.getCodcentro()%>">
+													<button type="submit"
+														id="btn-confirmar-centro-<%=c.getCodcentro()%>"
+														class="boton-tabla__accion boton-tabla__accion--success"><i class="fas fa-check"></i></button>
 													<button type="button"
 														onclick="cancelarEditar(<%=c.getCodcentro()%>)"
 														id="btn-cancelar-centro-<%=c.getCodcentro()%>"
-														class="boton-tabla__accion boton-tabla__accion--success"><i class="fas fa-times"></i></button>
-													<button type="submit"
-														id="btn-confirmar-centro-<%=c.getCodcentro()%>"
-														class="boton-tabla__accion"><i class="fas fa-check"></i></button>
+														class="boton-tabla__accion boton-tabla__accion"><i class="fas fa-times"></i></button>
+													
 												</td>
 											</tr>
 											<%}%>

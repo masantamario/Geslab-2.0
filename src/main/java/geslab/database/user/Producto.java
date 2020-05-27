@@ -8,6 +8,7 @@ package geslab.database.user;
 		private String n_einecs;
 		private String n_ec;
 		private String precauciones;
+		private int peso_mol;
 		
 		public Producto(String cas, String nombre, String formula, String formula_des, String n_einecs, String n_ec,
 				String precauciones) {
@@ -18,6 +19,7 @@ package geslab.database.user;
 			this.n_einecs = n_einecs;
 			this.n_ec = n_ec;
 			this.precauciones = precauciones;
+			this.peso_mol = 0;
 			
 		}
 
@@ -47,6 +49,10 @@ package geslab.database.user;
 
 		public String getPrecauciones() {
 			return precauciones;
+		}
+
+		public int getPeso_mol() {
+			return peso_mol;
 		}
 		
 }
