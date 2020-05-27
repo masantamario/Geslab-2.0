@@ -217,7 +217,7 @@ Siguiendo esta metodología, se ha refactorizado todo el código de las páginas
 
 IMPLEMENTADA PÁGINA DE GESTION
 
-Con el diseño de la nueva página ya listo, y con la nueva metodología BEM, se ha creado la pa´gina de gestión, y se le ha aplicado la funcionalidad de mostrar las entradas disponibles, de momento sin poder aplicar ningún filtro.
+Con el diseño de la nueva página ya listo, y con la nueva metodología BEM, se ha creado la página de gestión, y se le ha aplicado la funcionalidad de mostrar las entradas disponibles, de momento sin poder aplicar ningún filtro.
 
 Para ello se han creado las clases Ficha, Entrada, Salida, Producto y Ubicacion.
 
@@ -227,10 +227,30 @@ NUEVOS DATOS EN LA BASE DE DATOS
 Para poder trabajar con las nuevas tablas, se han añadido unos inserts para introducir unos datos de prueba en la base de datos.
 
 
+(27/05/2020) -----------------------------------
 
 
+AÑADIDO FAVICON
+
+Se ha creado el favicon de la aplicación y se ha implementado en todas las páginas.
 
 
+INFORMACION EXTRA DE FICHA
+
+cada ficha de entradas y salidas debe de mostrar mucha información relevante que es muy dificil de mostrar a golpe de vista en una sola tabla. Por ello se ha creado un pequeño formulario adicional que aparece cuando se pulsa en la ficha que se deseea consultar en profundidad. esta información extra se puede cerrar para dejar más visibilidad en la tabla principal.
 
 
+FUNCIONALIDAD DE FILTRADO
 
+Se ha añadido la funcionalidad de filtrar las entradas. Cuando un parámetro de filtrado es introducido en uno de los campos correspondientes, con javascript se realiza el filtrado ocultando las filas que no cumplen los requisitos.
+
+Entre  los filtrados se encuentra la opción de hacerlo por rango de fechas. Al trabajar con fechas se ha tenido que implementar un método diferente utilizando Date(), para así poder realizar comparaciones entre fechas.
+
+Para hacer el filtrado de los campos que no aparecen en la tabla principal y solo aparecen en la información extra, se ha creado columnas ocultas en la propia tabla principal, se modo que el filtro puede seguir trabajando con la misma tabla de manera transparente al usuario.
+
+
+CREADAS NUEVAS CLASES
+
+Para la realización del filtrado ha sido necesario crear nuevas clases que representan a tablas de la base de datos. Se han creado las clases Calidad, Entrada, Marca y Proveedor, con sus respectivos contructores y getters.
+
+En la clase Conexion se han implementado los métodos que conectan con la base de datos y leen todos los datos de cada clase de las anteriormente citadas.
