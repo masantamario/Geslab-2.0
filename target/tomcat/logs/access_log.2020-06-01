@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:04:45 +0200] "GET / HTTP/1.1" 200 3162 http-bio-8080-exec-1 77
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:04:45 +0200] "GET /css/style.css HTTP/1.1" 304 - http-bio-8080-exec-3 61
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:05:04 +0200] "POST /login.do HTTP/1.1" 302 - http-bio-8080-exec-4 1168
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:05:06 +0200] "GET /index.do HTTP/1.1" 200 39240 http-bio-8080-exec-6 1771
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:05:06 +0200] "GET /js/index.js HTTP/1.1" 304 - http-bio-8080-exec-7 3
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:27:24 +0200] "GET /index.do?tabla=salida HTTP/1.1" 200 20840 http-bio-8080-exec-9 420
+0:0:0:0:0:0:0:1 - - [01/Jun/2020:13:27:25 +0200] "GET /index.do?tabla=entrada HTTP/1.1" 200 39240 http-bio-8080-exec-9 314

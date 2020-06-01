@@ -49,6 +49,15 @@ select * from usuarios;
 
 SELECT codarea FROM area WHERE nombre="Orgánica";
 
+select calidad.nombre AS calidad, ubicacion.nombre AS ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, nombre_producto.nombre AS producto from ficha
+inner join calidad on "Excelente" = calidad.nombre
+inner join ubicacion on "Armario 1" = ubicacion.nombre
+inner join proveedor on "DPL Group" = proveedor.nombre
+inner join marca on "Fisher Sci." = marca.nombre
+inner join nombre_producto on "Helio" = nombre_producto.nombre
+;
+
+
 select calidad.nombre AS calidad, ubicacion.nombre AS ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, nombre_producto.nombre AS producto 
 from ficha
 inner join calidad on ficha.calidad = calidad.codcalidad

@@ -8,12 +8,12 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 
-
 <!-- Custom CSS -->
-<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css"/>
 <link rel="stylesheet" href="../css/style.css">
 
-<script src="https://kit.fontawesome.com/e907f1c9ed.js"></script>
+<!-- Extra CSS -->
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css"/>
+<script src="https://kit.fontawesome.com/e907f1c9ed.js" crossorigin="anonymous"></script>
 
 <title>Geslab 2.0</title>
 <link rel="shortcut icon" type="image/png" href="../images/favicon.png"/>
@@ -34,6 +34,7 @@
 	ArrayList<Proveedor> proveedores = (ArrayList<Proveedor>) request.getAttribute("proveedores");
 	ArrayList<Marca> marcas = (ArrayList<Marca>) request.getAttribute("marcas");
 	ArrayList<Calidad> calidades = (ArrayList<Calidad>) request.getAttribute("calidades");
+	ArrayList<Producto> productos = (ArrayList<Producto>) request.getAttribute("productos");
 	
 	String tabla = (String) request.getAttribute("mostrarTabla");	
 	%>
@@ -51,8 +52,8 @@
 					
 					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 					  		<form id="opciones-usuario" action="/login.do" method="get">
-					  			<input type="hidden" id="accion" name="accion" value="" />
-					  			<button class="dropdown-item header__dropdown-item" onclick="cerrarSesion()">Ubicaciones</button>
+					  			<input type="hidden" id="opcion-menu" name="accion" value="" />
+					  			<button class="dropdown-item header__dropdown-item" type="button">Ubicaciones</button>
 					  			<button class="dropdown-item header__dropdown-item--logout" onclick="cerrarSesion()">Cerrar sesión</button>
 					  		</form>
 					    	
@@ -182,11 +183,11 @@
 					
 					<div class="col-12 container-info px-3">
 						<div class="row pt-1 align-items-start" id="fila-tabla" style="height: 80%">
-							<div class="col">
+							<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
 								<%if(tabla.equals("entrada")){ %>
 									<table id="tabla-entradas" class="table table-borderless table-hover table-sm">
-										<thead class="tabla-header">
-										    <tr>
+										<thead >
+										    <tr class="tabla-header">
 										      <th class="tabla-header--item" scope="col">Fecha</th>
 										      <th class="tabla-header--item" scope="col">Producto</th>
 										      <th class="tabla-header--item" scope="col">Uds.</th>
@@ -194,6 +195,7 @@
 										      <th class="tabla-header--item" scope="col">Ub.</th>
 										      <th class="tabla-header--item" scope="col">Area</th>
 										      <th class="tabla-header--item" scope="col">Marca</th>
+										      <th class="tabla-header--item" scope="col"></th>
 										      
 										      <th style="display: none" scope="col">Cas</th>
 										      <th style="display: none" scope="col">Formula</th>
@@ -211,18 +213,18 @@
 										      <th style="display: none" scope="col">Ub. Oculta</th>
 										    </tr>
 								  		</thead>
-									
+										
 										 <tbody class="tabla-body">
 										 	<%for (Entrada e : entradas) {%>
 
 										 		<tr data-fila=<%=e.getCodentrada()%>>
-											      <td class="tabla-body--row"><%=e.getFecha()%></td>
-											      <td class="tabla-body--row"><%=e.getFicha().getProducto().getNombre()%></td>
-											      <td class="tabla-body--row"><%=e.getUnidades()%></td>
+											      <td class="tabla-body--row" id="fecha-<%=e.getCodentrada()%>"><%=e.getFecha()%></td>
+											      <td class="tabla-body--row" id="producto-<%=e.getCodentrada()%>"><%=e.getFicha().getProducto().getNombre()%></td>
+											      <td class="tabla-body--row" id="uds-<%=e.getCodentrada()%>"><%=e.getUnidades()%></td>
 											      <td class="tabla-body--row"><%=e.getCapacidad()%> <%=e.getG_ml()%>.</td>
-											      <td class="tabla-body--row"><%=e.getFicha().getUbicacion().getNombre()%></td>
-											      <td class="tabla-body--row"><%=e.getFicha().getUbicacion().getArea()%></td>
-											      <td class="tabla-body--row"><%=e.getFicha().getMarca()%></td>
+											      <td class="tabla-body--row" id="ubicacion-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getNombre()%></td>
+											      <td class="tabla-body--row" id="area-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getArea()%></td>
+											      <td class="tabla-body--row" id="marca-<%=e.getCodentrada()%>"><%=e.getFicha().getMarca()%></td>
 
 											      <td id="cas-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getCas()%></td>											      
 											      <td id="formula-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getFormula()%></td>											      
@@ -238,10 +240,14 @@
 											      <td id="prudencia-<%=e.getCodentrada()%>" style="display: none">Prudencia</td>	
 											      <td id="fecha-<%=e.getCodentrada()%>" style="display: none"><%=e.getFechaCal()%></td>										      
 											      <td id="oculto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().esOculta()%></td>										      
+											      <td id="g-ml-<%=e.getCodentrada()%>" style="display: none"><%=e.getG_ml()%></td>										      
+											      <td id="cpcd-<%=e.getCodentrada()%>" style="display: none"><%=e.getCapacidad()%></td>										      
+											      <td id="proveedor-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProveedor()%></td>										      
+											      <td id="lote-<%=e.getCodentrada()%>" style="display: none"><%=e.getLote()%></td>										      
 
 											      
 											      <td class="tabla-body--row" style="text-align: right;">
-											      	<button type="button" id="" class="boton-tabla__accion">
+											      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=e.getCodentrada()%>)">
 											      		<i class="fas fa-pen"></i></button></td>
 											      
 											    </tr>
@@ -312,7 +318,7 @@
                                                 <p class="extra-info__input flex-fill" id="extra-info-centro"><p>
                                             </div>
                                             <div class="col-3 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Caducidad<p>
+                                                <p class="extra-info__label d-inline-flex">Cad.<p>
                                                 <p class="extra-info__input flex-fill" id="extra-info-caducidad"><p>
                                             </div>
                                         </div>
@@ -346,7 +352,7 @@
 								
 								<div class="row py-3" style="height: 20%" id="fila-insertar">
 									<div class="col">
-										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right"></button>
+										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()"></button>
 									</div>
 								</div>
 							</div>
@@ -365,9 +371,124 @@
 		</div>
 	</div>
 	
+	<div class="modal fade" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+	    <div class="modal-content">
+	    	<form id="insertar-entrada" action="/index.do" method="post">
+		    	<div id="variables" style="display: none;">
+					<input id="accion" name="accion"></input> 
+					<input id="elemento" name="elemento"></input>
+					<input id="codigo" name="codigo"></input>
+				</div>
+	      <div class="modal-header justify-content-between">
+      		<div class="col-3">
+      			<h5 class="modal-title" id="exampleModalScrollableTitle">Entrada</h5>
+      		</div>
+      		<div class="col-3">
+      			<input class="modal__input" type="date" id="insertar-fecha" name="insertar-fecha">
+      		</div>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col px-4">
+	        		<div class="row">
+	        			<div class="col-6">
+                            <p class="modal__label">Producto</p>
+                            <select class="modal__input" id="insertar-producto" name="insertar-producto">
+                            	<option selected></option>
+								<%for(Producto p:productos){ %>
+									<option><%=p.getNombre()%></option>
+								<%}%>
+							</select>
+                        </div>
+                        <div class="col-2">
+                            <p class="modal__label">Uds.</p>
+                            <input class="modal__input" type="text" id="insertar-uds" name="insertar-uds">
+                        </div>
+                        <div class="col-2">
+                            <p class="modal__label">Cpcd.</p>
+                            <input class="modal__input" type="text" id="insertar-cpcd" name="insertar-cpcd">
+                        </div>
+                        <div class="col-2">
+                            <p class="modal__label">g/ml</p>
+                            <select class="modal__input" id="insertar-g-ml" name="insertar-g-ml">
+								<option selected></option>
+								<option>g</option>
+								<option>ml</option>
+							</select>
+                        </div>
+	        		</div>
+	        		<div class="row pt-4">
+	        			<div class="col-4">
+                            <p class="modal__label">Ubicación</p>
+                            <select class="modal__input" id="insertar-ubicacion" name="insertar-ubicacion">
+                            	<option selected></option>
+								<%for(Ubicacion u:ubicaciones){ %>
+									<option><%=u.getNombre()%></option>
+								<%}%>
+							</select>
+                        </div>
+                        <div class="col-4">
+                            <p class="modal__label">Marca</p>
+                            <select class="modal__input" id="insertar-marca" name="insertar-marca">
+                            	<option selected></option>
+								<%for(Marca m:marcas){ %>
+									<option><%=m.getNombre()%></option>
+								<%}%>
+							</select>
+                        </div>
+                        <div class="col-4">
+                            <p class="modal__label">Proovedor</p>
+                            <select class="modal__input" id="insertar-proveedor" name="insertar-proveedor">
+                            	<option selected></option>
+								<%for(Proveedor p:proveedores){ %>
+									<option><%=p.getNombre()%></option>
+								<%}%>
+							</select>
+                        </div>
+	        		</div>
+	        		
+	        		<div class="row pt-4">
+	        			<div class="col-4">
+                            <p class="modal__label">Calidad</p>
+                            <select class="modal__input" id="insertar-calidad" name="insertar-calidad">
+                            	<option selected></option>
+								<%for(Calidad c:calidades){ %>
+									<option><%=c.getNombre()%></option>
+								<%}%>
+							</select>
+                        </div>
+                        <div class="col-4">
+                            <p class="modal__label">Lote</p>
+                            <input class="modal__input" type="text" id="insertar-lote" name="insertar-lote">
+                        </div>
+                        <div class="col-4">
+                            <p class="modal__label">Caducidad</p>
+                            <input class="modal__input" type="date" id="insertar-caducidad" name="insertar-caducidad">
+                        </div>
+	        		</div>
+	        		
+	        		<div class="row pt-4">
+	        			<div class="col-4">
+                            <input class="" type="checkbox" id="insertar-residuo" name="insertar-residuo"> Residuo
+                        </div>
+	        		</div>
+	        		
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn boton-tabla__cancelar" onclick="cancelar()">Cancelar</button>
+	        <button type="button" class="btn boton-tabla__añadir" onclick="confirmar()">Añadir</button>
+	      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
 	
 	<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/index.js"></script>

@@ -2,7 +2,7 @@ package geslab.database.user;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -12,15 +12,15 @@ public class Entrada {
 
 	private int codentrada;
 	private Ficha ficha;
-	private Timestamp fecha;
-	private Timestamp caducidad;
+	private Date fecha;
+	private Date caducidad;
 	private String lote;
 	private BigDecimal unidades;
 	private BigDecimal capacidad;
 	private String g_ml;
 	private boolean residuo;
 
-	public Entrada(int codentrada, Ficha ficha, Timestamp fecha, Timestamp caducidad, String lote, BigDecimal unidades,
+	public Entrada(int codentrada, Ficha ficha, Date fecha, Date caducidad, String lote, BigDecimal unidades,
 			BigDecimal capacidad, String g_ml, Boolean residuo) {
 		this.codentrada = codentrada;
 		this.ficha = ficha;
@@ -50,7 +50,10 @@ public class Entrada {
 	public String getFechaCal() {
 		String f = formatoFechaCal.format(fecha);
 		return f;
-
+	}
+	
+	public Date getFechaIns() {
+		return this.fecha;
 	}
 
 	public String getCaducidad() {
@@ -65,6 +68,10 @@ public class Entrada {
 		if (caducidad != null)
 			cad = formatoFechaCal.format(caducidad);
 		return cad;
+	}
+	
+	public Date getCaducidadIns() {
+		return this.caducidad;
 	}
 
 	public String getLote() {
