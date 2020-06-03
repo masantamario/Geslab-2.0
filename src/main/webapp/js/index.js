@@ -15,11 +15,6 @@ function inicializar(e) {
 
 }
 
-function cerrarSesion() {
-	document.getElementById("opcion-menu").value = "logout";
-	document.getElementById("opciones-usuario").submit();
-}
-
 function mostrarElemento(e) {
 	elemento = e;
 	document.getElementById("tabla").value = e;
@@ -34,6 +29,7 @@ function insertar() {
 		document.getElementById("insertar-" + valor).value = "";
 	});
 	document.getElementById('insertar-fecha').valueAsDate = new Date();
+	document.getElementById("tituloModal").innerText = "Nueva " + elemento;
 	$("#modalEntrada").modal();
 }
 
@@ -59,7 +55,7 @@ function editar(cod) {
 		document.getElementById("insertar-" + valor).disabled = true;
 	});
 	
-	
+	document.getElementById("tituloModal").innerText = "Editar " + elemento + " (#" + cod +")";
 	$("#modalEntrada").modal();
 	ocultarExtraInfo();
 }

@@ -44,7 +44,6 @@ public class Entrada {
 	public String getFecha() {
 		String f = formatoFechaImp.format(fecha);
 		return f;
-
 	}
 
 	public String getFechaCal() {

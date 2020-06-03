@@ -13,7 +13,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="../css/style.css">
@@ -54,11 +54,7 @@
 					    <%=usuario.getNombre()%></a>
 					
 					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-					  		<form id="opciones-usuario" action="/login.do" method="get">
-					  			<input type="hidden" id="accion" name="accion" value="" />
-					  			<button class="dropdown-item header__dropdown-item--logout" onclick="cerrarSesion()">Cerrar sesión</button>
-					  		</form>
-					    	
+				  			<a class="dropdown-item header__dropdown-item--logout" href="/login.do?accion=logout" >Cerrar sesion</a>
 					  	</div>
 					</div>
 				</div>
@@ -399,7 +395,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/bootstrap/bootstrap.min.js"></script>
 	<script src="../js/admin.js"></script>
 	<script> inicializar('<%=tabla%>'); </script>
 

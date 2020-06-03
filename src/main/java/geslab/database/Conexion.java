@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -537,9 +536,6 @@ public class Conexion {
 
 			while (rs.next()) {
 				int codentrada = rs.getInt("codentrada");
-//				int codficha = rs.getInt("ficha");
-//				Timestamp fecha = rs.getTimestamp("fecha");
-//				Timestamp caducidad = rs.getTimestamp("fechacaducidad");
 				Date fecha = rs.getDate("fecha");
 				Date caducidad = rs.getDate("fechacaducidad");
 				String lote = rs.getString("lote");
@@ -569,23 +565,21 @@ public class Conexion {
 		ArrayList<Salida> salidas = new ArrayList<Salida>();
 
 		try {
-			pstm = conexion.prepareStatement("select * from entrada where ficha=?");
+			pstm = conexion.prepareStatement("select * from salida where ficha=?");
 			pstm.setInt(1, ficha.getCodficha());
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				int codentrada = rs.getInt("codsalida");
-//				int codficha = rs.getInt("ficha");
-				Timestamp fecha = rs.getTimestamp("fecha");
-				Timestamp caducidad = rs.getTimestamp("caducidad");
+				int codsalida = rs.getInt("codsalida");
+				Date fecha = rs.getDate("fecha");
+				Date caducidad = rs.getDate("fechacaducidad");
 				String lote = rs.getString("lote");
 				BigDecimal unidades = rs.getBigDecimal("unidades");
 				BigDecimal capacidad = rs.getBigDecimal("capacidad");
 				String g_ml = rs.getString("g_ml");
 				Boolean residuo = rs.getBoolean("residuo");
-//				Boolean.toString(u.getFederada()));
 
-				salidas.add(new Salida(codentrada, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
+				salidas.add(new Salida(codsalida, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
 			}
 
 		} catch (SQLException e) {
@@ -711,11 +705,9 @@ public class Conexion {
 		try {
 			pstm = conexion
 					.prepareStatement("INSERT INTO ficha(calidad, ubicacion, proveedor, marca, producto) VALUES (\r\n"
-							+ "(select codcalidad from calidad where nombre = ?),\r\n"
-							+ "?,\r\n"
+							+ "(select codcalidad from calidad where nombre = ?),\r\n" + "?,\r\n"
 							+ "(select codproveedor from proveedor where nombre = ?), \r\n"
-							+ "(select codmarca from marca where nombre = ?),\r\n"
-							+ "?)");
+							+ "(select codmarca from marca where nombre = ?),\r\n" + "?)");
 			pstm.setString(1, f.getCalidad());
 			pstm.setInt(2, f.getUbicacion().getCodubicacion());
 			pstm.setString(3, f.getProveedor());
@@ -837,7 +829,7 @@ public class Conexion {
 		}
 		return correcto;
 	}
-	
+
 	public boolean updateEntrada(Entrada e) {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
@@ -852,7 +844,7 @@ public class Conexion {
 			pstm.setString(6, e.getG_ml());
 			pstm.setString(7, String.valueOf(e.isResiduo()));
 			pstm.setInt(8, e.getCodentrada());
-			
+
 			pstm.executeUpdate();
 
 		} catch (SQLException ex) {
@@ -862,6 +854,7 @@ public class Conexion {
 		}
 		return correcto;
 	}
+
 
 	public boolean cambiarContrasena(Usuario u, String p) {
 		PreparedStatement pstm = null;

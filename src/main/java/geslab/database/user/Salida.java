@@ -1,20 +1,25 @@
 package geslab.database.user;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Salida {
+	private DateFormat formatoFechaCal = new SimpleDateFormat("yyyy-MM-dd");
+	private DateFormat formatoFechaImp = new SimpleDateFormat("dd-MM-yyyy");
+
 	private int codsalida;
 	private Ficha ficha;
-	private Timestamp fecha;
-	private Timestamp caducidad;
+	private Date fecha;
+	private Date caducidad;
 	private String lote;
 	private BigDecimal unidades;
 	private BigDecimal capacidad;
 	private String g_ml;
 	private boolean residuo;
 	
-	public Salida(int codsalida, Ficha ficha, Timestamp fecha, Timestamp caducidad, String lote, BigDecimal unidades,
+	public Salida(int codsalida, Ficha ficha, Date fecha, Date caducidad, String lote, BigDecimal unidades,
 			BigDecimal capacidad, String g_ml, Boolean residuo) {
 		this.codsalida = codsalida;
 		this.ficha = ficha;
@@ -35,12 +40,36 @@ public class Salida {
 		return ficha;
 	}
 
-	public Timestamp getFecha() {
-		return fecha;
+	public String getFecha() {
+		String f = formatoFechaImp.format(fecha);
+		return f;
 	}
 
-	public Timestamp getCaducidad() {
-		return caducidad;
+	public String getFechaCal() {
+		String f = formatoFechaCal.format(fecha);
+		return f;
+	}
+	
+	public Date getFechaIns() {
+		return this.fecha;
+	}
+
+	public String getCaducidad() {
+		String cad = "N/D";
+		if (caducidad != null)
+			cad = formatoFechaImp.format(caducidad);
+		return cad;
+	}
+
+	public String getCaducidadCal() {
+		String cad = "N/D";
+		if (caducidad != null)
+			cad = formatoFechaCal.format(caducidad);
+		return cad;
+	}
+	
+	public Date getCaducidadIns() {
+		return this.caducidad;
 	}
 
 	public String getLote() {
@@ -61,6 +90,10 @@ public class Salida {
 
 	public boolean isResiduo() {
 		return residuo;
+	}
+	
+	public String esResiduo() {
+		return (residuo) ? "Si" : "No";
 	}
 	
 }

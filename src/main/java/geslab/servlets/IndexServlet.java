@@ -26,7 +26,21 @@ public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
+
+	private HttpServletRequest request = null;
+	private HttpServletResponse response = null;
 	private Conexion cn = null;
+
+	// Variables ficha
+	private String calidad, proveedor, marca;
+	private Ubicacion ubicacion = null;
+	private Producto producto = null;
+
+	// Variables entrada-salida
+	private Date fecha, caducidad;
+	private String lote, g_ml;
+	private BigDecimal unidades, capacidad;
+	private boolean residuo;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -52,15 +66,14 @@ public class IndexServlet extends HttpServlet {
 				request.setAttribute("marcas", cn.leerMarcas());
 				request.setAttribute("calidades", cn.leerCalidades());
 				request.setAttribute("productos", cn.leerProductos());
-
+				request.setAttribute("fichas", cn.leerFichas());
 				request.setAttribute("entradas", cn.leerEntradas());
-//				request.setAttribute("salidas", cn.leerSalidas());
-
+				request.setAttribute("salidas", cn.leerSalidas());
 				request.setAttribute("usuario", usuario);
-
-				request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-
+				
 				cn.cerrarConexion();
+				
+				request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 			}
 		} else {
 			response.sendRedirect("/login.do");
@@ -70,6 +83,8 @@ public class IndexServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		this.request = request;
+		this.response = response;
 		String accion = request.getParameter("accion");
 		String elemento = request.getParameter("elemento");
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
@@ -78,45 +93,34 @@ public class IndexServlet extends HttpServlet {
 		System.out.println("Elemento: " + elemento);
 		System.out.println("Código: " + codigo);
 
-		String calidad = request.getParameter("insertar-calidad");
-		Ubicacion ubicacion = null;
-		for (Ubicacion u : cn.leerUbicaciones()) {
-			String nombre = request.getParameter("insertar-ubicacion");
-			if (u.getNombre().equals(nombre)) {
-				ubicacion = u;
+		switch (elemento) {
+			case "entrada":
+				leerParametrosFicha();
+				leerParametrosEntradaSalida();
+				accionEntrada(accion, codigo);
 				break;
-			}
-		}
-		String proveedor = request.getParameter("insertar-proveedor");
-		String marca = request.getParameter("insertar-marca");
-		Producto producto = null;
-		for (Producto p : cn.leerProductos()) {
-			String nombre = request.getParameter("insertar-producto");
-			if (p.getNombre().equals(nombre)) {
-				producto = p;
+			case "salida":
+				accionSalida(accion, codigo);
 				break;
-			}
 		}
 
-		Date fecha = Date.valueOf(request.getParameter("insertar-fecha"));
-		Date caducidad = Date.valueOf(request.getParameter("insertar-caducidad"));
-		String lote = request.getParameter("insertar-lote");
-		BigDecimal unidades = new BigDecimal(request.getParameter("insertar-uds"));
-		BigDecimal capacidad = new BigDecimal(request.getParameter("insertar-cpcd"));
-		String g_ml = request.getParameter("insertar-g-ml");
-		Boolean residuo = (request.getParameter("insertar-residuo") != null);
-		
+		cn.cerrarConexion();
+		response.sendRedirect("/index.do?tabla=" + elemento);
+	}
+
+
+	private void accionEntrada(String accion, int codigo) {
 		Ficha ficha = null;
 		Entrada entrada = null;
-		if(accion.equals("insertar")) {
+		if (accion.equals("insertar")) {
 			ficha = cn.existeFicha(new Ficha(0, calidad, ubicacion, proveedor, marca, producto));
 			entrada = new Entrada(0, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo);
 			if (ficha.getCodficha() == 0) {
 				cn.insertarFicha(ficha);
 				ficha = cn.existeFicha(ficha);
 			}
-			
-		}else if(accion.equals("editar")) {
+
+		} else if (accion.equals("editar")) {
 			for (Entrada e : cn.leerEntradas()) {
 				if (e.getCodentrada() == codigo) {
 					ficha = e.getFicha();
@@ -125,10 +129,44 @@ public class IndexServlet extends HttpServlet {
 			}
 			entrada = new Entrada(codigo, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo);
 		}
-		
+
 		cn.insertarEntrada(entrada);
-		cn.cerrarConexion();
-		response.sendRedirect("/login.do");
+		
+	}
+	
+	private void accionSalida(String accion, int codigo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void leerParametrosFicha() {
+		calidad = request.getParameter("insertar-calidad");
+		for (Ubicacion u : cn.leerUbicaciones()) {
+			String nombre = request.getParameter("insertar-ubicacion");
+			if (u.getNombre().equals(nombre)) {
+				ubicacion = u;
+				break;
+			}
+		}
+		proveedor = request.getParameter("insertar-proveedor");
+		marca = request.getParameter("insertar-marca");
+		for (Producto p : cn.leerProductos()) {
+			String nombre = request.getParameter("insertar-producto");
+			if (p.getNombre().equals(nombre)) {
+				producto = p;
+				break;
+			}
+		}
+	}
+
+	private void leerParametrosEntradaSalida() {
+		fecha = Date.valueOf(request.getParameter("insertar-fecha"));
+		caducidad = Date.valueOf(request.getParameter("insertar-caducidad"));
+		lote = request.getParameter("insertar-lote");
+		unidades = new BigDecimal(request.getParameter("insertar-uds"));
+		capacidad = new BigDecimal(request.getParameter("insertar-cpcd"));
+		g_ml = request.getParameter("insertar-g-ml");
+		residuo = (request.getParameter("insertar-residuo") != null);
 	}
 
 }

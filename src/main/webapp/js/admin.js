@@ -20,12 +20,6 @@ function mostrarElemento(e){
 	document.getElementById("mostrarTabla").submit();
 }
 
-function cerrarSesion(){
-	document.getElementById("accion").value = "logout";
-	document.getElementById("opciones-usuario").submit();
-}
-
-
 function insertar() {
 	accion = "insertando";
 	codigo = "nuevo";

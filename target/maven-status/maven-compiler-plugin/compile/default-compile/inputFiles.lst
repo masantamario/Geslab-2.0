@@ -10,6 +10,7 @@ C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\admin\
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\servlets\RegistroServlet.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\user\Calidad.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\Conexion.java
+C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\servlets\CalidadesServlet.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\user\Salida.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\servlets\AdminServlet.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\user\Marca.java
@@ -17,3 +18,5 @@ C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\user\P
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\admin\Area.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\admin\Rol.java
 C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\database\user\Entrada.java
+C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\servlets\UbicacionesServlet.java
+C:\Users\masan\eclipse-workspace\Geslab-2.0\src\main\java\geslab\servlets\ProductosServlet.java
