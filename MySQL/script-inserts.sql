@@ -1,15 +1,12 @@
-INSERT INTO roles (rol) values ('Administrador'), ('Gestor'), ('Usuario');
 
 INSERT INTO usuarios (usuario, contrasena) VALUES ('admin', 'Y1ZAbRz18/ZxnLRt0CMMYA==');
-UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, area=1, fecha_creacion = NOW() WHERE idusuario = 1;
-
-INSERT INTO usuarios (usuario, contrasena) VALUES ('mario', 'npbXu0+HIDNUaTa5bTQI1g==');
-UPDATE usuarios SET nombre = 'Mario ', mail = 'mario@prueba.es', federada = 'true', activo = 'false', rol = 3, area=1, fecha_creacion = NOW() WHERE idusuario = 2;
 
 INSERT INTO dpto (nombre) values ('Química');
 INSERT INTO area (nombre, dpto) values ("Orgánica", 1);
 INSERT INTO centro (nombre) values ("Facultad de Ciencias");
-INSERT INTO centro (nombre) values ("EPS");
+
+UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, area=1, fecha_creacion = NOW() WHERE idusuario = 1;
+
 
 INSERT INTO calidad (nombre) VALUES ('Excelente'), ('Buena'), ('Normal'), ('Regular'), ('Pésima');
 INSERT INTO ubicacion (nombre, area, centro, oculta) VALUES ('Armario 1', 1, 1, 'False'), ('Armario 2', 1, 1, 'False'), ('Nevera', 1, 1, 'False'), ('Cajón', 1, 1, 'False'), ('Taquilla', 1, 1, 'True');
@@ -31,6 +28,11 @@ INSERT INTO entrada (ficha, fecha, lote, unidades, capacidad, g_ml) VALUES (2, N
 update entrada set g_ml = 'g' where ficha=1;
 
 
+SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion
+							FROM usuarios 
+                            INNER JOIN area ON usuarios.area = area.codarea
+							WHERE usuario = 'admin';
+                            
 select * from usuarios where usuario = 'admin';
 
 DELETE FROM usuarios WHERE idusuario>2;
@@ -41,7 +43,7 @@ select * from ubicacion;
 
 select * from dpto;
 
-select * from centro;
+select * from entrada;
 
 select * from area;
 

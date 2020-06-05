@@ -1,6 +1,13 @@
 var accion = "";
 var codigo = "";
 
+function inicializar() {
+	$("input").attr("spellcheck", "false");
+	$(document.body).on("click", "tr[data-fila]", function() {
+		mostrarExtraInfo(this.dataset.fila);
+	});
+}
+
 function insertar() {
 	accion = "insertar";
 	var campos = ["cas", "nombre", "formula", "f_des", "einecs", "ec", "precauciones"];
@@ -54,4 +61,23 @@ function filtrar(campo, col) {
 			}
 		}
 	}
+}
+
+function mostrarExtraInfo(codentrada) {
+	var campos = ["peso", "einecs", "ec"];
+	campos.forEach(function(valor, indice, array) {
+		document.getElementById("extra-info-" + valor).innerText = document
+				.getElementById(valor + "-" + codentrada).innerText;
+	});
+
+	document.getElementById("fila-tabla").style.height = "35%";
+	document.getElementById("fila-info").style.height = "65%";
+	document.getElementById("container-info").style.display = "";
+
+}
+
+function ocultarExtraInfo() {
+	document.getElementById("fila-tabla").style.height = "80%";
+	document.getElementById("fila-info").style.height = "20%";
+	document.getElementById("container-info").style.display = "none";
 }

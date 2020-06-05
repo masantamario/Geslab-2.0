@@ -1,7 +1,8 @@
 package geslab.servlets;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,13 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
 import geslab.database.admin.Usuario;
-import geslab.database.user.Producto;
+import geslab.database.user.Marca;
 
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet("/productos.do")
-public class ProductosServlet extends HttpServlet {
+@WebServlet("/marcas.do")
+public class MarcasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
@@ -27,9 +28,6 @@ public class ProductosServlet extends HttpServlet {
 	private HttpServletResponse response = null;
 	private Conexion cn = null;
 
-	// Variables producto
-	private String cas, nombre, formula, formula_des, n_einecs, n_ec, precauciones, msds;
-	private BigDecimal peso_mol;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,15 +38,16 @@ public class ProductosServlet extends HttpServlet {
 			if (usuario.getNombre().equals("")) {
 				response.sendRedirect("/registro.do");
 			} else {
-
+				
 				Conexion cn = new Conexion();
 
-				request.setAttribute("productos", cn.leerProductos());
+				request.setAttribute("marcas", cn.leerMarcas());
+				request.setAttribute("proveedores", cn.leerProveedores());
 				request.setAttribute("usuario", usuario);
-
+				
 				cn.cerrarConexion();
-
-				request.getRequestDispatcher("/WEB-INF/productos.jsp").forward(request, response);
+				
+				request.getRequestDispatcher("/WEB-INF/marcas.jsp").forward(request, response);
 			}
 		} else {
 			response.sendRedirect("/login.do");
@@ -60,6 +59,7 @@ public class ProductosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		this.request = request;
 		this.response = response;
+		
 		String accion = request.getParameter("accion");
 		String codigo = request.getParameter("codigo");
 		cn = new Conexion();
@@ -68,30 +68,20 @@ public class ProductosServlet extends HttpServlet {
 
 		switch (accion) {
 		case "insertar":
-			Producto producto = null;
-			leerParametrosProducto();
-			if (cn.leerProducto(cas) == null) {
-				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
-						msds);
-				cn.insertarProducto(producto);
-			}
+			String nombre = request.getParameter("insertar-nombre");
+			String tlfn = request.getParameter("insertar-tlfn");
+			String direccion = request.getParameter("insertar-direccion");
+			ArrayList<String> proveedores = new ArrayList<String>(Arrays.asList(request.getParameterValues("insertar-proveedores")));
+			
+			cn.insertarMarca(new Marca(0, nombre, tlfn, direccion, proveedores));
 			break;
 
 		}
 		cn.cerrarConexion();
-		response.sendRedirect("/productos.do");
+		response.sendRedirect("/marcas.do");
 	}
 
-	private void leerParametrosProducto() {
-		cas = request.getParameter("insertar-cas");
-		nombre = request.getParameter("insertar-nombre");
-		formula = request.getParameter("insertar-formula");
-		formula_des = request.getParameter("insertar-f_des");
-		peso_mol = new BigDecimal(request.getParameter("insertar-peso"));
-		n_einecs = request.getParameter("insertar-einecs");
-		n_ec = request.getParameter("insertar-ec");
-		precauciones = request.getParameter("insertar-precauciones");
-		msds = request.getParameter("insertar-msds");
-	}
+
+	
 
 }

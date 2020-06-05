@@ -66,9 +66,11 @@ CREATE TABLE producto(
 	cas varchar(12),
     formula char(30),
     form_desarrollada text,
+    peso_mol decimal(20, 9),
     numero_einecs varchar(9),
     numero_ec varchar(7),
     precauciones varchar(40) null,
+    msds text,
     constraint PK_producto primary key clustered (cas)
 );
 
@@ -123,10 +125,9 @@ CREATE TABLE proveedor(
 	codproveedor int auto_increment,
     nombre varchar(40),
     direccion varchar(40) null,
-    tfno char(9) null,
-    fax char(9) null,
+    tfno char(20) null,
+    fax char(20) null,
     email varchar(40) null,
-    contacto varchar(40) null,
     constraint PK_codproveedor primary key clustered (codproveedor),
     constraint UNQ_proveedor unique(nombre)
 );
@@ -134,8 +135,7 @@ CREATE TABLE proveedor(
 CREATE TABLE marca(
 	codmarca int auto_increment,
 	nombre char(20),
-    descripcion varchar(100),
-    telefono varchar(10),
+    telefono varchar(20),
     direccion varchar(100),
     constraint PK_marca primary key clustered(codmarca)
 );
@@ -146,51 +146,6 @@ CREATE TABLE prov_marca(
     constraint PK_prov_marca primary key clustered(proveedor, marca),
     constraint FK_proveedor_pm foreign key (proveedor) references proveedor(codproveedor),
     constraint FK_marca_pm foreign key (marca) references marca(codmarca)
-);
-
-CREATE TABLE ficha(
-	codficha int auto_increment,
-    calidad int,
-    ubicacion int,
-    proveedor int,
-    marca int,
-    producto varchar(12),
-    constraint PK_ficha primary key (codficha),
-    constraint FK_calidad_ficha foreign key (calidad) references calidad(codcalidad),
-    constraint FK_ubicacion_ficha foreign key (ubicacion) references ubicacion(codubicacion),
-    constraint FK_proveedor foreign key (proveedor) references prov_marca(proveedor),
-    constraint FK_marca_ficha foreign key (marca) references prov_marca(marca),
-    constraint FK_producto_ficha foreign key (producto) references producto(cas)
-);
-
-CREATE TABLE entrada (
-	codentrada int auto_increment,
-    ficha int,
-    fecha datetime,
-    fechacaducidad datetime null,
-    lote char(10) null,
-    unidades decimal(6),
-    capacidad decimal(11,4),
-    g_ml char(2),
-    residuo char(5),
-    constraint PK_entrada primary key (codentrada),
-    constraint FK_ficha_entrada foreign key (ficha) references ficha(codficha),
-    constraint CK_s_n_entrada check ((residuo = 'true') OR (residuo = 'false'))
-);
-
-CREATE TABLE salida(
-	codsalida int auto_increment,
-    ficha int,
-    fecha datetime,
-    fechacaducidad datetime null,
-    lote char(10) null,
-    unidades decimal(6),
-    capacidad decimal(11, 4),
-    g_ml char(2),
-    residuo char(5),
-    constraint PK_salida primary key (codsalida),
-    constraint FK_ficha_salida foreign key (ficha) references ficha(codficha),
-    constraint CK_s_n_salida check ((residuo = 'true') OR (residuo = 'false'))
 );
 
 CREATE TABLE usuarios(
@@ -211,3 +166,48 @@ CREATE TABLE usuarios(
     constraint CK_usuarios_act check ((activo = 'true') OR (activo = 'false')),
     constraint FK_usuarios_area foreign key (area) references area(codarea)
 );
+
+CREATE TABLE ficha(
+	codficha int auto_increment,
+    producto varchar(12),
+    capacidad decimal(11,4),
+    g_ml char(2),
+    calidad int,
+    ubicacion int,
+    marca int,
+    proveedor int,
+    fechacaducidad datetime null,
+    lote char(10) null,
+    residuo char(5),
+    stock int,
+    constraint PK_ficha primary key (codficha),
+    constraint FK_calidad_ficha foreign key (calidad) references calidad(codcalidad),
+    constraint FK_ubicacion_ficha foreign key (ubicacion) references ubicacion(codubicacion),
+    constraint FK_proveedor foreign key (proveedor) references prov_marca(proveedor),
+    constraint FK_marca_ficha foreign key (marca) references prov_marca(marca),
+    constraint FK_producto_ficha foreign key (producto) references producto(cas),
+    constraint CK_s_n_entrada check ((residuo = 'true') OR (residuo = 'false'))
+);
+
+CREATE TABLE entrada (
+	codentrada int auto_increment,
+    ficha int,
+    unidades decimal(6),
+    fecha datetime,
+    usuario int,
+    constraint PK_entrada primary key (codentrada),
+    constraint FK_ficha_entrada foreign key (ficha) references ficha(codficha),
+    constraint FK_usuario_entrada foreign key (usuario) references usuarios(idusuario)
+);
+
+CREATE TABLE salida(
+	codsalida int auto_increment,
+    ficha int,
+	unidades decimal(6),
+    fecha datetime,
+    usuario int,
+    constraint PK_salida primary key (codsalida),
+    constraint FK_ficha_salida foreign key (ficha) references ficha(codficha),
+    constraint FK_usuario_salida foreign key (usuario) references usuarios(idusuario)
+);
+

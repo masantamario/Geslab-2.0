@@ -136,21 +136,31 @@ public class Conexion {
 		Ficha ficha = null;
 
 		try {
-			pstm = conexion.prepareStatement("select * from ficha\r\n"
-					+ "where calidad = (select codcalidad from calidad where nombre = ?) AND\r\n"
-					+ "ubicacion = ? AND\r\n"
-					+ "proveedor = (select codproveedor from proveedor where nombre = ?) AND\r\n"
-					+ "marca = (select codmarca from marca where nombre = ?) AND\r\n" + "producto = ?");
-			pstm.setString(1, f.getCalidad());
-			pstm.setInt(2, f.getUbicacion().getCodubicacion());
-			pstm.setString(3, f.getProveedor());
-			pstm.setString(4, f.getMarca());
-			pstm.setString(5, f.getProducto().getCas());
+			pstm = conexion
+					.prepareStatement("select * from ficha where producto = ? AND capacidad = ? AND\r\n"
+							+ "g_ml = ? AND\r\n" + "calidad = (select codcalidad from calidad where nombre = ?) AND\r\n"
+							+ "ubicacion = ? AND\r\n" + "marca = (select codmarca from marca where nombre = ?) AND\r\n"
+							+ "proveedor = (select codproveedor from proveedor where nombre = ?) AND\r\n"
+							+ "fechacaducidad = ? AND\r\n" + "lote = ? AND\r\n" + "residuo = ?");
+			pstm.setString(1, f.getProducto().getCas());
+			pstm.setDouble(2, f.getCapacidad().doubleValue());
+			pstm.setString(3, f.getG_ml());
+			pstm.setString(4, f.getCalidad());
+			pstm.setInt(5, f.getUbicacion().getCodubicacion());
+			pstm.setString(6, f.getMarca());
+			pstm.setString(7, f.getProveedor());
+			pstm.setDate(8, f.getCaducidadIns());
+			pstm.setString(9, f.getLote());
+			pstm.setString(10, Boolean.toString(f.isResiduo()));
+
 			rs = pstm.executeQuery();
+			
+			if(rs.next()) {
+				ficha = new Ficha(rs.getInt("codficha"), f.getProducto(), f.getCapacidad(), f.getG_ml(), f.getCalidad(), f.getUbicacion(),
+						f.getMarca(), f.getProveedor(), f.getCaducidadIns(), f.getLote(), f.isResiduo(), rs.getInt("stock"));
+			}
 
-			int cod = rs.next() ? rs.getInt("codficha") : 0;
-
-			ficha = new Ficha(cod, f.getCalidad(), f.getUbicacion(), f.getProveedor(), f.getMarca(), f.getProducto());
+			
 		} catch (SQLException e) {
 			printSQLException(e, "EXISTE FICHA");
 		} finally {
@@ -205,11 +215,14 @@ public class Conexion {
 				String formula = rs.getString("formula");
 				String formula_des = rs.getString("form_desarrollada");
 				String n_einecs = rs.getString("numero_einecs");
+				BigDecimal peso_mol = rs.getBigDecimal("peso_mol");
 				String n_ec = rs.getString("numero_ec");
 				String precauciones = rs.getString("precauciones");
 				String nombre = rs.getString("nombre");
+				String msds = rs.getString("msds");
 
-				producto = new Producto(cas, nombre, formula, formula_des, n_einecs, n_ec, precauciones);
+				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
+						msds);
 			}
 		} catch (SQLException e) {
 			printSQLException(e, "LEER PRODUCTO");
@@ -389,21 +402,28 @@ public class Conexion {
 
 		try {
 			pstm = conexion.prepareStatement(
-					"select codficha, calidad.nombre AS calidad, ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, producto \r\n"
-							+ "from ficha\r\n" + "inner join calidad on ficha.calidad = calidad.codcalidad\r\n"
+					"select codficha, capacidad, g_ml, fechacaducidad, lote, residuo, stock, calidad.nombre AS calidad, ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, producto \r\n"
+							+ "from ficha inner join calidad on ficha.calidad = calidad.codcalidad\r\n"
 							+ "inner join proveedor on ficha.proveedor = proveedor.codproveedor\r\n"
 							+ "inner join marca on ficha.marca = marca.codmarca");
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
 				int cod = rs.getInt("codficha");
+				Producto producto = leerProducto(rs.getString("producto"));
+				BigDecimal capacidad = rs.getBigDecimal("capacidad");
+				String g_ml = rs.getString("g_ml");
 				String calidad = rs.getString("calidad");
 				Ubicacion ubicacion = leerUbicacion(rs.getInt("ubicacion"));
-				String proveedor = rs.getString("proveedor");
 				String marca = rs.getString("marca");
-				Producto producto = leerProducto(rs.getString("producto"));
+				String proveedor = rs.getString("proveedor");
+				Date caducidad = rs.getDate("fechacaducidad");
+				String lote = rs.getString("lote");
+				Boolean residuo = rs.getBoolean("residuo");
+				int stock = rs.getInt("stock");
 
-				fichas.add(new Ficha(cod, calidad, ubicacion, proveedor, marca, producto));
+				fichas.add(new Ficha(cod, producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, caducidad,
+						lote, residuo, stock));
 			}
 
 		} catch (SQLException e) {
@@ -442,6 +462,7 @@ public class Conexion {
 	public ArrayList<Proveedor> leerProveedores() {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
+		
 		ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
 
 		try {
@@ -455,9 +476,9 @@ public class Conexion {
 				String telefono = rs.getString("tfno");
 				String fax = rs.getString("fax");
 				String mail = rs.getString("email");
-				String contacto = rs.getString("contacto");
-
-				proveedores.add(new Proveedor(cod, nombre, direccion, telefono, fax, mail, contacto));
+				ArrayList<String> marcas = leerMarcasProveedor(cod);
+				
+				proveedores.add(new Proveedor(cod, nombre, direccion, telefono, fax, mail, marcas));
 			}
 
 		} catch (SQLException e) {
@@ -468,6 +489,34 @@ public class Conexion {
 		}
 
 		return proveedores;
+	}
+	
+	public ArrayList<String> leerMarcasProveedor(int cod){
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		ArrayList<String> marcas = new ArrayList<String>();
+
+		try {
+			pstm = conexion.prepareStatement("select marca.nombre as marca, proveedor.nombre as proveedor from prov_marca\r\n" + 
+					"inner join proveedor on proveedor.codproveedor = prov_marca.proveedor\r\n" + 
+					"inner join marca on marca.codmarca = prov_marca.marca\r\n" + 
+					"where proveedor.codproveedor = ?;");
+			pstm.setInt(1, cod);
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				marcas.add(rs.getString("marca"));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER MARCAS PROVEEDOR");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerMarcasProveedor");
+		}
+
+		return marcas;
 	}
 
 	public ArrayList<Marca> leerMarcas() {
@@ -482,11 +531,11 @@ public class Conexion {
 			while (rs.next()) {
 				int cod = rs.getInt("codmarca");
 				String nombre = rs.getString("nombre");
-				String descripcion = rs.getString("descripcion");
 				String telefono = rs.getString("telefono");
 				String direccion = rs.getString("direccion");
-
-				marcas.add(new Marca(cod, nombre, descripcion, telefono, direccion));
+				ArrayList<String> proveedores = leerProovedoresMarca(cod);
+				
+				marcas.add(new Marca(cod, nombre, telefono, direccion, proveedores));
 			}
 
 		} catch (SQLException e) {
@@ -498,6 +547,35 @@ public class Conexion {
 
 		return marcas;
 	}
+	
+	public ArrayList<String> leerProovedoresMarca(int cod){
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		ArrayList<String> proveedores = new ArrayList<String>();
+
+		try {
+			pstm = conexion.prepareStatement("select marca.nombre as marca, proveedor.nombre as proveedor from prov_marca\r\n" + 
+					"inner join proveedor on proveedor.codproveedor = prov_marca.proveedor\r\n" + 
+					"inner join marca on marca.codmarca = prov_marca.marca\r\n" + 
+					"where marca.codmarca = ?;");
+			pstm.setInt(1, cod);
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				proveedores.add(rs.getString("proveedor"));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PROVEEDORes MARCA");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerProveedoresMarca");
+		}
+
+		return proveedores;
+	}
+	
 
 	public ArrayList<Calidad> leerCalidades() {
 		PreparedStatement pstm = null;
@@ -524,91 +602,91 @@ public class Conexion {
 		return calidades;
 	}
 
-	public ArrayList<Entrada> leerEntradasFicha(Ficha ficha) {
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
+//	public ArrayList<Entrada> leerEntradasFicha(Ficha ficha) {
+//		PreparedStatement pstm = null;
+//		ResultSet rs = null;
+//		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
+//
+//		try {
+//			pstm = conexion.prepareStatement("select * from entrada where ficha=?");
+//			pstm.setInt(1, ficha.getCodficha());
+//			rs = pstm.executeQuery();
+//
+//			while (rs.next()) {
+//				int codentrada = rs.getInt("codentrada");
+//				Date fecha = rs.getDate("fecha");
+//				Date caducidad = rs.getDate("fechacaducidad");
+//				String lote = rs.getString("lote");
+//				BigDecimal unidades = rs.getBigDecimal("unidades");
+//				BigDecimal capacidad = rs.getBigDecimal("capacidad");
+//				String g_ml = rs.getString("g_ml");
+//				Boolean residuo = rs.getBoolean("residuo");
+////				Boolean.toString(u.getFederada()));
+//
+//				entradas.add(
+//						new Entrada(codentrada, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
+//			}
+//
+//		} catch (SQLException e) {
+//			printSQLException(e, "LEER ENTRADAS-FICHA");
+//
+//		} finally {
+//			cerrarRsPstm(rs, pstm, "leerEntradasFicha");
+//		}
+//
+//		return entradas;
+//	}
+//
+//	public ArrayList<Salida> leerSalidasFicha(Ficha ficha) {
+//		PreparedStatement pstm = null;
+//		ResultSet rs = null;
+//		ArrayList<Salida> salidas = new ArrayList<Salida>();
+//
+//		try {
+//			pstm = conexion.prepareStatement("select * from salida where ficha=?");
+//			pstm.setInt(1, ficha.getCodficha());
+//			rs = pstm.executeQuery();
+//
+//			while (rs.next()) {
+//				int codsalida = rs.getInt("codsalida");
+//				Date fecha = rs.getDate("fecha");
+//				Date caducidad = rs.getDate("fechacaducidad");
+//				String lote = rs.getString("lote");
+//				BigDecimal unidades = rs.getBigDecimal("unidades");
+//				BigDecimal capacidad = rs.getBigDecimal("capacidad");
+//				String g_ml = rs.getString("g_ml");
+//				Boolean residuo = rs.getBoolean("residuo");
+//
+//				salidas.add(new Salida(codsalida, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
+//			}
+//
+//		} catch (SQLException e) {
+//			printSQLException(e, "LEER SALIDAS-FICHA");
+//
+//		} finally {
+//			cerrarRsPstm(rs, pstm, "leerSalidasFicha");
+//		}
+//
+//		return salidas;
+//	}
 
-		try {
-			pstm = conexion.prepareStatement("select * from entrada where ficha=?");
-			pstm.setInt(1, ficha.getCodficha());
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				int codentrada = rs.getInt("codentrada");
-				Date fecha = rs.getDate("fecha");
-				Date caducidad = rs.getDate("fechacaducidad");
-				String lote = rs.getString("lote");
-				BigDecimal unidades = rs.getBigDecimal("unidades");
-				BigDecimal capacidad = rs.getBigDecimal("capacidad");
-				String g_ml = rs.getString("g_ml");
-				Boolean residuo = rs.getBoolean("residuo");
-//				Boolean.toString(u.getFederada()));
-
-				entradas.add(
-						new Entrada(codentrada, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
-			}
-
-		} catch (SQLException e) {
-			printSQLException(e, "LEER ENTRADAS-FICHA");
-
-		} finally {
-			cerrarRsPstm(rs, pstm, "leerEntradasFicha");
-		}
-
-		return entradas;
-	}
-
-	public ArrayList<Salida> leerSalidasFicha(Ficha ficha) {
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		ArrayList<Salida> salidas = new ArrayList<Salida>();
-
-		try {
-			pstm = conexion.prepareStatement("select * from salida where ficha=?");
-			pstm.setInt(1, ficha.getCodficha());
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				int codsalida = rs.getInt("codsalida");
-				Date fecha = rs.getDate("fecha");
-				Date caducidad = rs.getDate("fechacaducidad");
-				String lote = rs.getString("lote");
-				BigDecimal unidades = rs.getBigDecimal("unidades");
-				BigDecimal capacidad = rs.getBigDecimal("capacidad");
-				String g_ml = rs.getString("g_ml");
-				Boolean residuo = rs.getBoolean("residuo");
-
-				salidas.add(new Salida(codsalida, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo));
-			}
-
-		} catch (SQLException e) {
-			printSQLException(e, "LEER SALIDAS-FICHA");
-
-		} finally {
-			cerrarRsPstm(rs, pstm, "leerSalidasFicha");
-		}
-
-		return salidas;
-	}
-
-	public ArrayList<Entrada> leerEntradas() {
-		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
-		ArrayList<Ficha> fichas = leerFichas();
-		for (Ficha f : fichas) {
-			entradas.addAll(leerEntradasFicha(f));
-		}
-		return entradas;
-	}
-
-	public ArrayList<Salida> leerSalidas() {
-		ArrayList<Salida> salidas = new ArrayList<Salida>();
-		ArrayList<Ficha> fichas = leerFichas();
-		for (Ficha f : fichas) {
-			salidas.addAll(leerSalidasFicha(f));
-		}
-		return salidas;
-	}
+//	public ArrayList<Entrada> leerEntradas() {
+//		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
+//		ArrayList<Ficha> fichas = leerFichas();
+//		for (Ficha f : fichas) {
+//			entradas.addAll(leerEntradasFicha(f));
+//		}
+//		return entradas;
+//	}
+//
+//	public ArrayList<Salida> leerSalidas() {
+//		ArrayList<Salida> salidas = new ArrayList<Salida>();
+//		ArrayList<Ficha> fichas = leerFichas();
+//		for (Ficha f : fichas) {
+//			salidas.addAll(leerSalidasFicha(f));
+//		}
+//		return salidas;
+//	}
 
 	public boolean insertarCentro(Centro c) {
 		PreparedStatement pstm = null;
@@ -704,15 +782,22 @@ public class Conexion {
 
 		try {
 			pstm = conexion
-					.prepareStatement("INSERT INTO ficha(calidad, ubicacion, proveedor, marca, producto) VALUES (\r\n"
-							+ "(select codcalidad from calidad where nombre = ?),\r\n" + "?,\r\n"
-							+ "(select codproveedor from proveedor where nombre = ?), \r\n"
-							+ "(select codmarca from marca where nombre = ?),\r\n" + "?)");
-			pstm.setString(1, f.getCalidad());
-			pstm.setInt(2, f.getUbicacion().getCodubicacion());
-			pstm.setString(3, f.getProveedor());
-			pstm.setString(4, f.getMarca());
-			pstm.setString(5, f.getProducto().getCas());
+					.prepareStatement("INSERT INTO ficha(producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, fechacaducidad, lote, residuo, stock) VALUES"
+							+ "(?, ?, ?, (select codcalidad from calidad where nombre = ?), ?,"
+							+ "(select codmarca from marca where nombre = ?),"
+							+ "(select codproveedor from proveedor where nombre = ?), ?, ?, ?, ?)");
+			pstm.setString(1, f.getProducto().getCas());
+			pstm.setBigDecimal(2, f.getCapacidad());
+			pstm.setString(3, f.getG_ml());
+			pstm.setString(4, f.getCalidad());
+			pstm.setInt(5, f.getUbicacion().getCodubicacion());
+			pstm.setString(6, f.getMarca());
+			pstm.setString(7, f.getProveedor());
+			pstm.setDate(8, f.getCaducidadIns());
+			pstm.setString(9, f.getLote());
+			pstm.setString(10, Boolean.toString(f.isResiduo()));
+			pstm.setInt(11, f.getStock());
+			
 			pstm.executeUpdate();
 
 		} catch (SQLException e) {
@@ -729,27 +814,166 @@ public class Conexion {
 		boolean correcto = false;
 		if (e.getCodentrada() == 0) {
 			try {
-				pstm = conexion.prepareStatement(
-						"INSERT INTO entrada (ficha, fecha, fechacaducidad, lote, unidades, capacidad, g_ml, residuo) values (?, ?, ?, ?, ?, ?, ?, ?)");
+				pstm = conexion
+						.prepareStatement("INSERT INTO entrada (ficha, fecha, unidades, usuario) values (?, ?, ?, ?)");
 				pstm.setInt(1, e.getFicha().getCodficha());
 				pstm.setDate(2, new Date(e.getFechaIns().getTime()));
-				pstm.setDate(3, new Date(e.getCaducidadIns().getTime()));
-				pstm.setString(4, e.getLote());
-				pstm.setDouble(5, e.getUnidades().doubleValue());
-				pstm.setDouble(6, e.getCapacidad().doubleValue());
-				pstm.setString(7, e.getG_ml());
-				pstm.setString(8, Boolean.toString(e.isResiduo()));
-
+				pstm.setInt(3, e.getUnidades());
+				pstm.setInt(4, e.getUsuario());
 				pstm.executeUpdate();
 
 			} catch (SQLException ex) {
 				printSQLException(ex, "INSERTAR ENTRADA");
 			} finally {
-				cerrarRsPstm(null, pstm, "insertareNTRADA");
+				cerrarRsPstm(null, pstm, "insertarEntrada");
 			}
 		} else {
-			correcto = updateEntrada(e);
+//			correcto = updateEntrada(e);
 		}
+		return correcto;
+	}
+
+	public boolean insertarProducto(Producto p) {
+		PreparedStatement pstm = null;
+		PreparedStatement pstm2 = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"INSERT INTO producto (cas, formula, form_desarrollada, peso_mol, numero_einecs, numero_ec, precauciones, msds) values (?, ?, ?, ?, ?, ?, ?, ?)");
+			pstm.setString(1, p.getCas());
+			pstm.setString(2, p.getFormula());
+			pstm.setString(3, p.getFormula_des());
+			pstm.setBigDecimal(4, p.getPeso_mol());
+			pstm.setString(5, p.getN_einecs());
+			pstm.setString(6, p.getN_ec());
+			pstm.setString(7, p.getPrecauciones());
+			pstm.setString(8, p.getMsds());
+
+			pstm.executeUpdate();
+
+			pstm2 = conexion.prepareStatement("INSERT INTO nombre_producto (cas, nombre) values (?, ?)");
+			pstm2.setString(1, p.getCas());
+			pstm2.setString(2, p.getNombre());
+
+			pstm2.executeUpdate();
+
+		} catch (SQLException ex) {
+			printSQLException(ex, "INSERTAR PRODUCTO");
+		} finally {
+			cerrarRsPstm(null, pstm, "insertarProducto");
+			cerrarRsPstm(null, pstm2, "insertarNombreProducto");
+		}
+
+		return correcto;
+	}
+
+	public boolean insertarCalidad(Calidad c) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement("INSERT INTO calidad (nombre) values (?)");
+			pstm.setString(1, c.getNombre());
+
+			pstm.executeUpdate();
+
+		} catch (SQLException ex) {
+			printSQLException(ex, "INSERTAR CALIDAD");
+		} finally {
+			cerrarRsPstm(null, pstm, "insertarCalidad");
+		}
+
+		return correcto;
+	}
+	
+	public boolean insertarUbicacion(Ubicacion u) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"INSERT INTO ubicacion (nombre, area, centro, oculta) values (?, (select codarea from area where nombre = ?), (select codcentro from centro where nombre = ?), ?)");
+			pstm.setString(1, u.getNombre());
+			pstm.setString(2, u.getArea());
+			pstm.setString(3, u.getCentro());
+			pstm.setString(4, Boolean.toString(u.isOculta()));
+
+			pstm.executeUpdate();
+
+		} catch (SQLException ex) {
+			printSQLException(ex, "INSERTAR UBICACION");
+		} finally {
+			cerrarRsPstm(null, pstm, "insertarUbicacion");
+		}
+
+		return correcto;
+	}
+	
+	public boolean insertarMarca(Marca m) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"INSERT INTO marca (nombre, telefono, direccion) values (?, ?, ?)");
+			pstm.setString(1, m.getNombre());
+			pstm.setString(2, m.getTelefono());
+			pstm.setString(3, m.getDireccion());
+			pstm.executeUpdate();
+			
+			for(String p: m.getProveedores()) {
+				insertarProvMarca(p, m.getNombre());
+			}
+
+		} catch (SQLException ex) {
+			printSQLException(ex, "INSERTAR MARCA");
+		} finally {
+			cerrarRsPstm(null, pstm, "insertarMarca");
+		}
+
+		return correcto;
+	}
+	
+	public boolean insertarProveedor(Proveedor p) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"INSERT INTO proveedor (nombre, direccion, tfno, fax, email) values (?, ?, ?, ?, ?)");
+			pstm.setString(1, p.getNombre());
+			pstm.setString(2, p.getDireccion());
+			pstm.setString(3, p.getTelefono());
+			pstm.setString(4, p.getFax());
+			pstm.setString(5, p.getEmail());
+			pstm.executeUpdate();
+			
+			for(String m: p.getMarcas()) {
+				insertarProvMarca(p.getNombre(), m);
+			}
+
+		} catch (SQLException ex) {
+			printSQLException(ex, "INSERTAR PROVEEDOR");
+		} finally {
+			cerrarRsPstm(null, pstm, "insertarProveedor");
+		}
+
+		return correcto;
+	}
+	
+	public boolean insertarProvMarca(String p, String m) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"INSERT INTO prov_marca (proveedor, marca) values ((select codproveedor from proveedor where nombre=?), (select codmarca from marca where nombre=?))");
+			pstm.setString(1, p);
+			pstm.setString(2, m);
+
+			pstm.executeUpdate();
+
+		} catch (SQLException ex) {
+			printSQLException(ex, "INSERTAR ProvMarca");
+		} finally {
+			cerrarRsPstm(null, pstm, "insertarProvMarca");
+		}
+
 		return correcto;
 	}
 
@@ -830,31 +1054,30 @@ public class Conexion {
 		return correcto;
 	}
 
-	public boolean updateEntrada(Entrada e) {
-		PreparedStatement pstm = null;
-		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement(
-					"UPDATE entrada SET fecha = ?, fechacaducidad = ?, lote = ?, unidades=?, capacidad=?, g_ml=?, residuo=? WHERE codentrada= ?");
-			pstm.setDate(1, e.getFechaIns());
-			pstm.setDate(2, e.getCaducidadIns());
-			pstm.setString(3, e.getLote());
-			pstm.setBigDecimal(4, e.getUnidades());
-			pstm.setBigDecimal(5, e.getCapacidad());
-			pstm.setString(6, e.getG_ml());
-			pstm.setString(7, String.valueOf(e.isResiduo()));
-			pstm.setInt(8, e.getCodentrada());
-
-			pstm.executeUpdate();
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "UPDATE ENTRADA");
-		} finally {
-			cerrarRsPstm(null, pstm, "updateEntrada");
-		}
-		return correcto;
-	}
-
+//	public boolean updateEntrada(Entrada e) {
+//		PreparedStatement pstm = null;
+//		boolean correcto = false;
+//		try {
+//			pstm = conexion.prepareStatement(
+//					"UPDATE entrada SET fecha = ?, fechacaducidad = ?, lote = ?, unidades=?, capacidad=?, g_ml=?, residuo=? WHERE codentrada= ?");
+//			pstm.setDate(1, e.getFechaIns());
+//			pstm.setDate(2, e.getCaducidadIns());
+//			pstm.setString(3, e.getLote());
+//			pstm.setBigDecimal(4, e.getUnidades());
+//			pstm.setBigDecimal(5, e.getCapacidad());
+//			pstm.setString(6, e.getG_ml());
+//			pstm.setString(7, String.valueOf(e.isResiduo()));
+//			pstm.setInt(8, e.getCodentrada());
+//
+//			pstm.executeUpdate();
+//
+//		} catch (SQLException ex) {
+//			printSQLException(ex, "UPDATE ENTRADA");
+//		} finally {
+//			cerrarRsPstm(null, pstm, "updateEntrada");
+//		}
+//		return correcto;
+//	}
 
 	public boolean cambiarContrasena(Usuario u, String p) {
 		PreparedStatement pstm = null;

@@ -1,20 +1,40 @@
+var elemento = "entrada";
 var accion = "";
 var codigo = "";
 
-function inicializar() {
+function inicializar(e) {
+	elemento = e;
+	document.getElementById("boton-tabla__insertar").innerText = "Nueva "
+			+ elemento
+	$('#bt-' + elemento + 's').addClass('fila-pestanas__pestana--active');
 	$("input").attr("spellcheck", "false");
+
 	$(document.body).on("click", "tr[data-fila]", function() {
 		mostrarExtraInfo(this.dataset.fila);
 	});
+
+}
+
+function mostrarElemento(e) {
+	elemento = e;
+	document.getElementById("tabla").value = e;
+	document.getElementById("mostrarTabla").submit();
 }
 
 function insertar() {
 	accion = "insertar";
-	document.getElementById("tituloModal").innerText = "Nueva ficha";
-	$("#modalFicha").modal();
+	var campos = ["producto", "uds", "cpcd", "g-ml", "ubicacion",
+		"marca", "proveedor", "calidad", "lote", "caducidad", "residuo"];
+	campos.forEach(function(valor, indice, array) {
+		document.getElementById("insertar-" + valor).value = "";
+	});
+	document.getElementById('insertar-fecha').valueAsDate = new Date();
+	document.getElementById("tituloModal").innerText = "Nueva " + elemento;
+	$("#modalEntrada").modal();
 }
 
 function editar(cod) {
+	
 	accion = "editar";
 	codigo = cod;
 	var campos = ["producto", "uds", "cpcd", "g-ml", "ubicacion",
@@ -36,7 +56,7 @@ function editar(cod) {
 	});
 	
 	document.getElementById("tituloModal").innerText = "Editar " + elemento + " (#" + cod +")";
-	$("#modalFicha").modal();
+	$("#modalEntrada").modal();
 	ocultarExtraInfo();
 }
 
@@ -46,13 +66,14 @@ function cancelar() {
 	camposFicha.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).disabled = false;
 	});
-	$("#modalFicha").modal("hide");
+	$("#modalEntrada").modal("hide");
 }
 
 function confirmar() {
 	document.getElementById("accion").value = accion;
+	document.getElementById("elemento").value = elemento;
 	document.getElementById("codigo").value = codigo;
-	document.getElementById("insertar-ficha").submit();
+	document.getElementById("insertar-entrada").submit();
 }
 
 function filtrarFecha() {
@@ -114,7 +135,9 @@ function filtrar(campo, col) {
 }
 
 function mostrarExtraInfo(codentrada) {
-	var campos = ["lote", "residuo"];
+	var campos = [ "cas", "formula", "peso", "einecs", "ec", "calidad",
+			"residuo", "dpto", "centro", "peligro", "prudencia",
+			"oculto" ];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("extra-info-" + valor).innerText = document
 				.getElementById(valor + "-" + codentrada).innerText;

@@ -1,25 +1,30 @@
 package geslab.database.user;
 
-	public class Producto{
+import java.math.BigDecimal;
+
+public class Producto{
 		private String cas;
 		private String nombre;
 		private String formula;
 		private String formula_des;
+		private BigDecimal peso_mol;
 		private String n_einecs;
 		private String n_ec;
 		private String precauciones;
-		private int peso_mol;
+		private String msds;
 		
-		public Producto(String cas, String nombre, String formula, String formula_des, String n_einecs, String n_ec,
-				String precauciones) {
+		
+		public Producto(String cas, String nombre, String formula, String formula_des, BigDecimal peso_mol, String n_einecs, String n_ec,
+				String precauciones, String msds) {
 			this.cas = cas;
 			this.nombre = nombre;
 			this.formula = formula;
 			this.formula_des = formula_des;
+			this.peso_mol = peso_mol;
 			this.n_einecs = n_einecs;
 			this.n_ec = n_ec;
 			this.precauciones = precauciones;
-			this.peso_mol = 0;
+			this.msds = msds;
 			
 		}
 
@@ -51,8 +56,12 @@ package geslab.database.user;
 			return precauciones;
 		}
 
-		public int getPeso_mol() {
+		public BigDecimal getPeso_mol() {
 			return peso_mol;
+		}
+
+		public String getMsds() {
+			return msds;
 		}
 		
 }

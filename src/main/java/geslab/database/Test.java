@@ -1,5 +1,6 @@
 package geslab.database;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -45,52 +46,57 @@ public class Test {
 //			System.out.println(r.getRol());
 //		}
 		
-		int id = 0;
-		String nombre = "";
-		int rol = 3;
-		String area = "Matematicas";
+//		int id = 0;
+//		String nombre = "";
+//		int rol = 3;
+//		String area = "Matematicas";
+//		
+//		
+//		
+//		Usuario u1 = new Usuario(1, "Mario", 3, "Química", true, true);
+//		Usuario u2 = new Usuario(2, "Carla", 1, "Matematicas", true, true);
+//		Usuario u3 = new Usuario(3, "Isma", 2, "Ciencias", true, true);
+//		Usuario u4 = new Usuario(4, "Luisete", 3, "Matematicas", true, true);
+//
+//        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+//        usuarios.add(u1);
+//        usuarios.add(u2);
+//        usuarios.add(u3);
+//        usuarios.add(u4);
+//        
+//
+//        ArrayList<Usuario> filtrado = new ArrayList<Usuario>();
+//        for (Usuario u: usuarios) {
+//        	boolean valido = true;
+//            
+//        	if(id != 0 && u.getIdusuario() != id) {
+//        		valido = false;
+//        		System.out.println("No coincide ID");
+//        	}
+//        	if(!nombre.equals("") && !u.getUsuario().equals(nombre)) {
+//        		valido = false;
+//        		System.out.println("No coincide Usuario");
+//        	}
+//        	if(rol != 0 && u.getRol().getId() != rol) {
+//        		valido = false;
+//        		System.out.println("No coincide Rol");
+//        	}
+//        	if(!area.equals("") && !u.getArea().equals(area)) {
+//        		valido = false;
+//        		System.out.println("No coincide Area");
+//        	}
+//        	
+//        	if(valido) filtrado.add(u);
+//        		
+//        }
+//
+//        System.out.println(filtrado);
 		
+		String n = "4.002602";
+		BigDecimal b = new BigDecimal(n);
 		
+		System.out.println(b);
 		
-		Usuario u1 = new Usuario(1, "Mario", 3, "Química", true, true);
-		Usuario u2 = new Usuario(2, "Carla", 1, "Matematicas", true, true);
-		Usuario u3 = new Usuario(3, "Isma", 2, "Ciencias", true, true);
-		Usuario u4 = new Usuario(4, "Luisete", 3, "Matematicas", true, true);
-
-        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-        usuarios.add(u1);
-        usuarios.add(u2);
-        usuarios.add(u3);
-        usuarios.add(u4);
-        
-
-        ArrayList<Usuario> filtrado = new ArrayList<Usuario>();
-        for (Usuario u: usuarios) {
-        	boolean valido = true;
-            
-        	if(id != 0 && u.getIdusuario() != id) {
-        		valido = false;
-        		System.out.println("No coincide ID");
-        	}
-        	if(!nombre.equals("") && !u.getUsuario().equals(nombre)) {
-        		valido = false;
-        		System.out.println("No coincide Usuario");
-        	}
-        	if(rol != 0 && u.getRol().getId() != rol) {
-        		valido = false;
-        		System.out.println("No coincide Rol");
-        	}
-        	if(!area.equals("") && !u.getArea().equals(area)) {
-        		valido = false;
-        		System.out.println("No coincide Area");
-        	}
-        	
-        	if(valido) filtrado.add(u);
-        		
-        }
-
-        System.out.println(filtrado);
-
 	}
 	
 }

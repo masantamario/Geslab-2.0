@@ -3,47 +3,57 @@ var codigo = "";
 
 function insertar() {
 	accion = "insertar";
-	var campos = ["nombre", "centro", "oculta"];
+	var campos = ["nombre", "tlfn", "direccion"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = "";
 	});
-	document.getElementById("tituloModal").innerText = "Nueva ubicacion"
-	$("#modalUbicacion").modal();
+	selector = document.getElementById("insertar-proveedores");
+	opt =  selector.getElementsByTagName("option");
+	for (i = 0; i < opt.length; i++) {
+		opt[i].selected = false;
+	}
+	document.getElementById("tituloModal").innerText = "Nueva marca"
+	$("#modalMarca").modal();
 }
 
-function editar(cod) {
+function editar(cod, proovedores) {
 	accion = "editar";
 	codigo = cod;
-	var campos = ["nombre", "centro"];
+	var campos = ["nombre", "tlfn", "direccion"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = document
 				.getElementById(valor + "-" + cod).innerText;
 	});
 	
-	if(document.getElementById("oculta-"+cod).innerText == "Si"){
-		document.getElementById("insertar-oculta").checked = true;
+	selector = document.getElementById("insertar-proveedores");
+	opt =  selector.getElementsByTagName("option");
+	for (i = 0; i < opt.length; i++) {
+		opt[i].selected = false;
 	}
-
-	document.getElementById("tituloModal").innerText = "Editar ubicacion (#"+cod+")";
-	$("#modalUbicacion").modal();
+	proovedores.forEach(function(valor, indice, array) {
+		valor.selected = true;
+	});
+	
+	document.getElementById("tituloModal").innerText = "Editar marca (#"+cod+")";
+	$("#modalMarca").modal();
 }
 
 function cancelar() {
 	accion = "";
-	$("#modalUbicacion").modal("hide");
+	$("#modalMarca").modal("hide");
 }
 
 function confirmar() {
 	document.getElementById("accion").value = accion;
 	document.getElementById("codigo").value = codigo;
-	document.getElementById("insertar-ubicacion").submit();
+	document.getElementById("insertar-marca").submit();
 }
 
 function filtrar(campo, col) {
 	var input, filter, table, tr, td, i, txtValue;
 	input = document.getElementById("filtro-" + campo);
 	filtro = input.value.toUpperCase();
-	tabla = document.getElementById("tabla-ubicaciones");
+	tabla = document.getElementById("tabla-marcas");
 	tr = tabla.getElementsByTagName("tr");
 
 	for (i = 0; i < tr.length; i++) {

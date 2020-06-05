@@ -222,32 +222,32 @@
 											 <%if(tabla.equals("entrada")){ %>
 											 	<%for (Entrada e : entradas) {%>
 											 		<tr data-fila=<%=e.getCodentrada()%>>
-												      <td class="tabla-body--row" id="fecha-<%=e.getCodentrada()%>"><%=e.getFecha()%></td>
-												      <td class="tabla-body--row" id="producto-<%=e.getCodentrada()%>"><%=e.getFicha().getProducto().getNombre()%></td>
-												      <td class="tabla-body--row" id="uds-<%=e.getCodentrada()%>"><%=e.getUnidades()%></td>
-												      <td class="tabla-body--row"><%=e.getCapacidad()%> <%=e.getG_ml()%>.</td>
-												      <td class="tabla-body--row" id="ubicacion-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getNombre()%></td>
-												      <td class="tabla-body--row" id="area-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getArea()%></td>
-												      <td class="tabla-body--row" id="marca-<%=e.getCodentrada()%>"><%=e.getFicha().getMarca()%></td>
+<%-- 												      <td class="tabla-body--row" id="fecha-<%=e.getCodentrada()%>"><%=e.getFecha()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="producto-<%=e.getCodentrada()%>"><%=e.getFicha().getProducto().getNombre()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="uds-<%=e.getCodentrada()%>"><%=e.getUnidades()%></td> --%>
+<%-- 												      <td class="tabla-body--row"><%=e.getCapacidad()%> <%=e.getG_ml()%>.</td> --%>
+<%-- 												      <td class="tabla-body--row" id="ubicacion-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getNombre()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="area-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getArea()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="marca-<%=e.getCodentrada()%>"><%=e.getFicha().getMarca()%></td> --%>
 	
-												      <td id="cas-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getCas()%></td>											      
-												      <td id="formula-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getFormula()%></td>											      
-												      <td id="peso-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getPeso_mol()%></td>											      
-												      <td id="einecs-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getN_einecs()%></td>											      
-												      <td id="ec-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getN_ec()%></td>											      
-												      <td id="calidad-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getCalidad()%></td>											      
-												      <td id="residuo-<%=e.getCodentrada()%>" style="display: none"><%=e.esResiduo()%></td>											      
-												      <td id="dpto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().getDpto()%></td>
-												      <td id="centro-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().getCentro()%></td>											      
-												      <td id="caducidad-<%=e.getCodentrada()%>" style="display: none"><%=e.getCaducidadCal()%></td>											      
-												      <td id="peligro-<%=e.getCodentrada()%>" style="display: none">Peligro</td>											      
-												      <td id="prudencia-<%=e.getCodentrada()%>" style="display: none">Prudencia</td>	
-												      <td id="fecha-<%=e.getCodentrada()%>" style="display: none"><%=e.getFechaCal()%></td>										      
-												      <td id="oculto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().esOculta()%></td>										      
-												      <td id="g-ml-<%=e.getCodentrada()%>" style="display: none"><%=e.getG_ml()%></td>										      
-												      <td id="cpcd-<%=e.getCodentrada()%>" style="display: none"><%=e.getCapacidad()%></td>										      
-												      <td id="proveedor-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProveedor()%></td>										      
-												      <td id="lote-<%=e.getCodentrada()%>" style="display: none"><%=e.getLote()%></td>										      
+<%-- 												      <td id="cas-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getCas()%></td>											       --%>
+<%-- 												      <td id="formula-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getFormula()%></td>											       --%>
+<%-- 												      <td id="peso-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getPeso_mol()%></td>											       --%>
+<%-- 												      <td id="einecs-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getN_einecs()%></td>											       --%>
+<%-- 												      <td id="ec-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getN_ec()%></td>											       --%>
+<%-- 												      <td id="calidad-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getCalidad()%></td>											       --%>
+<%-- 												      <td id="residuo-<%=e.getCodentrada()%>" style="display: none"><%=e.esResiduo()%></td>											       --%>
+<%-- 												      <td id="dpto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().getDpto()%></td> --%>
+<%-- 												      <td id="centro-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().getCentro()%></td>											       --%>
+<%-- 												      <td id="caducidad-<%=e.getCodentrada()%>" style="display: none"><%=e.getCaducidadCal()%></td>											       --%>
+<%-- 												      <td id="peligro-<%=e.getCodentrada()%>" style="display: none">Peligro</td>											       --%>
+<%-- 												      <td id="prudencia-<%=e.getCodentrada()%>" style="display: none">Prudencia</td>	 --%>
+<%-- 												      <td id="fecha-<%=e.getCodentrada()%>" style="display: none"><%=e.getFechaCal()%></td>										       --%>
+<%-- 												      <td id="oculto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().esOculta()%></td>										       --%>
+<%-- 												      <td id="g-ml-<%=e.getCodentrada()%>" style="display: none"><%=e.getG_ml()%></td>										       --%>
+<%-- 												      <td id="cpcd-<%=e.getCodentrada()%>" style="display: none"><%=e.getCapacidad()%></td>										       --%>
+<%-- 												      <td id="proveedor-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProveedor()%></td>										       --%>
+<%-- 												      <td id="lote-<%=e.getCodentrada()%>" style="display: none"><%=e.getLote()%></td>										       --%>
 	
 												      <td class="tabla-body--row" style="text-align: right;">
 												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=e.getCodentrada()%>)">
@@ -258,32 +258,32 @@
 	  										<%} else if(tabla.equals("salida")){ %>
 	  											<%for (Salida s : salidas) {%>
 											 		<tr data-fila=<%=s.getCodsalida()%>>
-												      <td class="tabla-body--row" id="fecha-<%=s.getCodsalida()%>"><%=s.getFecha()%></td>
-												      <td class="tabla-body--row" id="producto-<%=s.getCodsalida()%>"><%=s.getFicha().getProducto().getNombre()%></td>
-												      <td class="tabla-body--row" id="uds-<%=s.getCodsalida()%>"><%=s.getUnidades()%></td>
-												      <td class="tabla-body--row"><%=s.getCapacidad()%> <%=s.getG_ml()%>.</td>
-												      <td class="tabla-body--row" id="ubicacion-<%=s.getCodsalida()%>"><%=s.getFicha().getUbicacion().getNombre()%></td>
-												      <td class="tabla-body--row" id="area-<%=s.getCodsalida()%>"><%=s.getFicha().getUbicacion().getArea()%></td>
-												      <td class="tabla-body--row" id="marca-<%=s.getCodsalida()%>"><%=s.getFicha().getMarca()%></td>
+<%-- 												      <td class="tabla-body--row" id="fecha-<%=s.getCodsalida()%>"><%=s.getFecha()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="producto-<%=s.getCodsalida()%>"><%=s.getFicha().getProducto().getNombre()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="uds-<%=s.getCodsalida()%>"><%=s.getUnidades()%></td> --%>
+<%-- 												      <td class="tabla-body--row"><%=s.getCapacidad()%> <%=s.getG_ml()%>.</td> --%>
+<%-- 												      <td class="tabla-body--row" id="ubicacion-<%=s.getCodsalida()%>"><%=s.getFicha().getUbicacion().getNombre()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="area-<%=s.getCodsalida()%>"><%=s.getFicha().getUbicacion().getArea()%></td> --%>
+<%-- 												      <td class="tabla-body--row" id="marca-<%=s.getCodsalida()%>"><%=s.getFicha().getMarca()%></td> --%>
 	
-												      <td id="cas-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getCas()%></td>											      
-												      <td id="formula-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getFormula()%></td>											      
-												      <td id="peso-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getPeso_mol()%></td>											      
-												      <td id="einecs-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getN_einecs()%></td>											      
-												      <td id="ec-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getN_ec()%></td>											      
-												      <td id="calidad-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getCalidad()%></td>											      
-												      <td id="residuo-<%=s.getCodsalida()%>" style="display: none"><%=s.esResiduo()%></td>											      
-												      <td id="dpto-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().getDpto()%></td>
-												      <td id="centro-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().getCentro()%></td>											      
-												      <td id="caducidad-<%=s.getCodsalida()%>" style="display: none"><%=s.getCaducidadCal()%></td>											      
-												      <td id="peligro-<%=s.getCodsalida()%>" style="display: none">Peligro</td>											      
-												      <td id="prudencia-<%=s.getCodsalida()%>" style="display: none">Prudencia</td>	
-												      <td id="fecha-<%=s.getCodsalida()%>" style="display: none"><%=s.getFechaCal()%></td>										      
-												      <td id="oculto-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().esOculta()%></td>										      
-												      <td id="g-ml-<%=s.getCodsalida()%>" style="display: none"><%=s.getG_ml()%></td>										      
-												      <td id="cpcd-<%=s.getCodsalida()%>" style="display: none"><%=s.getCapacidad()%></td>										      
-												      <td id="proveedor-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProveedor()%></td>										      
-												      <td id="lote-<%=s.getCodsalida()%>" style="display: none"><%=s.getLote()%></td>										      
+<%-- 												      <td id="cas-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getCas()%></td>											       --%>
+<%-- 												      <td id="formula-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getFormula()%></td>											       --%>
+<%-- 												      <td id="peso-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getPeso_mol()%></td>											       --%>
+<%-- 												      <td id="einecs-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getN_einecs()%></td>											       --%>
+<%-- 												      <td id="ec-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getN_ec()%></td>											       --%>
+<%-- 												      <td id="calidad-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getCalidad()%></td>											       --%>
+<%-- 												      <td id="residuo-<%=s.getCodsalida()%>" style="display: none"><%=s.esResiduo()%></td>											       --%>
+<%-- 												      <td id="dpto-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().getDpto()%></td> --%>
+<%-- 												      <td id="centro-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().getCentro()%></td>											       --%>
+<%-- 												      <td id="caducidad-<%=s.getCodsalida()%>" style="display: none"><%=s.getCaducidadCal()%></td>											       --%>
+<%-- 												      <td id="peligro-<%=s.getCodsalida()%>" style="display: none">Peligro</td>											       --%>
+<%-- 												      <td id="prudencia-<%=s.getCodsalida()%>" style="display: none">Prudencia</td>	 --%>
+<%-- 												      <td id="fecha-<%=s.getCodsalida()%>" style="display: none"><%=s.getFechaCal()%></td>										       --%>
+<%-- 												      <td id="oculto-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().esOculta()%></td>										       --%>
+<%-- 												      <td id="g-ml-<%=s.getCodsalida()%>" style="display: none"><%=s.getG_ml()%></td>										       --%>
+<%-- 												      <td id="cpcd-<%=s.getCodsalida()%>" style="display: none"><%=s.getCapacidad()%></td>										       --%>
+<%-- 												      <td id="proveedor-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProveedor()%></td>										       --%>
+<%-- 												      <td id="lote-<%=s.getCodsalida()%>" style="display: none"><%=s.getLote()%></td>										       --%>
 	
 												      <td class="tabla-body--row" style="text-align: right;">
 												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=s.getCodsalida()%>)">

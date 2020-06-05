@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import geslab.database.Conexion;
+import geslab.database.admin.Area;
 import geslab.database.admin.Usuario;
 import geslab.database.user.Entrada;
 import geslab.database.user.Ficha;
@@ -63,16 +64,27 @@ public class UbicacionesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.request = request;
-		this.response = response;
+//		this.request = request;
+//		this.response = response;
+		
 		String accion = request.getParameter("accion");
-		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		String codigo = request.getParameter("codigo");
 		cn = new Conexion();
 		System.out.println("Accion: " + accion);
 		System.out.println("Código: " + codigo);
 
+		switch (accion) {
+		case "insertar":
+			String nombre = request.getParameter("insertar-nombre");
+			String centro = request.getParameter("insertar-centro");
+			String area = request.getParameter("insertar-area");
+			Boolean oculta = (request.getParameter("insertar-oculta") != null);
+			cn.insertarUbicacion(new Ubicacion(0, nombre, area, "", centro, oculta));
+			break;
+
+		}
 		cn.cerrarConexion();
-		request.getRequestDispatcher("/WEB-INF/ubicaciones.jsp").forward(request, response);
+		response.sendRedirect("/ubicaciones.do");
 	}
 
 

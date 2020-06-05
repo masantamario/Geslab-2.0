@@ -43,7 +43,7 @@
 					    <%=usuario.getNombre()%></a>
 					
 					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				  			<a class="dropdown-item header__dropdown-item" href="/index.do" >Entradas/Salidas</a>
+				  			<a class="dropdown-item header__dropdown-item" href="/index.do">Existencias</a>
 				  			<a class="dropdown-item header__dropdown-item" href="/productos.do" >Productos</a>
 <!-- 				  			<a class="dropdown-item header__dropdown-item" href="/ubicaciones.do" >Ubicaciones</a> -->
 				  			<a class="dropdown-item header__dropdown-item" href="/calidades.do" >Calidades</a>
@@ -63,12 +63,7 @@
 						<div class="row px-2" data-simplebar data-simplebar-auto-hide="false" style="height: 85%">
 							<div class="col-12" style="height: 100%">
 								<p class="filtros__label">Nombre</p>
-									<select class="filtros__select" id="filtro-nombre" onchange="filtrar('nombre', 0)">
-										<option selected></option>
-										<%for(Ubicacion u:ubicaciones){ %>
-											<option><%=u.getNombre()%></option>
-										<%}%>
-									</select>
+									<input class="filtros__input" id="filtro-nombre" type="text" onkeyup="filtrar('nombre', 1)">
 									
 								<p class="filtros__label">Departamento</p>
 									<select class="filtros__select" id="filtro-dpto" onchange="filtrar('dpto', 3)">
@@ -164,7 +159,7 @@
 						</div>
 						
 						<div class="row py-3" style="height: 20%" id="fila-insertar">
-							<div class="col">
+							<div class="col align-self-end">
 								<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva ubicación</button>
 							</div>
 						</div>
@@ -204,19 +199,17 @@
                             <p class="modal__label">Nombre</p>
                             <input class="modal__input" type="text" id="insertar-nombre" name="insertar-nombre">
                         </div>
-                        
 	        		</div>
+	        		
 	        		<div class="row pt-2">
-	        			<div class="col-6">
-                            <p class="modal__label">Área</p>
-                            <select class="modal__input" id="insertar-area" name="insertar-area">
-                            	<option selected></option>
-								<%for(Area a:areas){ %>
-									<option><%=a.getNombre()%></option>
-								<%}%>
-							</select>
+                        <div class="col-12">
+                            <p class="modal__label">Area</p>
+                            <input class="modal__input" type="text" id="insertar-area" name="insertar-area" value="<%=usuario.getArea()%>">
                         </div>
-                        <div class="col-6">
+	        		</div>
+	        		
+	        		<div class="row pt-2">
+                        <div class="col-12">
                             <p class="modal__label">Centro</p>
                             <select class="modal__input" id="insertar-centro" name="insertar-centro">
                             	<option selected></option>
@@ -225,7 +218,6 @@
 								<%}%>
 							</select>
                         </div>
-                        
 	        		</div>
 	        		
 	        		<div class="row pt-4">

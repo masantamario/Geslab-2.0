@@ -21,8 +21,8 @@ import geslab.database.user.Ubicacion;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet("/index.do")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/entrada-salida.do")
+public class EntradaSalidaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
@@ -51,9 +51,13 @@ public class IndexServlet extends HttpServlet {
 			if (usuario.getNombre().equals("")) {
 				response.sendRedirect("/registro.do");
 			} else {
+				String mostrarTabla = "entrada";
+				if (request.getParameter("tabla") != null)
+					mostrarTabla = request.getParameter("tabla");
 
 				Conexion cn = new Conexion();
 
+				request.setAttribute("mostrarTabla", mostrarTabla);
 				request.setAttribute("departamentos", cn.leerDepartamentos());
 				request.setAttribute("areas", cn.leerAreas());
 				request.setAttribute("centros", cn.leerCentros());
@@ -82,34 +86,26 @@ public class IndexServlet extends HttpServlet {
 		this.request = request;
 		this.response = response;
 		String accion = request.getParameter("accion");
-		String codigo = request.getParameter("codigo");
+		String elemento = request.getParameter("elemento");
+		int codigo = Integer.parseInt(request.getParameter("codigo"));
 		cn = new Conexion();
 		System.out.println("Accion: " + accion);
+		System.out.println("Elemento: " + elemento);
 		System.out.println("Código: " + codigo);
 
-		switch (accion) {
-			case "insertar":
+		switch (elemento) {
+			case "entrada":
 				leerParametrosFicha();
-				System.out.println(producto);
-				System.out.println(capacidad);
-				System.out.println(g_ml);
-				System.out.println(calidad);
-				System.out.println(ubicacion);
-				System.out.println(marca);
-				System.out.println(proveedor);
-				System.out.println(caducidad);
-				System.out.println(lote);
-				System.out.println(residuo);
-				Ficha ficha = new Ficha(0, producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, caducidad, lote, residuo, 0);
-				if(cn.existeFicha(ficha) == null) {
-					cn.insertarFicha(ficha);
-				}
+				leerParametrosEntradaSalida();
+				accionEntrada(accion, codigo);
 				break;
-			
+			case "salida":
+				accionSalida(accion, codigo);
+				break;
 		}
 
 		cn.cerrarConexion();
-		response.sendRedirect("/index.do");
+		response.sendRedirect("/index.do?tabla=" + elemento);
 	}
 
 
@@ -144,15 +140,7 @@ public class IndexServlet extends HttpServlet {
 	}
 
 	private void leerParametrosFicha() {
-		for (Producto p : cn.leerProductos()) {
-			String nombre = request.getParameter("insertar-producto");
-			if (p.getNombre().equals(nombre)) {
-				producto = p;
-				break;
-			}
-		}
-		capacidad = new BigDecimal(request.getParameter("insertar-cpcd"));
-		g_ml = request.getParameter("insertar-g-ml");
+		calidad = request.getParameter("insertar-calidad");
 		for (Ubicacion u : cn.leerUbicaciones()) {
 			String nombre = request.getParameter("insertar-ubicacion");
 			if (u.getNombre().equals(nombre)) {
@@ -160,18 +148,25 @@ public class IndexServlet extends HttpServlet {
 				break;
 			}
 		}
-		marca = request.getParameter("insertar-marca");
 		proveedor = request.getParameter("insertar-proveedor");
-		calidad = request.getParameter("insertar-calidad");
-		lote = request.getParameter("insertar-lote");
-		caducidad = Date.valueOf(request.getParameter("insertar-caducidad"));
-		residuo = (request.getParameter("insertar-residuo") != null);
+		marca = request.getParameter("insertar-marca");
+		for (Producto p : cn.leerProductos()) {
+			String nombre = request.getParameter("insertar-producto");
+			if (p.getNombre().equals(nombre)) {
+				producto = p;
+				break;
+			}
+		}
 	}
 
 	private void leerParametrosEntradaSalida() {
 		fecha = Date.valueOf(request.getParameter("insertar-fecha"));
+		caducidad = Date.valueOf(request.getParameter("insertar-caducidad"));
+		lote = request.getParameter("insertar-lote");
 		unidades = new BigDecimal(request.getParameter("insertar-uds"));
-		
+		capacidad = new BigDecimal(request.getParameter("insertar-cpcd"));
+		g_ml = request.getParameter("insertar-g-ml");
+		residuo = (request.getParameter("insertar-residuo") != null);
 	}
 
 }

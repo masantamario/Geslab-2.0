@@ -1,5 +1,7 @@
 package geslab.database.user;
 
+import java.util.ArrayList;
+
 public class Proveedor {
 	private int codproveedor;
 	private String nombre;
@@ -7,16 +9,16 @@ public class Proveedor {
 	private String telefono;
 	private String fax;
 	private String email;
-	private String contacto;
+	private ArrayList<String> marcas;
 	
-	public Proveedor(int cod, String nombre, String direccion, String telefono, String fax, String email, String contacto) {
+	public Proveedor(int cod, String nombre, String direccion, String telefono, String fax, String email, ArrayList<String> marcas) {
 		this.codproveedor = cod;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.fax = fax;
 		this.email = email;
-		this.contacto = contacto;
+		this.marcas = marcas;
 	}
 
 	public int getCodproveedor() {
@@ -43,7 +45,8 @@ public class Proveedor {
 		return email;
 	}
 
-	public String getContacto() {
-		return contacto;
+	public ArrayList<String> getMarcas() {
+		return marcas;
 	}
+
 }

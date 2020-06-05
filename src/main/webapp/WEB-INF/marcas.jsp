@@ -25,7 +25,8 @@
 	<%@page import="geslab.database.user.*"%>
 	<%
 	Usuario usuario = (Usuario) request.getAttribute("usuario");
-	ArrayList<Calidad> calidades = (ArrayList<Calidad>) request.getAttribute("calidades");
+	ArrayList<Marca> marcas = (ArrayList<Marca>) request.getAttribute("marcas");
+	ArrayList<Proveedor> proveedores = (ArrayList<Proveedor>) request.getAttribute("proveedores");
 	%>
 	<div class="container-fluid">
 		<div class="container">
@@ -40,11 +41,11 @@
 					    <%=usuario.getNombre()%></a>
 					
 					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				  			<a class="dropdown-item header__dropdown-item" href="/index.do" >Entradas/Salidas</a>
+				  			<a class="dropdown-item header__dropdown-item" href="/index.do">Existencias</a>
 				  			<a class="dropdown-item header__dropdown-item" href="/productos.do" >Productos</a>
 				  			<a class="dropdown-item header__dropdown-item" href="/ubicaciones.do" >Ubicaciones</a>
-<!-- 				  			<a class="dropdown-item header__dropdown-item" href="/calidades.do" >Calidades</a> -->
-				  			<a class="dropdown-item header__dropdown-item" href="/marcas.do" >Marcas</a>
+				  			<a class="dropdown-item header__dropdown-item" href="/calidades.do" >Calidades</a>
+<!-- 				  			<a class="dropdown-item header__dropdown-item" href="/marcas.do" >Marcas</a> -->
 				  			<a class="dropdown-item header__dropdown-item" href="/proveedores.do" >Proveedores</a>
 				  			<a class="dropdown-item header__dropdown-item--logout" href="/login.do?accion=logout" >Cerrar sesion</a>
 					  	</div>
@@ -60,15 +61,7 @@
 						<div class="row px-2" data-simplebar data-simplebar-auto-hide="false" style="height: 85%">
 							<div class="col-12" style="height: 100%">
 								<p class="filtros__label">Nombre</p>
-									<select class="filtros__select" id="filtro-nombre" onchange="filtrar('nombre', 0)">
-										<option selected></option>
-										<%for(Calidad c:calidades){ %>
-											<option><%=c.getNombre()%></option>
-										<%}%>
-									</select>
-									
-								
-								
+									<input class="filtros__input" id="filtro-nombre" type="text" onkeyup="filtrar('nombre', 0)">
 									
 							</div>
 						</div>
@@ -88,7 +81,7 @@
 						<div class="col-4">
 							<div class="row">
 								<div class="col-6 px-0">
-									<button id="bt-calidades" class="btn fila-pestañas__pestaña fila-pestanas__pestana--active">Calidades</button>
+									<button id="bt-marcas" class="btn fila-pestañas__pestaña fila-pestanas__pestana--active">Marcas</button>
 								</div>
 								
 							</div>
@@ -102,21 +95,25 @@
 						<div class="row pt-1 align-items-start" id="fila-tabla" style="height: 80%">
 							<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
 								
-									<table id="tabla-calidades" class="table table-borderless table-hover table-sm">
+									<table id="tabla-marcas" class="table table-borderless table-hover table-sm">
 										<thead >
 										    <tr class="tabla-header">
 										      <th class="tabla-header--item" scope="col">Nombre</th>
+										      <th class="tabla-header--item" scope="col">Tlfn.</th>
+										      <th class="tabla-header--item" scope="col">Dirección</th>
 										      <th class="tabla-header--item" scope="col"></th>
 										    </tr>
 								  		</thead>
 										
 										 <tbody class="tabla-body">
-											 	<%for (Calidad c : calidades) {%>
-											 		<tr data-fila=<%=c.getCodcalidad()%>>
-												      <td class="tabla-body--row" id="nombre-<%=c.getCodcalidad()%>"><%=c.getNombre()%></td>
+											 	<%for (Marca m : marcas) {%>
+											 		<tr data-fila=<%=m.getCodmarca()%>>
+												      <td class="tabla-body--row" id="nombre-<%=m.getCodmarca()%>"><%=m.getNombre()%></td>
+												      <td class="tabla-body--row" id="tlfn-<%=m.getCodmarca()%>"><%=m.getTelefono()%></td>
+												      <td class="tabla-body--row" id="direccion-<%=m.getCodmarca()%>"><%=m.getDireccion()%></td>
 	
 												      <td class="tabla-body--row" style="text-align: right;">
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=c.getCodcalidad()%>)">
+												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=m.getCodmarca()%>, <%=m.getProveedores()%>)">
 												      		<i class="fas fa-pen"></i></button></td>
 												    </tr>
 											 	<%} %>
@@ -127,7 +124,7 @@
 						
 						<div class="row py-3" style="height: 20%" id="fila-insertar">
 							<div class="col align-self-end">
-								<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva calidad</button>
+								<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva marca</button>
 							</div>
 						</div>
 						
@@ -144,17 +141,17 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="modalCalidad" tabindex="-1" role="dialog" aria-labelledby="modalCalidad" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+	<div class="modal fade" id="modalMarca" tabindex="-1" role="dialog" aria-labelledby="modalMarca" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
 	    <div class="modal-content">
-	    	<form id="insertar-calidad" action="/calidades.do" method="post">
+	    	<form id="insertar-marca" action="/marcas.do" method="post">
 		    	<div id="variables" style="display: none;">
 					<input id="accion" name="accion"></input> 
 					<input id="codigo" name="codigo"></input>
 				</div>
 	      <div class="modal-header justify-content-between">
       		<div class="col">
-      			<h5 class="modal-title" id="tituloModal">Calidad</h5>
+      			<h5 class="modal-title" id="tituloModal">Marca</h5>
       		</div>
 	      </div>
 	      <div class="modal-body">
@@ -162,11 +159,35 @@
 	        	<div class="col px-4">
 	        	
 	        		<div class="row">
-                        <div class="col-12">
+                        <div class="col-6">
                             <p class="modal__label">Nombre</p>
                             <input class="modal__input" type="text" id="insertar-nombre" name="insertar-nombre">
                         </div>
-                        
+                        <div class="col-6">
+                            <p class="modal__label">Tlfn.</p>
+                            <input class="modal__input" type="text" id="insertar-tlfn" name="insertar-tlfn">
+                        </div>
+	        		</div>
+	        		
+	        		<div class="row pt-2">
+	        			<div class="col">
+                            <p class="modal__label">Dirección</p>
+                            <input class="modal__input" type="text" id="insertar-direccion" name="insertar-direccion">
+                        </div>
+	        		</div>
+	        		
+	        		<div class="row pt-2">
+	        			<div class="col">
+                            <p class="modal__label">Proveedores</p>
+                            <div class="form-group">
+			                    <select class="mul-select" multiple="multiple" id="insertar-proveedores" name="insertar-proveedores">
+			                    	<%for(Proveedor p: proveedores){%>
+			                    		<option id=<%=p.getNombre()%>><%=p.getNombre()%></option>
+			                    	<%}%>
+			                    </select>
+			                </div> 
+
+                        </div>
 	        		</div>
 	        		
 	        	</div>
@@ -186,7 +207,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
-	<script src="../js/calidades.js"></script>
+	<script src="../js/marcas.js"></script>
 	
 </body>
 </html>

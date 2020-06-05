@@ -1,7 +1,5 @@
 package geslab.database.user;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,24 +11,15 @@ public class Entrada {
 	private int codentrada;
 	private Ficha ficha;
 	private Date fecha;
-	private Date caducidad;
-	private String lote;
-	private BigDecimal unidades;
-	private BigDecimal capacidad;
-	private String g_ml;
-	private boolean residuo;
+	private int unidades;
+	private int usuario;
 
-	public Entrada(int codentrada, Ficha ficha, Date fecha, Date caducidad, String lote, BigDecimal unidades,
-			BigDecimal capacidad, String g_ml, Boolean residuo) {
+	public Entrada(int codentrada, Ficha ficha, Date fecha, int unidades, int usuario) {
 		this.codentrada = codentrada;
 		this.ficha = ficha;
 		this.fecha = fecha;
-		this.caducidad = caducidad;
-		this.lote = lote;
 		this.unidades = unidades;
-		this.capacidad = capacidad.setScale(2, RoundingMode.HALF_EVEN);
-		this.g_ml = g_ml;
-		this.residuo = residuo;
+		this.usuario = usuario;
 	}
 
 	public int getCodentrada() {
@@ -50,51 +39,17 @@ public class Entrada {
 		String f = formatoFechaCal.format(fecha);
 		return f;
 	}
-	
+
 	public Date getFechaIns() {
 		return this.fecha;
 	}
 
-	public String getCaducidad() {
-		String cad = "N/D";
-		if (caducidad != null)
-			cad = formatoFechaImp.format(caducidad);
-		return cad;
-	}
-
-	public String getCaducidadCal() {
-		String cad = "N/D";
-		if (caducidad != null)
-			cad = formatoFechaCal.format(caducidad);
-		return cad;
-	}
-	
-	public Date getCaducidadIns() {
-		return this.caducidad;
-	}
-
-	public String getLote() {
-		return lote;
-	}
-
-	public BigDecimal getUnidades() {
+	public int getUnidades() {
 		return unidades;
 	}
 
-	public BigDecimal getCapacidad() {
-		return capacidad;
-	}
-
-	public String getG_ml() {
-		return g_ml;
-	}
-
-	public boolean isResiduo() {
-		return residuo;
-	}
-
-	public String esResiduo() {
-		return (residuo) ? "Si" : "No";
+	public int getUsuario() {
+		return usuario;
 	}
 
 }

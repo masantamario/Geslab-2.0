@@ -161,15 +161,13 @@
 							<div class="col-4">
 								<div class="row">
 									<div class="col-6 px-0">
-										<button id="bt-entradas" onclick="mostrarElemento('entrada')" class="btn fila-pestañas__pestaña">Entradas</button>
+										<button id="bt-existencias" class="btn fila-pestañas__pestaña fila-pestanas__pestana--active">Existencias</button>
 									</div>
-									<div class="col-6 ">
-										<button id="bt-salidas" onclick="mostrarElemento('salida')" class="btn fila-pestañas__pestaña">Salidas</button>
-									</div>
+									
 								</div>
 							</div>
 						
-							<div class="col-4">
+							<!-- <div class="col-4">
 								<div class="row justify-content-end align-items-center">
 									<p class="d-inline-flex fila-pestañas__fecha--label">Desde<p>
                                 	<input type="date" id="filtro-desde" onchange="filtrarFecha()" class="flex-fill form-control fila-pestañas__fecha--input">
@@ -179,7 +177,7 @@
                                 	<input type="date" id="filtro-hasta" onchange="filtrarFecha()" class="flex-fill form-control fila-pestañas__fecha--input">
 								</div>
 
-							</div>
+							</div> -->
 						</div>
 					</form>
 					
@@ -189,108 +187,46 @@
 						<div class="row pt-1 align-items-start" id="fila-tabla" style="height: 80%">
 							<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
 								
-									<table id="tabla-entradas" class="table table-borderless table-hover table-sm">
+									<table id="tabla-existencias" class="table table-borderless table-hover table-sm">
 										<thead >
 										    <tr class="tabla-header">
-										      <th class="tabla-header--item" scope="col">Fecha</th>
 										      <th class="tabla-header--item" scope="col">Producto</th>
-										      <th class="tabla-header--item" scope="col">Uds.</th>
 										      <th class="tabla-header--item" scope="col">Cpcd.</th>
-										      <th class="tabla-header--item" scope="col">Ub.</th>
-										      <th class="tabla-header--item" scope="col">Area</th>
+										      <th class="tabla-header--item" scope="col">Uds.</th>
+										      <th class="tabla-header--item" scope="col">Calidad</th>
+										      <th class="tabla-header--item" scope="col">Ubicacion</th>
 										      <th class="tabla-header--item" scope="col">Marca</th>
+										      <th class="tabla-header--item" scope="col">Proveedor</th>
 										      <th class="tabla-header--item" scope="col"></th>
 										      
-										      <th style="display: none" scope="col">Cas</th>
-										      <th style="display: none" scope="col">Formula</th>
-										      <th style="display: none" scope="col">Peso molecular</th>
-										      <th style="display: none" scope="col">N Einecs</th>
-										      <th style="display: none" scope="col">N Ec</th>
-										      <th style="display: none" scope="col">Calidad</th>
-										      <th style="display: none" scope="col">Residuo</th>
-										      <th style="display: none" scope="col">Dpto</th>
-										      <th style="display: none" scope="col">Centro</th>
 										      <th style="display: none" scope="col">Caducidad</th>
-										      <th style="display: none" scope="col">Peligro</th>
-										      <th style="display: none" scope="col">Prudencia</th>
-										      <th style="display: none" scope="col">Fecha</th>
-										      <th style="display: none" scope="col">Ub. Oculta</th>
+										      <th style="display: none" scope="col">Lote</th>
+										      <th style="display: none" scope="col">Residuo</th>
+										      
 										    </tr>
 								  		</thead>
 										
 										 <tbody class="tabla-body">
-											 <%if(tabla.equals("entrada")){ %>
-											 	<%for (Entrada e : entradas) {%>
-											 		<tr data-fila=<%=e.getCodentrada()%>>
-												      <td class="tabla-body--row" id="fecha-<%=e.getCodentrada()%>"><%=e.getFecha()%></td>
-												      <td class="tabla-body--row" id="producto-<%=e.getCodentrada()%>"><%=e.getFicha().getProducto().getNombre()%></td>
-												      <td class="tabla-body--row" id="uds-<%=e.getCodentrada()%>"><%=e.getUnidades()%></td>
-												      <td class="tabla-body--row"><%=e.getCapacidad()%> <%=e.getG_ml()%>.</td>
-												      <td class="tabla-body--row" id="ubicacion-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getNombre()%></td>
-												      <td class="tabla-body--row" id="area-<%=e.getCodentrada()%>"><%=e.getFicha().getUbicacion().getArea()%></td>
-												      <td class="tabla-body--row" id="marca-<%=e.getCodentrada()%>"><%=e.getFicha().getMarca()%></td>
-	
-												      <td id="cas-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getCas()%></td>											      
-												      <td id="formula-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getFormula()%></td>											      
-												      <td id="peso-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getPeso_mol()%></td>											      
-												      <td id="einecs-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getN_einecs()%></td>											      
-												      <td id="ec-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProducto().getN_ec()%></td>											      
-												      <td id="calidad-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getCalidad()%></td>											      
-												      <td id="residuo-<%=e.getCodentrada()%>" style="display: none"><%=e.esResiduo()%></td>											      
-												      <td id="dpto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().getDpto()%></td>
-												      <td id="centro-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().getCentro()%></td>											      
-												      <td id="caducidad-<%=e.getCodentrada()%>" style="display: none"><%=e.getCaducidadCal()%></td>											      
-												      <td id="peligro-<%=e.getCodentrada()%>" style="display: none">Peligro</td>											      
-												      <td id="prudencia-<%=e.getCodentrada()%>" style="display: none">Prudencia</td>	
-												      <td id="fecha-<%=e.getCodentrada()%>" style="display: none"><%=e.getFechaCal()%></td>										      
-												      <td id="oculto-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getUbicacion().esOculta()%></td>										      
-												      <td id="g-ml-<%=e.getCodentrada()%>" style="display: none"><%=e.getG_ml()%></td>										      
-												      <td id="cpcd-<%=e.getCodentrada()%>" style="display: none"><%=e.getCapacidad()%></td>										      
-												      <td id="proveedor-<%=e.getCodentrada()%>" style="display: none"><%=e.getFicha().getProveedor()%></td>										      
-												      <td id="lote-<%=e.getCodentrada()%>" style="display: none"><%=e.getLote()%></td>										      
+											 	<%for (Ficha f : fichas) {%>
+											 		<tr data-fila=<%=f.getCodficha()%>>
+												      <td class="tabla-body--row" id="producto-<%=f.getCodficha()%>"><%=f.getProducto().getNombre()%></td>
+												      <td class="tabla-body--row" id="cpcd-gml-<%=f.getCodficha()%>"><%=f.getCapacidad()%> <%=f.getG_ml()%>.</td>
+												      <td class="tabla-body--row" id="uds-<%=f.getCodficha()%>"><%=f.getStock()%></td>
+												      <td class="tabla-body--row" id=""><%=f.getCalidad()%></td>
+												      <td class="tabla-body--row" id=""><%=f.getUbicacion().getNombre()%></td>
+												      <td class="tabla-body--row" id=""><%=f.getMarca()%></td>
+												      <td class="tabla-body--row" id=""><%=f.getProveedor()%></td>
+
+												      <td id="caducidad-<%=f.getCodficha()%>" style="display: none"><%=f.getCaducidadCal()%></td>											      
+												      <td id="lote-<%=f.getCodficha()%>" style="display: none"><%=f.getLote()%></td>										      
+												      <td id="residuo-<%=f.getCodficha()%>" style="display: none"><%=f.esResiduo()%></td>											      
 	
 												      <td class="tabla-body--row" style="text-align: right;">
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=e.getCodentrada()%>)">
+												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=f.getCodficha()%>)">
 												      		<i class="fas fa-pen"></i></button></td>
 												    </tr>
 											 	<%} %>
 											 	
-	  										<%} else if(tabla.equals("salida")){ %>
-	  											<%for (Salida s : salidas) {%>
-											 		<tr data-fila=<%=s.getCodsalida()%>>
-												      <td class="tabla-body--row" id="fecha-<%=s.getCodsalida()%>"><%=s.getFecha()%></td>
-												      <td class="tabla-body--row" id="producto-<%=s.getCodsalida()%>"><%=s.getFicha().getProducto().getNombre()%></td>
-												      <td class="tabla-body--row" id="uds-<%=s.getCodsalida()%>"><%=s.getUnidades()%></td>
-												      <td class="tabla-body--row"><%=s.getCapacidad()%> <%=s.getG_ml()%>.</td>
-												      <td class="tabla-body--row" id="ubicacion-<%=s.getCodsalida()%>"><%=s.getFicha().getUbicacion().getNombre()%></td>
-												      <td class="tabla-body--row" id="area-<%=s.getCodsalida()%>"><%=s.getFicha().getUbicacion().getArea()%></td>
-												      <td class="tabla-body--row" id="marca-<%=s.getCodsalida()%>"><%=s.getFicha().getMarca()%></td>
-	
-												      <td id="cas-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getCas()%></td>											      
-												      <td id="formula-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getFormula()%></td>											      
-												      <td id="peso-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getPeso_mol()%></td>											      
-												      <td id="einecs-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getN_einecs()%></td>											      
-												      <td id="ec-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProducto().getN_ec()%></td>											      
-												      <td id="calidad-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getCalidad()%></td>											      
-												      <td id="residuo-<%=s.getCodsalida()%>" style="display: none"><%=s.esResiduo()%></td>											      
-												      <td id="dpto-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().getDpto()%></td>
-												      <td id="centro-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().getCentro()%></td>											      
-												      <td id="caducidad-<%=s.getCodsalida()%>" style="display: none"><%=s.getCaducidadCal()%></td>											      
-												      <td id="peligro-<%=s.getCodsalida()%>" style="display: none">Peligro</td>											      
-												      <td id="prudencia-<%=s.getCodsalida()%>" style="display: none">Prudencia</td>	
-												      <td id="fecha-<%=s.getCodsalida()%>" style="display: none"><%=s.getFechaCal()%></td>										      
-												      <td id="oculto-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getUbicacion().esOculta()%></td>										      
-												      <td id="g-ml-<%=s.getCodsalida()%>" style="display: none"><%=s.getG_ml()%></td>										      
-												      <td id="cpcd-<%=s.getCodsalida()%>" style="display: none"><%=s.getCapacidad()%></td>										      
-												      <td id="proveedor-<%=s.getCodsalida()%>" style="display: none"><%=s.getFicha().getProveedor()%></td>										      
-												      <td id="lote-<%=s.getCodsalida()%>" style="display: none"><%=s.getLote()%></td>										      
-	
-												      <td class="tabla-body--row" style="text-align: right;">
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=s.getCodsalida()%>)">
-												      		<i class="fas fa-pen"></i></button></td>
-												    </tr>
-											 	<%} %>
-	  										<%} %>
 									    </tbody>
 									</table>
 							</div>
@@ -306,79 +242,49 @@
                                         </div>
 
                                         <div class="row pt-2">
-                                            <div class="col-3 form-inline">
-                                                <p class="extra-info__label d-inline-flex">CAS<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-cas"><p>
+                                            <div class="col-4 form-inline">
+                                                <p class="extra-info__label d-inline-flex">Caducidad<p>
+                                                <p class="extra-info__input flex-fill" id="extra-info-caducidad"><p>
                                             </div>
                                             <div class="col-4 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Fórmula<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-formula"><p>
+                                                <p class="extra-info__label d-inline-flex">Lote<p>
+                                                <p class="extra-info__input flex-fill" id="extra-info-lote"><p>
                                             </div>
-                                            <div class="col-3 form-inline">
-                                                <p class="extra-info__label d-inline-flex">PM<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-peso"><p>
-                                            </div>
-                                            <div class="col-2 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Oculto<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-oculto"><p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row pt-2">
                                             <div class="col-4 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Nº EINECS<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-einecs"><p>
-                                            </div>
-                                            <div class="col-3 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Nº EC<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-ec"><p>
-                                            </div>
-                                            <div class="col-3 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Calidad<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-calidad"><p>
-                                            </div>
-                                            <div class="col-2 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Res.<p>
+                                                <p class="extra-info__label d-inline-flex">Residuo<p>
                                                 <p class="extra-info__input flex-fill" id="extra-info-residuo"><p>
                                             </div>
                                         </div>
-
+                                        
                                         <div class="row pt-2">
-                                            <div class="col-4 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Dpto.<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-dpto"><p>
-                                            </div>
-                                            <div class="col-5 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Centro<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-centro"><p>
-                                            </div>
-                                            <div class="col-3 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Cad.<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-caducidad"><p>
-                                            </div>
+                                        	<div class="col-6">
+                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
+								
+<!-- 													<table id="tabla-entradas" class="table table-borderless table-hover table-sm"> -->
+<!-- 														<thead > -->
+<!-- 														    <tr class="tabla-header"> -->
+<!-- 														      <th class="tabla-header--item" scope="col">Fecha</th> -->
+<!-- 														      <th class="tabla-header--item" scope="col">Uds.</th> -->
+<!-- 														    </tr> -->
+<!-- 												  		</thead> -->
+														
+<!-- 														 <tbody class="tabla-body"> -->
+<%-- 															 	<%for (Entrada e : entradas) {%> --%>
+<%-- 															 		<tr data-fila=<%=e.getCodentrada()%>> --%>
+<%-- 																      <td class="tabla-body--row" id="fecha-<%=e.getCodentrada()%>"><%=e.getFecha()%></td> --%>
+<%-- 																      <td class="tabla-body--row" id="unidades-<%=e.getCodentrada()%>"><%=e.getUnidades()%></td> --%>
+<!-- 																    </tr> -->
+<%-- 															 	<%} %> --%>
+<!-- 													    </tbody> -->
+<!-- 													</table> -->
+											</div>
+                                        	</div>
+                                        	
+                                        	<div class="col-6">
+                                        	</div>
+                                        
                                         </div>
-
-                                        <div class="row pt-2">
-                                            <div class="col-8">
-                                                <div class="row">
-                                                    <div class="col-12 form-inline">
-                                                        <p class="extra-info__label d-inline-flex">Peligro<p>
-                                                        <p class="extra-info__input flex-fill" id="extra-info-peligro"><p>
-                                                    </div>
-                                                </div>
-                                                <div class="row pt-2">
-                                                    <div class="col-12 form-inline">
-                                                        <p class="extra-info__label d-inline-flex">Prudencia<p>
-                                                        <p class="extra-info__input flex-fill" id="extra-info-prudencia"><p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="row">
-                                                    <p class="extra-info__label d-inline-flex">Pictogramas<p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                     </div></div>
 								
@@ -387,7 +293,7 @@
 								
 								<div class="row py-3" style="height: 20%" id="fila-insertar">
 									<div class="col">
-										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()"></button>
+										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva ficha</button>
 									</div>
 								</div>
 							</div>
@@ -406,36 +312,22 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="modalEntrada" aria-hidden="true">
+	<div class="modal fade" id="modalFicha" tabindex="-1" role="dialog" aria-labelledby="modalFicha" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
 	    <div class="modal-content">
-	    	<form id="insertar-entrada" action="/index.do" method="post">
+	    	<form id="insertar-ficha" action="/index.do" method="post">
 		    	<div id="variables" style="display: none;">
 					<input id="accion" name="accion"></input> 
-					<input id="elemento" name="elemento"></input>
 					<input id="codigo" name="codigo"></input>
 				</div>
 	      <div class="modal-header justify-content-between">
       		<div class="col-6">
       			<h5 class="modal-title" id="tituloModal"></h5>
       		</div>
-      		<div class="col-3">
-      			<input class="modal__input" type="date" id="insertar-fecha" name="insertar-fecha">
-      		</div>
 	      </div>
 	      <div class="modal-body">
 	        <div class="row">
 	        	<div class="col px-4">
-	        		<div class="row">
-	        			<div class="col">
-	        				<select class="modal__input" id="" name="">
-                            	<option selected></option>
-								<%for(Ficha f:fichas){ %>
-									<option><%=f.getProducto().getNombre()%> -- <%=f.getUbicacion().getNombre()%> -- <%=f.getMarca()%> -- <%=f.getProveedor()%> -- <%=f.getCalidad()%></option>
-								<%}%>
-							</select>
-	        			</div>
-	        		</div>
 	        	
 	        		<div class="row">
 	        			<div class="col-6">
@@ -447,12 +339,9 @@
 								<%}%>
 							</select>
                         </div>
-                        <div class="col-2">
-                            <p class="modal__label">Uds.</p>
-                            <input class="modal__input" type="text" id="insertar-uds" name="insertar-uds">
-                        </div>
-                        <div class="col-2">
-                            <p class="modal__label">Cpcd.</p>
+          
+                        <div class="col-4">
+                            <p class="modal__label">Capacidad</p>
                             <input class="modal__input" type="text" id="insertar-cpcd" name="insertar-cpcd">
                         </div>
                         <div class="col-2">
@@ -538,7 +427,7 @@
 	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
 	<script src="../js/index.js"></script>
-	<script> inicializar('<%=tabla%>'); </script>
+	<script> inicializar(); </script>
 	
 </body>
 </html>

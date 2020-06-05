@@ -136,9 +136,11 @@
 										      <th class="tabla-header--item" scope="col">Nombre</th>
 										      <th class="tabla-header--item" scope="col">Fórmula</th>
 										      <th class="tabla-header--item" scope="col">F. Desarrollada</th>
-										      <th class="tabla-header--item" scope="col">No Einecs</th>
-										      <th class="tabla-header--item" scope="col">No Ec</th>
 										      <th class="tabla-header--item" scope="col"></th>
+										      
+										      <th style="display: none" scope="col">Peso molecular</th>
+										      <th style="display: none" scope="col">N Einecs</th>
+										      <th style="display: none" scope="col">N Ec</th>
 										    </tr>
 								  		</thead>
 										
@@ -149,8 +151,10 @@
 												      <td class="tabla-body--row" id="nombre-<%=p.getCas()%>"><%=p.getNombre()%></td>
 												      <td class="tabla-body--row" id="formula-<%=p.getCas()%>"><%=p.getFormula()%></td>
 												      <td class="tabla-body--row" id="f_des-<%=p.getCas()%>"><%=p.getFormula_des()%></td>
-												      <td class="tabla-body--row" id="einecs-<%=p.getCas()%>"><%=p.getN_einecs()%></td>
-												      <td class="tabla-body--row" id="ec-<%=p.getCas()%>"><%=p.getN_ec()%></td>
+												      
+													   <td id="peso-<%=p.getCas()%>" style="display: none"><%=p.getPeso_mol()%></td>											       
+	 												   <td id="einecs-<%=p.getCas()%>" style="display: none"><%=p.getN_einecs()%></td>											       
+	 												   <td id="ec-<%=p.getCas()%>" style="display: none"><%=p.getN_ec()%></td>
 	
 												      <td class="tabla-body--row" style="text-align: right;">
 												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=p.getCas()%>)">
@@ -161,7 +165,58 @@
 									</table>
 							</div>
 						</div>
-						
+						<div class="row align-items-end" id="fila-info" style="height: 20%">
+							<div class="col align-self-end">
+							
+							<div class="row extra-info mx-1" id="container-info" style="height:236px; display:none">
+									<div class="col"><div class="row">
+									<div class="col-12 px-4">
+                                        <div class="row justify-content-end pt-1">
+                                            <div class="col-1 text-right" onclick='ocultarExtraInfo()'><i class="fas fa-times extra-info__boton"></i></div>
+                                        </div>
+
+                                        <div class="row pt-2">
+                                        	<div class="col-4 form-inline">
+                                                <p class="extra-info__label d-inline-flex">Peso<p>
+                                                <p class="extra-info__input flex-fill" id="extra-info-peso"><p>
+                                            </div>
+                                            <div class="col-4 form-inline">
+                                                <p class="extra-info__label d-inline-flex">No Einecs<p>
+                                                <p class="extra-info__input flex-fill" id="extra-info-einecs"><p>
+                                            </div>
+                                            <div class="col-4 form-inline">
+                                                <p class="extra-info__label d-inline-flex">No Ec<p>
+                                                <p class="extra-info__input flex-fill" id="extra-info-ec"><p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row pt-2">
+                                            <div class="col-8">
+                                                <div class="row">
+                                                    <div class="col-12 form-inline">
+                                                        <p class="extra-info__label d-inline-flex">Peligro<p>
+                                                        <p class="extra-info__input flex-fill" id="extra-info-peligro"><p>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-2">
+                                                    <div class="col-12 form-inline">
+                                                        <p class="extra-info__label d-inline-flex">Prudencia<p>
+                                                        <p class="extra-info__input flex-fill" id="extra-info-prudencia"><p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <p class="extra-info__label d-inline-flex">Pictogramas<p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    </div></div>
+								
+								</div>
+								
 						<div class="row py-3" style="height: 20%" id="fila-insertar">
 							<div class="col">
 								<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nuevo producto</button>
@@ -221,21 +276,32 @@
                         
 	        		</div>
 	        		
-	        		<div class="row pt-4">
-	        			<div class="col-6">
+	        		<div class="row pt-2">
+	        			<div class="col-2">
+                            <p class="modal__label">PM</p>
+                            <input class="modal__input" type="text" id="insertar-peso" name="insertar-peso">
+                        </div>
+	        			<div class="col-5">
                             <p class="modal__label">No Einecs</p>
                             <input class="modal__input" type="text" id="insertar-einecs" name="insertar-einecs">
                         </div>
-                        <div class="col-6">
+                        <div class="col-5">
                             <p class="modal__label">No Ec</p>
                             <input class="modal__input" type="text" id="insertar-ec" name="insertar-ec">
                         </div>
 	        		</div>
 	        		
-	        		<div class="row pt-4">
+	        		<div class="row pt-2">
 	        			<div class="col">
                             <p class="modal__label">Precauciones</p>
                             <input class="modal__input" type="text" id="insertar-precauciones" name="insertar-precauciones">
+                        </div>
+	        		</div>
+	        		
+	        		<div class="row pt-2">
+	        			<div class="col">
+                            <p class="modal__label">MSDS</p>
+                            <input class="modal__input" type="text" id="insertar-msds" name="insertar-msds">
                         </div>
 	        		</div>
 	        		
@@ -257,6 +323,7 @@
 	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
 	<script src="../js/productos.js"></script>
+	<script> inicializar(); </script>
 	
 </body>
 </html>

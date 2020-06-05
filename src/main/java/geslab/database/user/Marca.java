@@ -1,18 +1,20 @@
 package geslab.database.user;
 
+import java.util.ArrayList;
+
 public class Marca {
 	private int codmarca;
 	private String nombre;
-	private String descripcion;
 	private String telefono;
 	private String direccion;
+	private ArrayList<String> proveedores;
 	
-	public Marca(int cod, String nombre, String descripcion, String telefono, String direccion) {
+	public Marca(int cod, String nombre, String telefono, String direccion, ArrayList<String> proveedores) {
 		this.codmarca = cod;
 		this.nombre = nombre;
-		this.descripcion = descripcion;
 		this.telefono = telefono;
 		this.direccion = direccion;
+		this.proveedores = proveedores;
 	}
 
 	public int getCodmarca() {
@@ -23,16 +25,16 @@ public class Marca {
 		return nombre;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
-	}
-
 	public String getTelefono() {
 		return telefono;
 	}
 
 	public String getDireccion() {
 		return direccion;
+	}
+
+	public ArrayList<String> getProveedores() {
+		return proveedores;
 	}
 
 }
