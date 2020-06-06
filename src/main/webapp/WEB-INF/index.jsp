@@ -221,9 +221,11 @@
 												      <td id="lote-<%=f.getCodficha()%>" style="display: none"><%=f.getLote()%></td>										      
 												      <td id="residuo-<%=f.getCodficha()%>" style="display: none"><%=f.esResiduo()%></td>											      
 	
-												      <td class="tabla-body--row" style="text-align: right;">
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=f.getCodficha()%>)">
-												      		<i class="fas fa-pen"></i></button></td>
+												      <td class="tabla-body--row info" style="text-align: right;">
+												      	<button type="button" id="boton-entrada" class="boton-tabla__accion boton-tabla__accion--add" onclick="entSal(<%=f.getCodficha()%>, 'entrada')">
+												      		<i class="fas fa-plus"></i></button>
+												      	<button type="button" id="boton-salida" class="boton-tabla__accion" onclick="entSal(<%=f.getCodficha()%>, 'salida')">
+												      		<i class="fas fa-minus"></i></i></button></td>
 												    </tr>
 											 	<%} %>
 											 	
@@ -260,27 +262,35 @@
                                         	<div class="col-6">
                                         		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
 								
-<!-- 													<table id="tabla-entradas" class="table table-borderless table-hover table-sm"> -->
-<!-- 														<thead > -->
-<!-- 														    <tr class="tabla-header"> -->
-<!-- 														      <th class="tabla-header--item" scope="col">Fecha</th> -->
-<!-- 														      <th class="tabla-header--item" scope="col">Uds.</th> -->
-<!-- 														    </tr> -->
-<!-- 												  		</thead> -->
+													<table id="tabla-entradas" class="table table-borderless table-hover table-sm">
+														<thead >
+														    <tr class="tabla-header">
+														      <th class="tabla-header--item" scope="col">Fecha</th>
+														      <th class="tabla-header--item" scope="col">Uds.</th>
+														    </tr>
+												  		</thead>
 														
-<!-- 														 <tbody class="tabla-body"> -->
-<%-- 															 	<%for (Entrada e : entradas) {%> --%>
-<%-- 															 		<tr data-fila=<%=e.getCodentrada()%>> --%>
-<%-- 																      <td class="tabla-body--row" id="fecha-<%=e.getCodentrada()%>"><%=e.getFecha()%></td> --%>
-<%-- 																      <td class="tabla-body--row" id="unidades-<%=e.getCodentrada()%>"><%=e.getUnidades()%></td> --%>
-<!-- 																    </tr> -->
-<%-- 															 	<%} %> --%>
-<!-- 													    </tbody> -->
-<!-- 													</table> -->
-											</div>
+														 <tbody id="body-entradas" class="tabla-body">
+													    </tbody>
+													</table>
+												</div>
                                         	</div>
                                         	
                                         	<div class="col-6">
+                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
+								
+													<table id="tabla-salidas" class="table table-borderless table-hover table-sm">
+														<thead >
+														    <tr class="tabla-header">
+														      <th class="tabla-header--item" scope="col">Fecha</th>
+														      <th class="tabla-header--item" scope="col">Uds.</th>
+														    </tr>
+												  		</thead>
+														
+														 <tbody id="body-salidas" class="tabla-body">
+													    </tbody>
+													</table>
+												</div>
                                         	</div>
                                         
                                         </div>
@@ -317,12 +327,12 @@
 	    <div class="modal-content">
 	    	<form id="insertar-ficha" action="/index.do" method="post">
 		    	<div id="variables" style="display: none;">
-					<input id="accion" name="accion"></input> 
-					<input id="codigo" name="codigo"></input>
+					<input id="accion-ficha" name="accion"></input> 
+					<input id="codigo-ficha" name="codigo"></input>
 				</div>
 	      <div class="modal-header justify-content-between">
       		<div class="col-6">
-      			<h5 class="modal-title" id="tituloModal"></h5>
+      			<h5 class="modal-title">Nueva ficha</h5>
       		</div>
 	      </div>
 	      <div class="modal-body">
@@ -421,6 +431,51 @@
 	  </div>
 	</div>
 	
+	<div class="modal fade" id="modalEntSal" tabindex="-1" role="dialog" aria-labelledby="modalEntSal" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+	    <div class="modal-content">
+	    	<form id="insertar-ent-sal" action="/index.do" method="post">
+		    	<div id="variables" style="display: none;">
+					<input id="accion-EntSal" name="accion"></input> 
+					<input id="codigo-fichaEntSal" name="codigo"></input>
+				</div>
+	      <div class="modal-header justify-content-between">
+      		<div class="col-12">
+      			<h5 class="modal-title" id="tituloModalEntSal"></h5>
+      		</div>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col px-4">
+	        	
+	        		<div class="row align-items-center pb-2">
+	        			<div class="col-5 pt-2">
+                            <p class="modal__label">Unidades</p>
+                        </div>  
+                        <div class="col-7 qty">
+		                        <span class="minus boton-tabla__accion boton-tabla__accion--add">-</span>
+		                        <input type="number" class="count" id="insertar-unidades" name="insertar-unidades" value="1">
+		                        <span class="plus boton-tabla__accion boton-tabla__accion--add">+</span>
+		                    </div>
+                        <div class="col-12 pt-3">
+                            <p class="modal__label">Fecha</p>
+                            <input class="modal__input" type="date" id="insertar-fecha" name="insertar-fecha">
+                        </div> 
+                        
+	        		</div>
+	        		
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn boton-tabla__cancelar" onclick="cancelarEntSal()">Cancelar</button>
+	        <button type="button" class="btn boton-tabla__añadir" onclick="confirmarEntSal()">Añadir</button>
+	      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
 	
 	<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
@@ -428,6 +483,48 @@
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
 	<script src="../js/index.js"></script>
 	<script> inicializar(); </script>
+	
+	<script> 
+		function mostrarEntradas(codficha){
+			$("#tabla-entradas tbody tr").remove(); 
+			body = document.getElementById("body-entradas");
+			
+			<% for(Entrada e : entradas){%>
+				if(codficha == "<%=e.getFicha().getCodficha()%>"){
+					fila = document.createElement("tr");
+					var fecha = document.createElement("td");
+					var uds = document.createElement("td");
+					textoFecha = document.createTextNode("<%=e.getFecha()%>");
+					textoUds = document.createTextNode("<%=e.getUnidades()%>");
+					fecha.appendChild(textoFecha);
+					uds.appendChild(textoUds);
+					fila.appendChild(fecha);
+					fila.appendChild(uds);
+					body.appendChild(fila);
+				}
+			<%}%>
+		}
+		
+		function mostrarSalidas(codficha){
+			$("#tabla-salidas tbody tr").remove(); 
+			body = document.getElementById("body-salidas");
+			
+			<% for(Salida s : salidas){%>
+				if(codficha == "<%=s.getFicha().getCodficha()%>"){
+					fila = document.createElement("tr");
+					var fecha = document.createElement("td");
+					var uds = document.createElement("td");
+					textoFecha = document.createTextNode("<%=s.getFecha()%>");
+					textoUds = document.createTextNode("<%=s.getUnidades()%>");
+					fecha.appendChild(textoFecha);
+					uds.appendChild(textoUds);
+					fila.appendChild(fecha);
+					fila.appendChild(uds);
+					body.appendChild(fila);
+				}
+			<%}%>
+		}
+	</script>
 	
 </body>
 </html>

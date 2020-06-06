@@ -16,6 +16,7 @@ import geslab.database.admin.Usuario;
 import geslab.database.user.Entrada;
 import geslab.database.user.Ficha;
 import geslab.database.user.Producto;
+import geslab.database.user.Salida;
 import geslab.database.user.Ubicacion;
 
 /**
@@ -39,7 +40,8 @@ public class IndexServlet extends HttpServlet {
 	// Variables entrada-salida
 	private Date fecha, caducidad;
 	private String lote, g_ml;
-	private BigDecimal unidades, capacidad;
+	private int unidades;
+	private BigDecimal capacidad;
 	private boolean residuo;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -63,8 +65,8 @@ public class IndexServlet extends HttpServlet {
 				request.setAttribute("calidades", cn.leerCalidades());
 				request.setAttribute("productos", cn.leerProductos());
 				request.setAttribute("fichas", cn.leerFichas());
-//				request.setAttribute("entradas", cn.leerEntradas());
-//				request.setAttribute("salidas", cn.leerSalidas());
+				request.setAttribute("entradas", cn.leerEntradas());
+				request.setAttribute("salidas", cn.leerSalidas());
 				request.setAttribute("usuario", usuario);
 				
 				cn.cerrarConexion();
@@ -87,60 +89,33 @@ public class IndexServlet extends HttpServlet {
 		System.out.println("Accion: " + accion);
 		System.out.println("Código: " + codigo);
 
+		Ficha ficha = null;
 		switch (accion) {
 			case "insertar":
 				leerParametrosFicha();
-				System.out.println(producto);
-				System.out.println(capacidad);
-				System.out.println(g_ml);
-				System.out.println(calidad);
-				System.out.println(ubicacion);
-				System.out.println(marca);
-				System.out.println(proveedor);
-				System.out.println(caducidad);
-				System.out.println(lote);
-				System.out.println(residuo);
-				Ficha ficha = new Ficha(0, producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, caducidad, lote, residuo, 0);
+				ficha = new Ficha(0, producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, caducidad, lote, residuo, 0);
 				if(cn.existeFicha(ficha) == null) {
 					cn.insertarFicha(ficha);
 				}
+				break;
+			case "entrada":
+				leerParametrosEntSal();
+				ficha = cn.leerFicha(Integer.parseInt(codigo));
+				Entrada entrada = new Entrada(0, ficha, fecha, unidades, usuario.getIdusuario());
+				cn.insertarEntrada(entrada);
+				break;
+			
+			case "salida":
+				leerParametrosEntSal();
+				ficha = cn.leerFicha(Integer.parseInt(codigo));
+				Salida salida = new Salida(0, ficha, fecha, unidades, usuario.getIdusuario());
+				cn.insertarSalida(salida);
 				break;
 			
 		}
 
 		cn.cerrarConexion();
 		response.sendRedirect("/index.do");
-	}
-
-
-	private void accionEntrada(String accion, int codigo) {
-//		Ficha ficha = null;
-//		Entrada entrada = null;
-//		if (accion.equals("insertar")) {
-//			ficha = cn.existeFicha(new Ficha(0, calidad, ubicacion, proveedor, marca, producto));
-//			entrada = new Entrada(0, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo);
-//			if (ficha.getCodficha() == 0) {
-//				cn.insertarFicha(ficha);
-//				ficha = cn.existeFicha(ficha);
-//			}
-//
-//		} else if (accion.equals("editar")) {
-//			for (Entrada e : cn.leerEntradas()) {
-//				if (e.getCodentrada() == codigo) {
-//					ficha = e.getFicha();
-//					break;
-//				}
-//			}
-//			entrada = new Entrada(codigo, ficha, fecha, caducidad, lote, unidades, capacidad, g_ml, residuo);
-//		}
-//
-//		cn.insertarEntrada(entrada);
-		
-	}
-	
-	private void accionSalida(String accion, int codigo) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void leerParametrosFicha() {
@@ -168,9 +143,9 @@ public class IndexServlet extends HttpServlet {
 		residuo = (request.getParameter("insertar-residuo") != null);
 	}
 
-	private void leerParametrosEntradaSalida() {
+	private void leerParametrosEntSal() {
 		fecha = Date.valueOf(request.getParameter("insertar-fecha"));
-		unidades = new BigDecimal(request.getParameter("insertar-uds"));
+		unidades = Integer.parseInt(request.getParameter("insertar-unidades"));
 		
 	}
 

@@ -3,41 +3,24 @@ var codigo = "";
 
 function inicializar() {
 	$("input").attr("spellcheck", "false");
-	$(document.body).on("click", "tr[data-fila]", function() {
-		mostrarExtraInfo(this.dataset.fila);
+	$(document.body).on("click", "td:not(.info)", function() {
+		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
+//	$('.count').prop('disabled', true);
+		$(document).on('click','.plus',function(){
+		$('.count').val(parseInt($('.count').val()) + 1 );
+	});
+	$(document).on('click','.minus',function(){
+		$('.count').val(parseInt($('.count').val()) - 1 );
+			if ($('.count').val() == 0) {
+				$('.count').val(1);
+			}
+    	});
 }
 
 function insertar() {
 	accion = "insertar";
-	document.getElementById("tituloModal").innerText = "Nueva ficha";
 	$("#modalFicha").modal();
-}
-
-function editar(cod) {
-	accion = "editar";
-	codigo = cod;
-	var campos = ["producto", "uds", "cpcd", "g-ml", "ubicacion",
-		"marca", "proveedor", "calidad", "lote", "caducidad"];
-	campos.forEach(function(valor, indice, array) {
-		document.getElementById("insertar-" + valor).value = document
-				.getElementById(valor + "-" + cod).innerText;
-	});
-	
-	var fecha = document.getElementById("fecha-" + cod).innerText;
-	document.getElementById("insertar-fecha").value = formatearFecha(fecha);
-	if(document.getElementById("residuo-"+cod).innerText == "Si"){
-		document.getElementById("insertar-residuo").checked = true;
-	}
-
-	var camposFicha = ["calidad", "ubicacion", "proveedor", "marca", "producto"];
-	camposFicha.forEach(function(valor, indice, array) {
-		document.getElementById("insertar-" + valor).disabled = true;
-	});
-	
-	document.getElementById("tituloModal").innerText = "Editar " + elemento + " (#" + cod +")";
-	$("#modalFicha").modal();
-	ocultarExtraInfo();
 }
 
 function cancelar() {
@@ -50,9 +33,75 @@ function cancelar() {
 }
 
 function confirmar() {
-	document.getElementById("accion").value = accion;
-	document.getElementById("codigo").value = codigo;
+	document.getElementById("accion-ficha").value = accion;
+	document.getElementById("codigo-ficha").value = codigo;
 	document.getElementById("insertar-ficha").submit();
+}
+
+function entSal(cod, entSal) {
+	accion = entSal;
+	codigo = cod;
+	document.getElementById("tituloModalEntSal").innerText = "Nueva " + entSal;
+	document.getElementById('insertar-fecha').valueAsDate = new Date();
+	$("#modalEntSal").modal();
+	ocultarExtraInfo();
+}
+
+function confirmarEntSal() {
+	document.getElementById("accion-EntSal").value = accion;
+	document.getElementById("codigo-fichaEntSal").value = codigo;
+	document.getElementById("insertar-ent-sal").submit();
+}
+
+function cancelarEntSal() {
+	accion = "";
+	document.getElementById("insertar-unidades").value = "1";
+	$("#modalEntSal").modal("hide");
+}
+
+function mostrarExtraInfo(codficha) {
+	var campos = ["lote", "residuo"];
+	campos.forEach(function(valor, indice, array) {
+		document.getElementById("extra-info-" + valor).innerText = document
+				.getElementById(valor + "-" + codficha).innerText;
+	});
+	
+	var caducidad = document.getElementById("caducidad-" + codficha).innerText;
+	document.getElementById("extra-info-caducidad").innerText = formatearFecha(caducidad);
+	mostrarEntradas(codficha);
+	mostrarSalidas(codficha); 
+
+	document.getElementById("fila-tabla").style.height = "35%";
+	document.getElementById("fila-info").style.height = "65%";
+	document.getElementById("container-info").style.display = "";
+
+}
+
+function ocultarExtraInfo() {
+	document.getElementById("fila-tabla").style.height = "80%";
+	document.getElementById("fila-info").style.height = "20%";
+	document.getElementById("container-info").style.display = "none";
+}
+
+function filtrar(campo, col) {
+	var input, filter, table, tr, td, i, txtValue;
+	input = document.getElementById("filtro-" + campo);
+	filtro = input.value.toUpperCase();
+	tabla = document.getElementById("tabla-" + elemento + "s");
+	tr = tabla.getElementsByTagName("tr");
+
+	for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[col];
+		if (td) {
+			txtValue = td.textContent || td.innerText;
+			if (txtValue.toUpperCase().indexOf(filtro) > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
+	}
+	ocultarExtraInfo();
 }
 
 function filtrarFecha() {
@@ -90,49 +139,6 @@ function filtrarFecha() {
 	}
 	ocultarExtraInfo();
 
-}
-
-function filtrar(campo, col) {
-	var input, filter, table, tr, td, i, txtValue;
-	input = document.getElementById("filtro-" + campo);
-	filtro = input.value.toUpperCase();
-	tabla = document.getElementById("tabla-" + elemento + "s");
-	tr = tabla.getElementsByTagName("tr");
-
-	for (i = 0; i < tr.length; i++) {
-		td = tr[i].getElementsByTagName("td")[col];
-		if (td) {
-			txtValue = td.textContent || td.innerText;
-			if (txtValue.toUpperCase().indexOf(filtro) > -1) {
-				tr[i].style.display = "";
-			} else {
-				tr[i].style.display = "none";
-			}
-		}
-	}
-	ocultarExtraInfo();
-}
-
-function mostrarExtraInfo(codentrada) {
-	var campos = ["lote", "residuo"];
-	campos.forEach(function(valor, indice, array) {
-		document.getElementById("extra-info-" + valor).innerText = document
-				.getElementById(valor + "-" + codentrada).innerText;
-	});
-	
-	var caducidad = document.getElementById("caducidad-" + codentrada).innerText;
-	document.getElementById("extra-info-caducidad").innerText = formatearFecha(caducidad);
-
-	document.getElementById("fila-tabla").style.height = "35%";
-	document.getElementById("fila-info").style.height = "65%";
-	document.getElementById("container-info").style.display = "";
-
-}
-
-function ocultarExtraInfo() {
-	document.getElementById("fila-tabla").style.height = "80%";
-	document.getElementById("fila-info").style.height = "20%";
-	document.getElementById("container-info").style.display = "none";
 }
 
 function formatearFecha(fecha){

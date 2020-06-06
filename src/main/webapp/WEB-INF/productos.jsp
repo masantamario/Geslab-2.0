@@ -156,7 +156,7 @@
 	 												   <td id="einecs-<%=p.getCas()%>" style="display: none"><%=p.getN_einecs()%></td>											       
 	 												   <td id="ec-<%=p.getCas()%>" style="display: none"><%=p.getN_ec()%></td>
 	
-												      <td class="tabla-body--row" style="text-align: right;">
+												      <td class="tabla-body--row info" style="text-align: right;">
 												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=p.getCas()%>)">
 												      		<i class="fas fa-pen"></i></button></td>
 												    </tr>

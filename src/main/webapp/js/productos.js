@@ -3,8 +3,8 @@ var codigo = "";
 
 function inicializar() {
 	$("input").attr("spellcheck", "false");
-	$(document.body).on("click", "tr[data-fila]", function() {
-		mostrarExtraInfo(this.dataset.fila);
+	$(document.body).on("click", "td:not(.info)", function() {
+		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
 }
 
