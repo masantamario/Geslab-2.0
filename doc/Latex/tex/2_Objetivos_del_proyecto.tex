@@ -1,0 +1,75 @@
+\capitulo{2}{Objetivos del proyecto}
+
+El objetivo principal del proyecto es la recreación de la aplicación ya existente en una aplicación web así como la importación de todos los datos que posee el sistema actual al nuevo. También se han de añadir distintos requisitos que con el uso de la aplicación, los usuarios han marcado como necesarios. Entre ellos se puede destacar un sistema que permita almacenar las medidas de seguridad necesarias para la conservación de los productos, así como un sistema capaz de unificar todos los posibles nombres que puede tener un producto, y evitar así problemas de elementos duplicados.
+
+Antes de analizar en profundidad los nuevos requisitos, es importante explicar el funcionamiento actual de la aplicación.
+
+
+\section{Funcionamiento actual de la aplicación}
+
+Geslab 1.0 permite a un usuario creado por el administrador de la base de datos logearse y acceder a la información que se encuentra en la misma.
+
+De esta manera el usuario puede consultar las existencias actuales de un producto, que se almacena en forma de \textbf{ficha de producto}. Cada ficha se corresponde con un producto guardado en una ubicación, con una calidad determinada, de una marca en concreto y proporcionado por un distribuidor.
+
+De cada ficha puede haber tanto \textbf{entradas} como \textbf{salidas}, y de estas se guarda la fecha, su caducidad, el nº de lote, las unidades, su capacidad y si es residuo o no. Así, cada ficha puede tener varias entradas y salidas y su stock real se calcula con los datos de estas.
+
+El sistema también almacena una serie de datos importantes para su funcionamiento, dejando estos a disposición del propio usuario para que pueda editarlos y añadir nuevos en caso necesario.   
+
+Hay una tabla con todos los \textbf{productos} de los que puede disponer una ficha, junto a información relevante del producto (formula química, precauciones, etc).
+
+De la misma manera se guardan las distintas \textbf{calidades} que puede tener el producto.
+
+El sistema almacena tanto las \textbf{marcas} como los \textbf{proveedores}, añadiendo también información de contacto.
+
+Por otro lado se almacenan los datos de \textbf{departamentos}, \textbf{áreas} y \textbf{centros}, pero a diferencia de los anteriores estos solo podrán ser editados por un usuario administrador de la base de datos.
+
+Con todos estos datos, el usuario al logearse en la aplicación puede consultar las existencias, pudiendo ver las entradas y las salidas de cada ficha, y puede realizar una búsqueda filtrando en función de los muchos campos de los que disponen las tablas.
+
+
+\section{Nuevas funcionalidades}
+
+La actualización de la aplicación va a recibir nuevas funcionalidades, unas requeridas por el propio planteamiento de la actualización, otras requeridas por parte de los usuarios de la aplicación y otras resultantes del análisis de la aplicación por parte del alumno desarrollador.
+
+\subsection{Requisitos del proyecto}
+
+\begin{itemize}
+\item El proyecto ha de mantener todos los requisitos actuales de la aplicación.
+
+\item La actualización ha de permitir la integración de todos los datos actuales de la base de datos.
+
+\item También se requiere un sistema que permita almacenar las medidas de seguridad necesarias para la conservación de los productos.
+
+\end{itemize}
+
+\subsection{Requisitos de los usuarios}
+
+\begin{itemize}
+
+\item Tienen que existir varios roles de usuario, \textbf{administrador de la aplicación}, que puede editar las tablas y su funcionamiento, \textbf{gestores de inventario}, que pueden gestionar las fichas de productos, y \textbf{usuarios}, que solo pueden ver la información sin conocer la ubicación de estos.  
+
+\item Se han de añadir los siguientes campos a la tabla producto: pureza, peso molecular, formula desarrollada, Nº CAS, Nº EINECS, Nº EC, pictogramas de seguridad, indicadores de peligro, indicadores de prudencia y hoja de seguridad (PDF)
+
+\item El sistema debe de permitir una búsqueda simplificada y una búsqueda avanzada. La búsqueda avanzada deberá de incluir los campos marca, fórmula, CAS, caducidad, fecha adquisición, nombre y localización. El sistema no deberá distinguir entre mayúsculas y minúsculas.
+
+\item El sistema deberá de tener un sistema de exportación de datos a Excel, que deje elegir los campos que se desean exportar.
+
+\item El sistema deberá de tener un sistema de exportación de etiquetas a la carta, para poder añadir los pictogramas de seguridad y la distinta información necesaria.
+
+\item El sistema debe de contemplar los distintos sinónimos que poseen los productos, así como identificar el compuesto tanto por su nombre en español como en inglés.
+  
+\item La aplicación debe de permitir solicitar reactivos entre los laboratorios que tengan existencias.
+
+\end{itemize}
+
+\subsection{Requisitos del alumno}
+
+\begin{itemize}
+
+\item La aplicación se desarrollará en lenguaje java con servlets y jsp y se realizará a través de Eclipse.
+
+\item La base de datos se creará en MySql, y se conectará con Java a través del MySql Connector.
+
+\item El diseño de la aplicación se realizará en HTML5 y se utilizará bootstrap 4 
+
+\end{itemize}
+

@@ -1,0 +1,44 @@
+\capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
+
+Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
+Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
+Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
+Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
+Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+
+Si hay algo importante a destacar en el desarrollo del proyecto, es sin duda alguna el como ha afectado la irrupción del \textbf{COVID-19} en nuestro país, y como el posterior estado de alarma hizo que todo el proyecto se estableciera en el limbo durante varias semanas.
+
+\section{COVID-19}
+
+Cuando se estaban estableciendo las bases del proyecto, se realizó una reunión con el decano de la facultad y un técnico de laboratorio, en la cual se trataron diversos temas, entre ellos, la necesidad por nuestra parte de unos requisitos funcionales elegidos por los propios usuarios de la aplicación, por lo cual se concreto otra segunda reunión para poder obtener una respuesta. Con fecha para la nueva reunión ya establecida, se decreto el estado de alarma en el país, que afecto a todos los organismos de la universidad e incapacitó la tarea de reunirse. 
+
+De aquí en adelante, toda la labor de comunicarse con los usuarios se convirtió en una tarea larga y tediosa, durante la cual el alumno no podía hacer otra cosa sino que autoformarse y estudiar la documentación que poseía hasta el momento, que pese a contener mucha información, había ciertos criterios técnicos que solo un miembro del laboratorio podía entender.
+
+\section{Obtención de requisitos funcionales}
+
+Finalmente se pudo obtener un borrador de unos requisitos funcionales, a través de una serie de correos enviados entre los miembros del departamento. En los correos la información era poco específica y caótica, por lo que hizo falta realizar una tarea de análisis para poder extraer unos requisitos funcionales claros. 
+
+Tras esta tarea de análisis e investigación tanto de la aplicación como de conceptos de química utilizados, se extrajeron unas historias de usuario a medio completar, con el objetivo de que o bien el decano, o bien los usuarios, aportaran más información, y sobre todo información más específica. 
+
+Al no recibir respuesta por parte de la universidad (de nuevo por motivo del confinamiento) se decidió investigar los requisitos por cuenta propia y establecer unos requisitos finales para poder ir trabajando sobre ellos, dejando claro que los requisitos finalmente elegidos no eran definitivos y quedaban abiertos a posibles cambios en un futuro.
+
+\section{Obtención del material original}
+
+Por otro lado, a parte de la información requerida de los usuarios, también se necesitaba obtener todos los datos de la aplicación ya existente en su sistema. De la misma manera que ocurría con los requisitos, la comunicación era complicada, pero Pedro estuvo en contacto con ellos para poder obtener las tablas y poder replicarlas en un MySql, y así ir trabajando con ellas en traspasar los datos a las tablas nuevas.
+
+Cuando finalmente recibimos la información del servidor, la recibimos en un formato de imagen de disco proveniente de Ghost Norton en formato VHD. Esto nos dejaba con una copia del disco duro en el que estaban las tablas que necesitábamos.
+Para montar la imagen utilizamos Virtual Vox NT4, pero por alguna razón la maquina no arrancaba. Tras muchas pruebas encontramos que la causa era la tarjeta de red, no era compatible. Tras esto se realizó una búsqueda de una compatible. Finalmente se utilizó AMD PC net family. 
+
+Con todo listo se pudo ejecutar la imagen, y a través de admin SQL exportamos los datos que necesitábamos.
+
+\section{Cambios en la base de datos}
+
+Es importante mencionar como la base de datos original ha sufrido una serie de cambios,  aparte de el propio paso de SQL Server a MySQL, por supuesto. Con el análisis del funcionamiento original de la aplicación y de los nuevos requisitos funcionales, se plantearon multitud de cambios en las tablas, que incluyen la creación de nuevas, la eliminación de otras, y el cambio dtanto de formato como de ubicación de los campos de las mismas.
+
+\section{Nuevo planteamiento de la UI}
+
+Un apartado muy importante para el proyecto ha consistido en la creación de una interfaz de usuario con una usabilidad muy intuitiva y adaptada a los estándares actuales. El paso de una aplicación creada hace varias décadas con Visual Basic 5.0 (con todas las limitaciones que eso conlleva), a una webapp que se comporte como un sistema actual al que los usuarios puedan estar acostumbrados, no ha sido una tarea sencilla. 
+
+La aplicación ha de trabajar con multitud de datos a la vez, unos más relevantes en unas situaciones y otros en otras, teniendo que encontrar en cada vista un punto medio entre mostrar datos de importancia real y componer una vista atractiva visualmente, evitando que la página se sobrecargue de información.
+
+También es importante destacar, el hecho de como las tecnologías actuales cada vez están más enfocadas a los dispositivos móviles, de forma que es muy importante pensar en su portabilidad entre dispositivos. Al trabajar con bootsrap, se deja abierta una puerta a una posible modificación del diseño que haga que todo el sistema se pueda comportar de la misma manera en cualquier dispositivo.  

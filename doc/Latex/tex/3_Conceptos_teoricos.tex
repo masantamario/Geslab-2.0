@@ -1,0 +1,30 @@
+\capitulo{3}{Conceptos teóricos}
+
+En este apartado se hará hincapié en distintos conceptos teóricos que son necesarios para la comprensión del proyecto. Es importante analizar los cambios de tecnología que se van a realizar, para poder comprender correctamente su comportamiento. 
+
+\section{MySQL}
+
+MySQL es un sistema de gestión de base de datos relacionales de código abierto con un modelo cliente servidor. Actualmente está considerada como la base de datos open source más popular del mundo sobre todo para entornos de desarrollo web.
+
+La aplicación actual utiliza como sistema gestor de base de datos el SQL Server 6.5 de Microsoft en inglés, mientras que la  nueva actualización se desarrollará en MySQL. Geslab 1.0 esta desarrollada como una aplicación de escritorio de windows, por lo cual es razonable que se eligiera SQL Server.
+
+Con el salto a aplicación web el cambio a MySQL viene de la mano, ya que MySQL es mucho más sencillo de emparejar con cualquier otro idioma, como en nuestro caso es Java.
+
+
+\section{JSP}
+
+JavaServer Pages (JSP) es una tecnología que ayuda a los desarrolladores de software a crear páginas web dinámicas basadas en HTML y XML. JSP es similar a PHP, pero usa el lenguaje de programación Java \cite{wiki:JSP}
+
+El motor de las páginas JSP se base en servlets, que son programas destinados a ejecutarse en el lado del servidor de modo que puede ampliar las capacidades del mismo.
+
+Por todo ello, la utilización de JSP y Servlets nos permitirá realizar de una manera muy cómoda todo el diseño de las páginas HTML que utilizará la aplicación, evitándonos el tener que escribir infinitas sentencias println. 
+
+Además esto nos ayuda a diferenciar bien la tarea del diseño gráfico de la aplicación por un lado,y por otro todo el comportamiento de programación.
+
+\section{Maven} 
+
+Maven es una herramienta de software para la gestión y construcción de proyectos Java con un modelo de construcción basado en XML. Maven utiliza un POM para describir el proyecto software a construir, sus dependencias de otros módulos y componentes externos, y el orden de construcción de los elementos. 
+
+Además, el motor incluido en su núcleo puede dinámicamente descargar plugins de un repositorio, el mismo repositorio que provee acceso a muchas versiones de diferentes proyectos Open Source en Java, de Apache y otras organizaciones y desarrolladores. \cite{wiki:maven}
+
+Maven nos ayuda mucho a la hora de crear un proyecto web gracias a su posible implementación con Eclipse. La configuración de las dependencias se realiza de manera muy sencilla, desde la configuración de los servlets, a la configuración de tomcat en el proyecto.
