@@ -61,13 +61,13 @@
 						<div class="row px-2" data-simplebar data-simplebar-auto-hide="false" style="height: 85%">
 							<div class="col-12" style="height: 100%">
 								<p class="filtros__label">Nombre</p>
-									<input class="filtros__input" id="filtro-nombre" type="text" onkeyup="filtrar('nombre', 0)">
+									<input class="filtros__input" id="filtro-nombre" type="text" onkeyup="filtrado()">
 									
 							</div>
 						</div>
 						<div class="row align-items-center justify-content-center" style="height: 15%">
 							<div class="col px-4">
-								<button type="button"  class="btn filtros__boton">Reiniciar filtro</button>
+								<button type="button" class="btn filtros__boton" onclick="reiniciarFiltro()">Reiniciar filtro</button>
 							</div>
 						</div>
 					</div>

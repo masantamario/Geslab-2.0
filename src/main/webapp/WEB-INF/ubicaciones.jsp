@@ -63,24 +63,24 @@
 						<div class="row px-2" data-simplebar data-simplebar-auto-hide="false" style="height: 85%">
 							<div class="col-12" style="height: 100%">
 								<p class="filtros__label">Nombre</p>
-									<input class="filtros__input" id="filtro-nombre" type="text" onkeyup="filtrar('nombre', 1)">
+									<input class="filtros__input" id="filtro-nombre" type="text" onkeyup="filtrado()">
 									
 								<p class="filtros__label">Departamento</p>
-									<select class="filtros__select" id="filtro-dpto" onchange="filtrar('dpto', 3)">
+									<select class="filtros__select" id="filtro-dpto" onchange="filtrado()">
 										<option selected></option>
 										<%for(Departamento d:departamentos){ %>
 											<option><%=d.getNombre()%></option>
 										<%}%>
 									</select>
 								<p class="filtros__label">Área</p>
-									<select class="filtros__select" id="filtro-area" onchange="filtrar('area', 1)">
+									<select class="filtros__select" id="filtro-area" onchange="filtrado()">
 										<option selected></option>
 										<%for(Area a:areas){ %>
 											<option><%=a.getNombre()%></option>
 										<%}%>
 									</select>
 								<p class="filtros__label">Centro</p>
-									<select class="filtros__select" id="filtro-centro" onchange="filtrar('centro', 2)">
+									<select class="filtros__select" id="filtro-centro" onchange="filtrado()">
 										<option selected></option>
 										<%for(Centro c:centros){ %>
 											<option><%=c.getNombre()%></option>
@@ -88,7 +88,7 @@
 									</select>
 								
 								<p class="filtros__label">Ub. Oculta</p>
-									<select class="filtros__select" id="filtro-oculto" onchange="filtrar('oculto', 4)">
+									<select class="filtros__select" id="filtro-oculta" onchange="filtrado()">
 										<option selected></option>
 										<option>Si</option>
 										<option>No</option>
@@ -99,7 +99,7 @@
 						</div>
 						<div class="row align-items-center justify-content-center" style="height: 15%">
 							<div class="col px-4">
-								<button type="button"  class="btn filtros__boton">Reiniciar filtro</button>
+								<button type="button" class="btn filtros__boton" onclick="reiniciarFiltro()">Reiniciar filtro</button>
 							</div>
 						</div>
 					</div>

@@ -74,68 +74,68 @@
 						<div class="row px-2" data-simplebar data-simplebar-auto-hide="false" style="height: 85%">
 							<div class="col-12" style="height: 100%">
 								<p class="filtros__label">Producto</p>
-									<input class="filtros__input" id="filtro-producto" type="text" onkeyup="filtrar('producto', 1)">
+									<input class="filtros__input" id="filtro-producto" type="text" onkeyup="filtrado()">
 								<p class="filtros__label">CAS</p>
-									<input class="filtros__input" id="filtro-cas" type="text" onkeyup="filtrar('cas', 7)">
+									<input class="filtros__input" id="filtro-cas" type="text" onkeyup="filtrado()">
 								<p class="filtros__label">Fórmula</p>
-									<input class="filtros__input" id="filtro-formula" type="text" onkeyup="filtrar('formula', 8)">
+									<input class="filtros__input" id="filtro-formula" type="text" onkeyup="filtrado()">
 								<p class="filtros__label">Departamento</p>
-									<select class="filtros__select" id="filtro-dpto" onchange="filtrar('dpto', 14)">
+									<select class="filtros__select" id="filtro-dpto" onchange="filtrado()">
 										<option selected></option>
 										<%for(Departamento d:departamentos){ %>
 											<option><%=d.getNombre()%></option>
 										<%}%>
 									</select>
 								<p class="filtros__label">Área</p>
-									<select class="filtros__select" id="filtro-area" onchange="filtrar('area', 5)">
+									<select class="filtros__select" id="filtro-area" onchange="filtrado()">
 										<option selected></option>
 										<%for(Area a:areas){ %>
 											<option><%=a.getNombre()%></option>
 										<%}%>
 									</select>
 								<p class="filtros__label">Centro</p>
-									<select class="filtros__select" id="filtro-centro" onchange="filtrar('centro', 15)">
+									<select class="filtros__select" id="filtro-centro" onchange="filtrado()">
 										<option selected></option>
 										<%for(Centro c:centros){ %>
 											<option><%=c.getNombre()%></option>
 										<%}%>
 									</select>
 								<p class="filtros__label">Ubicación</p>
-									<select class="filtros__select" id="filtro-ubicacion" onchange="filtrar('ubicacion', 4)">
+									<select class="filtros__select" id="filtro-ubicacion" onchange="filtrado()">
 										<option selected></option>
 										<%for(Ubicacion u:ubicaciones){ %>
 											<option><%=u.getNombre()%></option>
 										<%}%>
 									</select>
-								<p class="filtros__label">Proveedor</p>
-									<select class="filtros__select" id="filtro-proveedor" onchange="">
-										<option selected></option>
-										<%for(Proveedor p:proveedores){ %>
-											<option><%=p.getNombre()%></option>
-										<%}%>
-									</select>
 								<p class="filtros__label">Marca</p>
-									<select class="filtros__select" id="filtro-marca" onchange="filtrar('marca', 6)">
+									<select class="filtros__select" id="filtro-marca" onchange="filtrado()">
 										<option selected></option>
 										<%for(Marca m:marcas){ %>
 											<option><%=m.getNombre()%></option>
 										<%}%>
 									</select>
+								<p class="filtros__label">Proveedor</p>
+									<select class="filtros__select" id="filtro-proveedor" onchange="filtrado()">
+										<option selected></option>
+										<%for(Proveedor p:proveedores){ %>
+											<option><%=p.getNombre()%></option>
+										<%}%>
+									</select>
 								<p class="filtros__label">Calidad</p>
-									<select class="filtros__select" id="filtro-calidad" onchange="filtrar('calidad', 12)">
+									<select class="filtros__select" id="filtro-calidad" onchange="filtrado()">
 										<option selected></option>
 										<%for(Calidad c:calidades){ %>
 											<option><%=c.getNombre()%></option>
 										<%}%>
 									</select>
 								<p class="filtros__label">Ub. Oculta</p>
-									<select class="filtros__select" id="filtro-oculto" onchange="filtrar('oculto', 20)">
+									<select class="filtros__select" id="filtro-oculto" onchange="filtrado()">
 										<option selected></option>
 										<option>Si</option>
 										<option>No</option>
 									</select>
 								<p class="filtros__label">Residuo</p>
-									<select class="filtros__select" id="filtro-residuo" onchange="filtrar('residuo', 13)">
+									<select class="filtros__select" id="filtro-residuo" onchange="filtrado()">
 										<option selected></option>
 										<option>Si</option>
 										<option>No</option>
@@ -145,7 +145,7 @@
 						</div>
 						<div class="row align-items-center justify-content-center" style="height: 15%">
 							<div class="col px-4">
-								<button type="button"  class="btn filtros__boton">Reiniciar filtro</button>
+								<button type="button" class="btn filtros__boton" onclick="reiniciarFiltro()">Reiniciar filtro</button>
 							</div>
 						</div>
 					</div>
@@ -203,23 +203,34 @@
 										      <th style="display: none" scope="col">Lote</th>
 										      <th style="display: none" scope="col">Residuo</th>
 										      
+										      <th style="display: none" scope="col">CAS</th>
+										      <th style="display: none" scope="col">Formula</th>
+										      <th style="display: none" scope="col">Dpto.</th>
+										      
 										    </tr>
 								  		</thead>
 										
 										 <tbody class="tabla-body">
 											 	<%for (Ficha f : fichas) {%>
-											 		<tr data-fila=<%=f.getCodficha()%>>
+											 		<tr data-filtro=true data-fila=<%=f.getCodficha()%>>
 												      <td class="tabla-body--row" id="producto-<%=f.getCodficha()%>"><%=f.getProducto().getNombre()%></td>
 												      <td class="tabla-body--row" id="cpcd-gml-<%=f.getCodficha()%>"><%=f.getCapacidad()%> <%=f.getG_ml()%>.</td>
 												      <td class="tabla-body--row" id="uds-<%=f.getCodficha()%>"><%=f.getStock()%></td>
-												      <td class="tabla-body--row" id=""><%=f.getCalidad()%></td>
-												      <td class="tabla-body--row" id=""><%=f.getUbicacion().getNombre()%></td>
-												      <td class="tabla-body--row" id=""><%=f.getMarca()%></td>
-												      <td class="tabla-body--row" id=""><%=f.getProveedor()%></td>
+												      <td class="tabla-body--row" id="calidad-<%=f.getCodficha()%>"><%=f.getCalidad()%></td>
+												      <td class="tabla-body--row" id="ubicacion-<%=f.getCodficha()%>"><%=f.getUbicacion().getNombre()%></td>
+												      <td class="tabla-body--row" id="marca-<%=f.getCodficha()%>"><%=f.getMarca()%></td>
+												      <td class="tabla-body--row" id="proveedor-<%=f.getCodficha()%>"><%=f.getProveedor()%></td>
 
 												      <td id="caducidad-<%=f.getCodficha()%>" style="display: none"><%=f.getCaducidadCal()%></td>											      
 												      <td id="lote-<%=f.getCodficha()%>" style="display: none"><%=f.getLote()%></td>										      
-												      <td id="residuo-<%=f.getCodficha()%>" style="display: none"><%=f.esResiduo()%></td>											      
+												      <td id="residuo-<%=f.getCodficha()%>" style="display: none"><%=f.esResiduo()%></td>
+												      
+												      <td id="cas-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getCas()%></td>	
+												      <td id="formula-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getFormula()%></td>											      
+												      <td id="dpto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getDpto()%></td>											      
+												      <td id="area-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getArea()%></td>											      
+												      <td id="centro-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getCentro()%></td>											      
+												      <td id="oculto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().esOculta()%></td>											      
 	
 												      <td class="tabla-body--row info" style="text-align: right;">
 												      	<button type="button" id="boton-entrada" class="boton-tabla__accion boton-tabla__accion--add" onclick="entSal(<%=f.getCodficha()%>, 'entrada')">

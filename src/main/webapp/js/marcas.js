@@ -49,22 +49,33 @@ function confirmar() {
 	document.getElementById("insertar-marca").submit();
 }
 
-function filtrar(campo, col) {
-	var input, filter, table, tr, td, i, txtValue;
-	input = document.getElementById("filtro-" + campo);
-	filtro = input.value.toUpperCase();
+function filtrado() {
+	var campos = ["nombre"];
+	var filtros = [];
+	campos.forEach( function(valor, indice, array) {
+	    filtros[indice] = document.getElementById("filtro-" + valor).value.toUpperCase();
+	});
 	tabla = document.getElementById("tabla-marcas");
-	tr = tabla.getElementsByTagName("tr");
+	var filas = tabla.getElementsByTagName("tr");
 
-	for (i = 0; i < tr.length; i++) {
-		td = tr[i].getElementsByTagName("td")[col];
-		if (td) {
-			txtValue = td.textContent || td.innerText;
-			if (txtValue.toUpperCase().indexOf(filtro) > -1) {
-				tr[i].style.display = "";
-			} else {
-				tr[i].style.display = "none";
-			}
+	filas.forEach( function(valor, indice, array) {
+		var cod = valor.dataset.fila;
+		var columnas = filas[indice].getElementsByTagName("td");
+		visible = true;
+		if(indice > 0){
+			campos.forEach(function (valor, indice, array){
+				v = columnas.namedItem(valor + "-" + cod).innerText.toUpperCase();
+				visible = v.indexOf(filtros[indice]) > -1 ? visible && true : visible && false;
+			});
+			filas[indice].style.display = visible ? "" : "none";
 		}
-	}
+	});
+}
+
+function reiniciarFiltro(){
+	var campos = ["nombre"];
+	campos.forEach( function(valor, indice, array) {
+		document.getElementById("filtro-" + valor).value = "";
+	});
+	filtrado();
 }

@@ -6,16 +6,16 @@ function inicializar() {
 	$(document.body).on("click", "td:not(.info)", function() {
 		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
-//	$('.count').prop('disabled', true);
-		$(document).on('click','.plus',function(){
-		$('.count').val(parseInt($('.count').val()) + 1 );
+	// $('.count').prop('disabled', true);
+	$(document).on('click', '.plus', function() {
+		$('.count').val(parseInt($('.count').val()) + 1);
 	});
-	$(document).on('click','.minus',function(){
-		$('.count').val(parseInt($('.count').val()) - 1 );
-			if ($('.count').val() == 0) {
-				$('.count').val(1);
-			}
-    	});
+	$(document).on('click', '.minus', function() {
+		$('.count').val(parseInt($('.count').val()) - 1);
+		if ($('.count').val() == 0) {
+			$('.count').val(1);
+		}
+	});
 }
 
 function insertar() {
@@ -25,7 +25,8 @@ function insertar() {
 
 function cancelar() {
 	accion = "";
-	var camposFicha = ["calidad", "ubicacion", "proveedor", "marca", "producto"];
+	var camposFicha = [ "calidad", "ubicacion", "proveedor", "marca",
+			"producto" ];
 	camposFicha.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).disabled = false;
 	});
@@ -60,16 +61,16 @@ function cancelarEntSal() {
 }
 
 function mostrarExtraInfo(codficha) {
-	var campos = ["lote", "residuo"];
+	var campos = [ "lote", "residuo" ];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("extra-info-" + valor).innerText = document
 				.getElementById(valor + "-" + codficha).innerText;
 	});
-	
+
 	var caducidad = document.getElementById("caducidad-" + codficha).innerText;
 	document.getElementById("extra-info-caducidad").innerText = formatearFecha(caducidad);
 	mostrarEntradas(codficha);
-	mostrarSalidas(codficha); 
+	mostrarSalidas(codficha);
 
 	document.getElementById("fila-tabla").style.height = "35%";
 	document.getElementById("fila-info").style.height = "65%";
@@ -83,25 +84,35 @@ function ocultarExtraInfo() {
 	document.getElementById("container-info").style.display = "none";
 }
 
-function filtrar(campo, col) {
-	var input, filter, table, tr, td, i, txtValue;
-	input = document.getElementById("filtro-" + campo);
-	filtro = input.value.toUpperCase();
-	tabla = document.getElementById("tabla-" + elemento + "s");
-	tr = tabla.getElementsByTagName("tr");
+function filtrado() {
+	var campos = ["producto", "cas", "formula", "dpto", "area", "centro", "ubicacion", "marca", "proveedor", "calidad", "oculto", "residuo"];
+	var filtros = [];
+	campos.forEach( function(valor, indice, array) {
+	    filtros[indice] = document.getElementById("filtro-" + valor).value.toUpperCase();
+	});
+	tabla = document.getElementById("tabla-existencias");
+	var filas = tabla.getElementsByTagName("tr");
 
-	for (i = 0; i < tr.length; i++) {
-		td = tr[i].getElementsByTagName("td")[col];
-		if (td) {
-			txtValue = td.textContent || td.innerText;
-			if (txtValue.toUpperCase().indexOf(filtro) > -1) {
-				tr[i].style.display = "";
-			} else {
-				tr[i].style.display = "none";
-			}
+	filas.forEach( function(valor, indice, array) {
+		var cod = valor.dataset.fila;
+		var columnas = filas[indice].getElementsByTagName("td");
+		visible = true;
+		if(indice > 0){
+			campos.forEach(function (valor, indice, array){
+				v = columnas.namedItem(valor + "-" + cod).innerText.toUpperCase();
+				visible = v.indexOf(filtros[indice]) > -1 ? visible && true : visible && false;
+			});
+			filas[indice].style.display = visible ? "" : "none";
 		}
-	}
-	ocultarExtraInfo();
+	});
+}
+
+function reiniciarFiltro(){
+	var campos = ["producto", "cas", "formula", "dpto", "area", "centro", "ubicacion", "marca", "proveedor", "calidad", "oculto", "residuo"];
+	campos.forEach( function(valor, indice, array) {
+		document.getElementById("filtro-" + valor).value = "";
+	});
+	filtrado();
 }
 
 function filtrarFecha() {
@@ -141,8 +152,8 @@ function filtrarFecha() {
 
 }
 
-function formatearFecha(fecha){
+function formatearFecha(fecha) {
 	var fecha = fecha.split("-");
-	var fechaFormateada = fecha[2] + "-" + fecha[1] + "-" + fecha[0]; 
-	return fechaFormateada;	
+	var fechaFormateada = fecha[2] + "-" + fecha[1] + "-" + fecha[0];
+	return fechaFormateada;
 }
