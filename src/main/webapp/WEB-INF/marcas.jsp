@@ -122,10 +122,46 @@
 							</div>
 						</div>
 						
-						<div class="row py-3" style="height: 20%" id="fila-insertar">
+						<div class="row align-items-end" id="fila-info" style="height: 20%">
 							<div class="col align-self-end">
-								<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva marca</button>
+								
+								<div class="row extra-info mx-1" id="container-info" style="height:236px; display:none">
+									<div class="col"><div class="row" style="height: 100%">
+									<div class="col-12 px-4">
+                                        <div class="row justify-content-end pt-1">
+                                            <div class="col-1 text-right" onclick='ocultarExtraInfo()'><i class="fas fa-times extra-info__boton"></i></div>
+                                        </div>
+
+                                        <div class="row pt-2" style="height: 72%">
+                                        	<div class="col container-tabla-extra-info">
+                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
+								
+													<table id="tabla-provs" class="table table-borderless table-hover table-sm">
+														<thead>
+														    <tr class="tabla-header">
+														      <th class="tabla-header--item" scope="col">Proveedores que la distribuyen</th>
+														    </tr>
+												  		</thead>
+														 <tbody id="body-provs" class="tabla-body">
+													    </tbody>
+													</table>
+												</div>
+                                        	</div>
+                                        </div>
+                                        
+                                    </div>
+                                    </div></div>
+								
+								</div>
+								
+								
+								<div class="row py-3" style="height: 20%" id="fila-insertar">
+									<div class="col">
+										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva marca</button>
+									</div>
+								</div>
 							</div>
+							
 						</div>
 						
 		
@@ -180,7 +216,7 @@
 	        			<div class="col">
                             <p class="modal__label">Proveedores</p>
                             <div class="form-group">
-			                    <select class="mul-select" multiple="multiple" id="insertar-proveedores" name="insertar-proveedores">
+			                    <select class="mul-select modal__select" multiple="multiple" id="insertar-proveedores" name="insertar-proveedores">
 			                    	<%for(Proveedor p: proveedores){%>
 			                    		<option id=<%=p.getNombre()%>><%=p.getNombre()%></option>
 			                    	<%}%>
@@ -208,6 +244,29 @@
 	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
 	<script src="../js/marcas.js"></script>
+	<script>inicializar()</script>
+	
+	<script> 
+		function mostrarProvs(codmarca){
+			$("#tabla-provs tbody tr").remove(); 
+			body = document.getElementById("body-provs");
+			
+			<% for(Marca m : marcas){%>
+				if(codmarca == "<%=m.getCodmarca()%>"){
+					<%for(String p : m.getProveedores()){%>
+						fila = document.createElement("tr");
+						fila.classList.add("tabla-body--row");
+						var prov = document.createElement("td");
+						textoProv = document.createTextNode("<%=p%>");
+						prov.appendChild(textoProv);
+						fila.appendChild(prov);
+						body.appendChild(fila);
+					<%}%>
+				}
+			<%}%>
+		}
+		
+	</script>
 	
 </body>
 </html>

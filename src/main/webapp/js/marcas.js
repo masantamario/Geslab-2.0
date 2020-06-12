@@ -1,6 +1,21 @@
 var accion = "";
 var codigo = "";
 
+function inicializar(){
+	$("input").attr("spellcheck", "false");
+	
+	$(document.body).on("click", "td:not(.info)", function() {
+		mostrarExtraInfo(this.parentElement.dataset.fila);
+	});
+	
+	
+	$('#insertar-proveedores option').mousedown(function(e) {
+	    e.preventDefault();
+	    $(this).prop('selected', !$(this).prop('selected'));
+	    return false;
+	});
+}
+
 function insertar() {
 	accion = "insertar";
 	var campos = ["nombre", "tlfn", "direccion"];
@@ -47,6 +62,20 @@ function confirmar() {
 	document.getElementById("accion").value = accion;
 	document.getElementById("codigo").value = codigo;
 	document.getElementById("insertar-marca").submit();
+}
+
+function mostrarExtraInfo(codmarca) {
+	mostrarProvs(codmarca);
+	document.getElementById("fila-tabla").style.height = "35%";
+	document.getElementById("fila-info").style.height = "65%";
+	document.getElementById("container-info").style.display = "";
+
+}
+
+function ocultarExtraInfo() {
+	document.getElementById("fila-tabla").style.height = "80%";
+	document.getElementById("fila-info").style.height = "20%";
+	document.getElementById("container-info").style.display = "none";
 }
 
 function filtrado() {
