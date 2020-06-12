@@ -31,7 +31,7 @@ function insertar() {
 	$("#modalMarca").modal();
 }
 
-function editar(cod, proovedores) {
+function editar(cod) {
 	accion = "editar";
 	codigo = cod;
 	var campos = ["nombre", "tlfn", "direccion"];
@@ -45,8 +45,9 @@ function editar(cod, proovedores) {
 	for (i = 0; i < opt.length; i++) {
 		opt[i].selected = false;
 	}
-	proovedores.forEach(function(valor, indice, array) {
-		valor.selected = true;
+
+	$("#proveedores-" + cod + " option").each(function(){
+		$("#insertar-proveedores").find("#" + $(this).val().replace(' ','_').replace('.', '_')).prop("selected","selected");
 	});
 	
 	document.getElementById("tituloModal").innerText = "Editar marca (#"+cod+")";

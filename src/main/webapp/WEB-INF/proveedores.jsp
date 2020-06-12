@@ -116,9 +116,17 @@
 												      <td class="tabla-body--row" id="tlfn-<%=p.getCodproveedor()%>"><%=p.getTelefono()%></td>
 												      <td class="tabla-body--row" id="fax-<%=p.getCodproveedor()%>"><%=p.getFax()%></td>
 												      <td class="tabla-body--row" id="mail-<%=p.getCodproveedor()%>"><%=p.getEmail()%></td>
+												      
+												      <td class="tabla-body--row info" style="display: none">
+												      	<select id="marcas-<%=p.getCodproveedor()%>">
+									                    	<%for(String m: p.getMarcas()){%>
+									                    		<option><%=m%></option>
+									                    	<%}%>
+			                    						</select>
+												      </td>
 	
-												      <td class="tabla-body--row" style="text-align: right;">
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=p.getCodproveedor()%>, <%=p.getMarcas()%>)">
+												      <td class="tabla-body--row info" style="text-align: right;">
+												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=p.getCodproveedor()%>)">
 												      		<i class="fas fa-pen"></i></button></td>
 												    </tr>
 											 	<%} %>
@@ -144,7 +152,7 @@
 													<table id="tabla-marcas" class="table table-borderless table-hover table-sm">
 														<thead>
 														    <tr class="tabla-header">
-														      <th class="tabla-header--item" scope="col">Marcas que distribuyes</th>
+														      <th class="tabla-header--item" scope="col">Marcas que distribuye</th>
 														    </tr>
 												  		</thead>
 														 <tbody id="body-marcas" class="tabla-body">
@@ -234,14 +242,12 @@
                             <div class="form-group">
 			                    <select class="mul-select modal__select" multiple="multiple" id="insertar-marcas" name="insertar-marcas">
 			                    	<%for(Marca m: marcas){%>
-			                    		<option class="modal__select--opcion" id=<%=m.getNombre()%>><%=m.getNombre()%></option>
+			                    		<option class="modal__select--opcion" id=<%=m.getNombre().replace(' ','_').replace('.', '_')%>><%=m.getNombre()%></option>
 			                    	<%}%>
 			                    </select>
 			                </div> 
-
                         </div>
 	        		</div>
-	        		
 	        	</div>
 	        </div>
 	      </div>

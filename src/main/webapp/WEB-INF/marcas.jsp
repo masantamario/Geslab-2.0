@@ -108,14 +108,23 @@
 										 <tbody class="tabla-body">
 											 	<%for (Marca m : marcas) {%>
 											 		<tr data-fila=<%=m.getCodmarca()%>>
-												      <td class="tabla-body--row" id="nombre-<%=m.getCodmarca()%>"><%=m.getNombre()%></td>
-												      <td class="tabla-body--row" id="tlfn-<%=m.getCodmarca()%>"><%=m.getTelefono()%></td>
-												      <td class="tabla-body--row" id="direccion-<%=m.getCodmarca()%>"><%=m.getDireccion()%></td>
-	
-												      <td class="tabla-body--row" style="text-align: right;">
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=m.getCodmarca()%>, <%=m.getProveedores()%>)">
-												      		<i class="fas fa-pen"></i></button></td>
-												    </tr>
+												    	<td class="tabla-body--row" id="nombre-<%=m.getCodmarca()%>"><%=m.getNombre()%></td>
+												    	<td class="tabla-body--row" id="tlfn-<%=m.getCodmarca()%>"><%=m.getTelefono()%></td>
+												    	<td class="tabla-body--row" id="direccion-<%=m.getCodmarca()%>"><%=m.getDireccion()%></td>
+														
+														<td class="tabla-body--row info" style="display: none">
+													      	<select id="proveedores-<%=m.getCodmarca()%>">
+										                    	<%for(String p: m.getProveedores()){%>
+										                    		<option><%=p%></option>
+										                    	<%}%>
+				                    						</select>
+													      </td>
+														
+														
+												    	<td class="tabla-body--row info" style="text-align: right;">
+												      		<button type="button" class="boton-tabla__accion" onclick="editar(<%=m.getCodmarca()%>)">
+												      			<i class="fas fa-pen"></i></button></td>
+											    	</tr>
 											 	<%} %>
 									    </tbody>
 									</table>
@@ -218,7 +227,7 @@
                             <div class="form-group">
 			                    <select class="mul-select modal__select" multiple="multiple" id="insertar-proveedores" name="insertar-proveedores">
 			                    	<%for(Proveedor p: proveedores){%>
-			                    		<option id=<%=p.getNombre()%>><%=p.getNombre()%></option>
+			                    		<option class="modal__select--opcion" id=<%=p.getNombre().replace(' ','_').replace('.', '_')%>><%=p.getNombre()%></option>
 			                    	<%}%>
 			                    </select>
 			                </div> 

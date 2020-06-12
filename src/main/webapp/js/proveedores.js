@@ -32,10 +32,9 @@ function insertar() {
 	$("#modalProveedor").modal();
 }
 
-function editar(cod, marcas) {
+function editar(cod) {
 	accion = "editar";
 	codigo = cod;
-	console.log("Aqui llega")
 	var campos = ["nombre", "direccion", "tlfn", "fax", "mail"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = document
@@ -47,10 +46,11 @@ function editar(cod, marcas) {
 	for (i = 0; i < opt.length; i++) {
 		opt[i].selected = false;
 	}
-	marcas.forEach(function(valor, indice, array) {
-		valor.selected = true;
+	
+	$("#marcas-" + cod + " option").each(function(){
+		$("#insertar-marcas").find("#" + $(this).val().replace(' ','_').replace('.', '_')).prop("selected","selected");
 	});
-
+	
 	document.getElementById("tituloModal").innerText = "Editar proveedor (#"+cod+")";
 	$("#modalProveedor").modal();
 }
