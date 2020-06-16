@@ -269,15 +269,14 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="row pt-2">
-                                        	<div class="col-6">
-                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
-								
+                                        <div class="row pt-3 justify-content-between" style="height: 50%">
+                                        	<div class="col-5 container-tabla-extra-info">
+                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
 													<table id="tabla-entradas" class="table table-borderless table-hover table-sm">
 														<thead >
 														    <tr class="tabla-header">
+														      <th class="tabla-header--item" scope="col">Entrada</th>
 														      <th class="tabla-header--item" scope="col">Fecha</th>
-														      <th class="tabla-header--item" scope="col">Uds.</th>
 														    </tr>
 												  		</thead>
 														
@@ -287,14 +286,13 @@
 												</div>
                                         	</div>
                                         	
-                                        	<div class="col-6">
-                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="false" style="height: 100%">
-								
+                                        	<div class="col-5 container-tabla-extra-info">
+                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
 													<table id="tabla-salidas" class="table table-borderless table-hover table-sm">
 														<thead >
 														    <tr class="tabla-header">
-														      <th class="tabla-header--item" scope="col">Fecha</th>
-														      <th class="tabla-header--item" scope="col">Uds.</th>
+														    	<th class="tabla-header--item" scope="col">Salida</th>
+														    	<th class="tabla-header--item" scope="col">Fecha</th>
 														    </tr>
 												  		</thead>
 														
@@ -506,11 +504,11 @@
 					var fecha = document.createElement("td");
 					var uds = document.createElement("td");
 					textoFecha = document.createTextNode("<%=e.getFecha()%>");
-					textoUds = document.createTextNode("<%=e.getUnidades()%>");
+					textoUds = document.createTextNode("<%=e.getUnidades()%> uds.");
 					fecha.appendChild(textoFecha);
 					uds.appendChild(textoUds);
-					fila.appendChild(fecha);
 					fila.appendChild(uds);
+					fila.appendChild(fecha);
 					body.appendChild(fila);
 				}
 			<%}%>
@@ -526,11 +524,11 @@
 					var fecha = document.createElement("td");
 					var uds = document.createElement("td");
 					textoFecha = document.createTextNode("<%=s.getFecha()%>");
-					textoUds = document.createTextNode("<%=s.getUnidades()%>");
+					textoUds = document.createTextNode("<%=s.getUnidades()%> uds.");
 					fecha.appendChild(textoFecha);
 					uds.appendChild(textoUds);
-					fila.appendChild(fecha);
 					fila.appendChild(uds);
+					fila.appendChild(fecha);
 					body.appendChild(fila);
 				}
 			<%}%>

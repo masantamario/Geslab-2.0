@@ -2,9 +2,104 @@
 
 \section{Introducción}
 
+Antes de profundizar en el desarrollo del proyecto es importante mencionar las circunstancias exteriores que rodean a este trabajo. El trabajo se comenzó a desarrollar en Marzo, ya avanzado el curso, por motivos de trabajo. A esto se le añade que al poco de comenzar, el COVID-19 llegó a nuestro país y puso todo patas arriba, haciendo que las comunicaciones con las partes interesadas en la aplicación fueran muy complicadas, hasta que todo se empezó a estabilizar un poco. 
+
+
 \section{Planificación temporal}
 
+Contando con todos lo problemas que se tuvieron desde el principio, se optó por utilizar una metodología ágil basada en la programación extrema. La programación extrema se diferencia de otras principalmente en que pone más énfasis en la adaptabilidad que en la previsibilidad, así que teniendo en cuenta todos los factores que nos rodeaban, optamos por esta.
+
+Semanalmente se realizaban entre una y dos reuniones con el tutor, para establecer requisitos y objetivos (sobre todo al principio) y resolver posibles dudas. En estas reuniones se establecía un objetivo basado en las circunstancias generalmente, para la semana siguiente. 
+
+Cada semana se realizaba un commit con los cambios realizados, y se actualizaba un archivo de documentación temporal, en el que quedan anotados todos los pasos que se han ido realizando.
+
+No obstante, todo el ciclo del proyecto se puede dividir en diferentes etapas que se definirán a continuación.
+
+\subsection{Planificación y formación}
+
+La primera parte del proceso que lleno prácticamente un mes de trabajo, consistió en la planificación inicial del proyecto. Se investigaron las posibles herramientas que se podrían utilizar, y se decidió cuáles eran las que se iban a utilizar. La aplicación se desarrollaría en lenguaje java con Eclipse, usando JSP y utilizando Maven para la configuración. Esta elección se tomó en base a los conocimientos que ya se tenían sobre el programa y sobre el lenguaje, adquiridos a lo largo de la carrera. La base de datos se pasaría de SQL Server a MySQL ya que tiene una licencia de código abierto y tiene una integración sencilla y funcional con Java y Eclipse.
+
+Luego se comenzó un proceso de autoformación, en el para empezar que se estudió todo el comportamiento de la aplicación ya existente, así como luego se estudió el funcionamiento de todas las herramientas que se iban a utilizar, realizando pruebas y estudiando sus documentaciones.
+
+Por los motivos ya mencionados previamente, esta fase se alargo más de lo que se esperaba, quedando a la espera de los materiales necesarios, por lo que se dedico aprovechar el tiempo con videotutoriales y cursos.
+
+
+Se realizaron pruebas en Eclipse usando Maven, y siguiendo un tutorial en Udemy para refrescar los conocimientos \cite{curso:JSPin25Steps}.
+
+Para conectar Java con MySQL, se encontró un videotutorial que solucionó algunas dudas sobre su configuración \cite{tutorial:javaMySQL}
+
+
+\subsection{Importación y adaptación}
+
+Cuando finalmente recibimos la información del servidor, lo recibimos en un formato de imagen de disco proveniente de Ghost Norton en formato VHD. Esto nos dejaba con una copia del disco duro en el que estaban las tablas que necesitábamos.
+Para montar la imagen utilizamos Virtual Vox NT4, pero por alguna razón la maquina no arrancaba. Tras muchas pruebas encontramos que la causa era la tarjeta de red, no era compatible. Tras esto se realizó una búsqueda de una compatible. Finalmente se utilizó AMD PC net family. 
+
+Con todo listo se pudo ejecutar la imagen, y a través de admin SQL exportamos los datos que necesitábamos.
+
+Una vez obtenidas las tablas extraidas, se realizó la instalación de MYSQL descagando el software de su página oficial. Desde la página buscaremos el "MySQL Comunnity Server" y después seleccionar la plataforma en la que lo vamos a instalar.
+
+Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En mi caso se seleccionó "Developer Default" ya que se quería instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
+
+\subsection{Requisitos funcionales}
+
+La tarea de recoger unos nuevos requisitos funcionales claros fue complicada. Con todo lo sucedido por el confinamiento, las reuniones entre los usuarios de la aplicación fueron imposibles. debido a ello, la única manera de comunicarse fue a través de una serie de correos que los propios usuarios enviaron a Gonzalo. Pedro Renedo recopiló esos correos y me los envío a mi.
+
+En los correos la información era poco específica y caótica, por lo que hizo falta realizar una tarea de análisis para poder extraer unos requisitos funcionales claros. 
+
+Tras esta tarea de análisis e investigación tanto de la aplicación como de conceptos de química utilizados, se extrajeron unas historias de usuario a medio completar, con el objetivo de que o bien Gonzalo, o bien los usuarios, aportaran más información, y sobre todo información más específica. 
+
+Al no recibir respuesta por parte de la universidad (de nuevo por razones del confinamiento) se decidió investigar los requisitos por cuenta propia y establecer unos requisitos temporales para poder ir trabajando sobre ellos. Los requisitos finalmente elegidos no eran definitivos y quedaban abiertos a posibles cambios en el futuro.
+
+
+\subsection{Diseño de la aplicación}
+
+Para realizar el diseño de la aplicación se comenzó por crear un logotipo, elegir unos colores y una tipografía. Con todo ello, se creo un primer prototipo de la página de inicio (login). Para la creación tanto del logotipo como del primer diseño de la página de login se ha utilizado la herramienta Illustrator. 
+
+Con un diseño gráfico ya establecido, se creó inicialmente la página de login utilizando bootstrap. Inicialmente solo se implementó la parte gráfica de la aplicación, sirviendo a modo de "práctica" en la utilización de bootstrap. Para ello se realizó una formación en bootstrap a través de la documentación de su página web, y de diversos tutoriales de los que disponen \cite{doc:Bootstrap4}.
+
+Se descargaron todos los archivos pertinentes (css's y javascripts) y se importaron en el proyecto. Para trasladar el diseño creado en illustrator, se ha utilizado una herramienta intermedia llamada Figma.
+
+Con el proyecto ya más avanzado, se creó todo el diseño gráfico del resto de ventanas a utilizar. También se refactorizó el código CSS para ajustarse a una metodología BEM, con el fin de mejorar su legibilidad y reutilización.
+
+También se añadió una libreria javascript llamada "animation.js". Esta librería es una biblioteca de animación JavaScript que funciona con propiedades CSS, transformaciones CSS individuales, SVG o cualquier atributo DOM y objetos JavaScript.
+
+Con ella se creó una animación muy simple para la página de login a modo de prueba.
+
+
+\subsection{Desarrollo de la aplicación}
+
+La fase desarrollo de la aplicación fue la que más tiempo llevó, y la que mas actualizaciones en el proyecto supuso. Lo primero que se realizó fue la conexión de Java con MySQL. Se importó en el proyecto el conector java-mysql, que permite realizar consultas en la base de datos desde java y se creo la clase conexión para realizar todas las configuraciones pertinentes a la conexión. Esta misma clase Conexión, es la que termino albergando todos los métodos  que realizan alguna comunicación con la base de datos.
+
+Con ello se creó la página de login, que al ser la primera, sirvió a modo de practica con los lenguajes y herramientas. Después se implemento todo el sistema de mantenimiento de la web, el cual va enfocado solamente al usuario administrador. Se creó un paquete "admin" para contener todas las clases implicadas en estas tareas. 
+
+Se crearon los objetos Area, Centro, Departamento y Usuario para poder almacenar toda la información que se lee de las respectivas tablas de la base de datos. Además se creo una clase enumeración para el Rol. De esta manera el rol pasa a ser una variable estática definida por la aplicación, ya que no interesa que un usuario administrador pueda crear roles.
+
+Con cada página JSP que se crea, se crea también su correspondiente Servlet, de forma que de primeras se creo el servlet del login y de admin.
+
+Una vez terminadas las funcionalidades de administración y mantenimiento,  se pasó a crear el paquete "usuario", que contendría todas las clases pertenecientes a las tablas a las que el usuario puede tener acceso.
+
+Se comenzó por la que denominamos página de gestión, es decir, la página que mostrará todas las entradas y salidas de productos, y que será la primera página que verá el usuario al acceder. Con ella se crearon los objetos java de Ficha, Entrada y Salida, con su correspondiente página JSP y su servlet.
+
+Para el funcionamiento de la página de gestión, también era necesaria la implementación del resto de páginas a las que denominamos auxiliares, que son las que permiten al usuario gestionar datos de la base de datos como son: las calidades, las marcas, los productos, los proveedores y las salidas.
+
+Cada tabla de las anteriores dispone de su propia página JSP y se servlet, ya que el usuario podrá tanto añadir como editar los datos de todas ellas.
+
+
+\subsection{Cambios y arreglos}
+
+Una vez se obtuvieron prácticamente todas las funcionalidades básicas de la aplicación, se dedico el tiempo a arreglar y perfeccionar cosas que iban quedando en la recámara, como la encriptacion de las contraseñas, o el correcto funcionamiento de los filtros que poseen las páginas. 
+
+Además se realizó una reunión con los usuarios del laboratorio que van a utilizar la aplicación, y se les mostró una preview de lo que iba funcionando hasta el momento. Tras esta reunión se plantearon unos nuevos puntos de vista, que requerían de algún cambio en el funcionamiento del sistema que, se añadieron y pasaron a implementarse.
+
+El cambio más importante a destacar tras esta reunión, es el cambió drástico de la página principal, que pasó de mostrar las entradas por un lado, y las salidas por otro, a mostrar directamente las fichas de producto completas junto con sus existencias actuales.
+
+Este cambio produjo también un cambio importante en la base de datos y en el funcionamiento en general, ya que se paso de tratar a las entradas y salidas de una manera primordial, a centrarse en las fichas y sus existencias. 
+
+Este cambio que fue bastante necesario, ya que se llevaba tiempo planteando, pero al no poder resolver las dudas con el equipo, no se había realizado aún, hasta que finalmente en la reunión se resolvieron las dudas.
+
 \section{Estudio de viabilidad}
+
+En el siguiente apartado se analizarán todos los parámetros que pueden estar involucrados a la hora de estudiar la viabilidad del proyecto que nos ocupa.
 
 \subsection{Viabilidad económica}
 
