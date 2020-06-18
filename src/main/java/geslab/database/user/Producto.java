@@ -1,6 +1,7 @@
 package geslab.database.user;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class Producto{
 		private String cas;
@@ -12,10 +13,13 @@ public class Producto{
 		private String n_ec;
 		private String precauciones;
 		private String msds;
+		private ArrayList<Peligro> peligros;
+		private ArrayList<Prudencia> prudencias;
+		private ArrayList<Pictograma> pictogramas;
 		
 		
 		public Producto(String cas, String nombre, String formula, String formula_des, BigDecimal peso_mol, String n_einecs, String n_ec,
-				String precauciones, String msds) {
+				String precauciones, String msds, ArrayList<Peligro> peligros, ArrayList<Prudencia> prudencias, ArrayList<Pictograma> pictogramas) {
 			this.cas = cas;
 			this.nombre = nombre;
 			this.formula = formula;
@@ -25,7 +29,9 @@ public class Producto{
 			this.n_ec = n_ec;
 			this.precauciones = precauciones;
 			this.msds = msds;
-			
+			this.peligros = peligros;
+			this.prudencias = prudencias;
+			this.pictogramas = pictogramas;
 		}
 
 		public String getCas() {
@@ -62,6 +68,42 @@ public class Producto{
 
 		public String getMsds() {
 			return msds;
+		}
+
+		public ArrayList<Peligro> getPeligros() {
+			return peligros;
+		}
+
+		public ArrayList<Prudencia> getPrudencias() {
+			return prudencias;
+		}
+		
+		public ArrayList<Pictograma> getPictogramas() {
+			return pictogramas;
+		}
+
+		public ArrayList<String> getFrasesPeligro(){
+			ArrayList<String> frases = new ArrayList<String>();
+			for(Peligro p: peligros) {
+				frases.add(p.getFrase());
+			}
+			return frases;
+		}
+		
+		public ArrayList<String> getFrasesPrudencia(){
+			ArrayList<String> frases = new ArrayList<String>();
+			for(Prudencia p: prudencias) {
+				frases.add(p.getFrase());
+			}
+			return frases;
+		}
+		
+		public ArrayList<String> getReferenciasPictograma(){
+			ArrayList<String> referencias = new ArrayList<String>();
+			for(Pictograma p: pictogramas) {
+				referencias.add(p.getReferencia());
+			}
+			return referencias;
 		}
 		
 }

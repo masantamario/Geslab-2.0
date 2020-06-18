@@ -218,9 +218,12 @@ public class Conexion {
 				String precauciones = rs.getString("precauciones");
 				String nombre = rs.getString("nombre");
 				String msds = rs.getString("msds");
+				ArrayList<Peligro> peligros = leerPeligrosProducto(cas);
+				ArrayList<Prudencia> prudencias = leerPrudenciasProducto(cas);
+				ArrayList<Pictograma> pictogramas = leerPictogramasProducto(cas);
 
 				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
-						msds);
+						msds, peligros, prudencias, pictogramas);
 			}
 		} catch (SQLException e) {
 			printSQLException(e, "LEER PRODUCTO");
@@ -230,6 +233,96 @@ public class Conexion {
 
 		return producto;
 
+	}
+
+	private ArrayList<Peligro> leerPeligrosProducto(String cas) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+	
+		ArrayList<Peligro> peligros = new ArrayList<Peligro>();
+	
+		try {
+			pstm = conexion
+					.prepareStatement("select peligro.frase as frase, peligro.indicacion as indicacion from peligro_producto "
+							+ "inner join peligro on peligro_producto.frase = peligro.frase "
+							+ "where peligro_producto.cas = ?");
+			pstm.setString(1, cas);
+			rs = pstm.executeQuery();
+	
+			while (rs.next()) {
+				String frase = rs.getString("frase");
+				String indicacion = rs.getString("indicacion");
+				peligros.add(new Peligro(frase, indicacion));
+			}
+			
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PELIGROS PRODUCTO");
+	
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerPeligrosProducto");
+		}
+	
+		return peligros;
+	}
+
+	private ArrayList<Prudencia> leerPrudenciasProducto(String cas) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		ArrayList<Prudencia> prudencias = new ArrayList<Prudencia>();
+
+		try {
+			pstm = conexion
+					.prepareStatement("select prudencia.frase as frase, prudencia.consejo as consejo from prudencia_producto "
+							+ "inner join prudencia on prudencia_producto.frase = prudencia.frase "
+							+ "where prudencia_producto.cas = ?");
+			pstm.setString(1, cas);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				String frase = rs.getString("frase");
+				String consejo = rs.getString("consejo");
+				prudencias.add(new Prudencia(frase, consejo));
+			}
+			
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PRUDENCIAS PRODUCTO");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerPrudenciasProducto");
+		}
+
+		return prudencias;
+	}
+	
+	private ArrayList<Pictograma> leerPictogramasProducto(String cas) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		ArrayList<Pictograma> pictogramas = new ArrayList<Pictograma>();
+
+		try {
+			pstm = conexion
+					.prepareStatement("select pictograma.referencia as referencia, pictograma.descripcion as descripcion from pictograma_producto "
+							+ "inner join pictograma on pictograma_producto.referencia = pictograma.referencia "
+							+ "where pictograma_producto.cas = ?");
+			pstm.setString(1, cas);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				String referencia = rs.getString("referencia");
+				String descripcion = rs.getString("descripcion");
+				pictogramas.add(new Pictograma(referencia, descripcion));
+			}
+			
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PICTOGRAMAS PRODUCTO");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerPictogramasProducto");
+		}
+
+		return pictogramas;
 	}
 
 	public Ubicacion leerUbicacion(int codubicacion) {
@@ -431,6 +524,82 @@ public class Conexion {
 		}
 
 		return productos;
+	}
+	
+	public ArrayList<Peligro> leerPeligros() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Peligro> peligros = new ArrayList<Peligro>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from peligro");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				String frase = rs.getString("frase");
+				String indicacion = rs.getString("indicacion");
+				peligros.add(new Peligro(frase, indicacion));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PELIGROS");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerPeligros");
+		}
+
+		return peligros;
+	}
+	
+	
+	public ArrayList<Prudencia> leerPrudencias() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Prudencia> prudencias = new ArrayList<Prudencia>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from prudencia");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				String frase = rs.getString("frase");
+				String consejo = rs.getString("consejo");
+				prudencias.add(new Prudencia(frase, consejo));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PRUDENCIAS");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerPrudencias");
+		}
+
+		return prudencias;
+	}
+	
+	public ArrayList<Pictograma> leerPictogramas() {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		ArrayList<Pictograma> pictogramas = new ArrayList<Pictograma>();
+
+		try {
+			pstm = conexion.prepareStatement("select * from pictograma");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				String referencia = rs.getString("referencia");
+				String descripcion = rs.getString("descripcion");
+				pictogramas.add(new Pictograma(referencia, descripcion));
+			}
+
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PICTOGRAMAS");
+
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerPictogramas");
+		}
+
+		return pictogramas;
 	}
 
 	public ArrayList<Ficha> leerFichas() {
@@ -1125,31 +1294,122 @@ public class Conexion {
 		}
 		return correcto;
 	}
+	
+	public boolean updateProducto(Producto producto, Producto productoEdit) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"UPDATE producto set formula = ?, form_desarrollada = ?, peso_mol = ?, numero_einecs = ?, "
+							+ "numero_ec = ?, precauciones = ?, msds = ? WHERE cas = ?");
+			
+			pstm.setString(1, productoEdit.getFormula());
+			pstm.setString(2, productoEdit.getFormula_des());
+			pstm.setBigDecimal(3, productoEdit.getPeso_mol());
+			pstm.setString(4, productoEdit.getN_einecs());
+			pstm.setString(5, productoEdit.getN_ec());
+			pstm.setString(6, productoEdit.getPrecauciones());
+			pstm.setString(7, productoEdit.getMsds());
+			pstm.setString(8, productoEdit.getCas());
+			pstm.executeUpdate();
+			
+			updatePeligroProducto(producto, productoEdit);
+			updatePrudenciaProducto(producto, productoEdit);
+			updatePictogramaProducto(producto, productoEdit);
 
-//	public boolean updateEntrada(Entrada e) {
-//		PreparedStatement pstm = null;
-//		boolean correcto = false;
-//		try {
-//			pstm = conexion.prepareStatement(
-//					"UPDATE entrada SET fecha = ?, fechacaducidad = ?, lote = ?, unidades=?, capacidad=?, g_ml=?, residuo=? WHERE codentrada= ?");
-//			pstm.setDate(1, e.getFechaIns());
-//			pstm.setDate(2, e.getCaducidadIns());
-//			pstm.setString(3, e.getLote());
-//			pstm.setBigDecimal(4, e.getUnidades());
-//			pstm.setBigDecimal(5, e.getCapacidad());
-//			pstm.setString(6, e.getG_ml());
-//			pstm.setString(7, String.valueOf(e.isResiduo()));
-//			pstm.setInt(8, e.getCodentrada());
-//
-//			pstm.executeUpdate();
-//
-//		} catch (SQLException ex) {
-//			printSQLException(ex, "UPDATE ENTRADA");
-//		} finally {
-//			cerrarRsPstm(null, pstm, "updateEntrada");
-//		}
-//		return correcto;
-//	}
+		} catch (SQLException ex) {
+			printSQLException(ex, "UPDATE PRODUCTO");
+		} finally {
+			cerrarRsPstm(null, pstm, "updateProducto");
+		}
+
+		return correcto;
+	}
+	
+	public boolean updatePeligroProducto(Producto producto, Producto productoEdit) throws SQLException {
+		String cas = producto.getCas();
+		ArrayList<String> origenPel = producto.getFrasesPeligro();
+		ArrayList<String> updatePel = productoEdit.getFrasesPeligro();
+		ArrayList<String> eliminarPel = new ArrayList<String>(origenPel);
+		ArrayList<String> añadirPel = new ArrayList<String>(updatePel);
+		eliminarPel.removeAll(updatePel);
+		añadirPel.removeAll(origenPel);
+		
+		for(String p : eliminarPel) {
+			PreparedStatement pstm = conexion.prepareStatement("DELETE FROM peligro_producto WHERE cas = ? and frase = ?");
+			pstm.setString(1, cas);
+			pstm.setString(2, p);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updatePeligroProducto");
+		}
+		
+		for(String p : añadirPel) {
+			PreparedStatement pstm = conexion.prepareStatement("INSERT INTO peligro_producto (cas, frase) values (?, ?)");
+			pstm.setString(1, cas);
+			pstm.setString(2, p);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updatePeligroProducto");
+		}
+		
+		return false;
+	}
+	
+	public boolean updatePrudenciaProducto(Producto producto, Producto productoEdit) throws SQLException {
+		String cas = producto.getCas();
+		ArrayList<String> origenPru = producto.getFrasesPrudencia();
+		ArrayList<String> updatePru = productoEdit.getFrasesPrudencia();
+		ArrayList<String> eliminarPru = new ArrayList<String>(origenPru);
+		ArrayList<String> añadirPru = new ArrayList<String>(updatePru);
+		eliminarPru.removeAll(updatePru);
+		añadirPru.removeAll(origenPru);
+		
+		for(String p : eliminarPru) {
+			PreparedStatement pstm = conexion.prepareStatement("DELETE FROM prudencia_producto WHERE cas = ? and frase = ?");
+			pstm.setString(1, cas);
+			pstm.setString(2, p);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updatePrudenciaProducto");
+		}
+		
+		for(String p : añadirPru) {
+			PreparedStatement pstm = conexion.prepareStatement("INSERT INTO prudencia_producto (cas, frase) values (?, ?)");
+			pstm.setString(1, cas);
+			pstm.setString(2, p);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updatePrudenciaProducto");
+		}
+		
+		return false;
+	}
+	
+	public boolean updatePictogramaProducto(Producto producto, Producto productoEdit) throws SQLException {
+		String cas = producto.getCas();
+		ArrayList<String> origenPic = producto.getReferenciasPictograma();
+		ArrayList<String> updatePic = productoEdit.getReferenciasPictograma();
+		ArrayList<String> eliminarPic = new ArrayList<String>(origenPic);
+		ArrayList<String> añadirPic = new ArrayList<String>(updatePic);
+		eliminarPic.removeAll(updatePic);
+		añadirPic.removeAll(origenPic);
+		
+		for(String p : eliminarPic) {
+			PreparedStatement pstm = conexion.prepareStatement("DELETE FROM pictograma_producto WHERE cas = ? and referencia = ?");
+			pstm.setString(1, cas);
+			pstm.setString(2, p);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updatePictogramaProducto");
+		}
+		
+		for(String p : añadirPic) {
+			PreparedStatement pstm = conexion.prepareStatement("INSERT INTO pictograma_producto (cas, referencia) values (?, ?)");
+			pstm.setString(1, cas);
+			pstm.setString(2, p);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updatePictogramaProducto");
+		}
+		
+		return false;
+	}
+
 
 	public boolean cambiarContrasena(Usuario u, String p) {
 		PreparedStatement pstm = null;

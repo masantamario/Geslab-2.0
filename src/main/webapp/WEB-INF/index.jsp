@@ -195,8 +195,8 @@
 										      <th class="tabla-header--item" scope="col">Uds.</th>
 										      <th class="tabla-header--item" scope="col">Calidad</th>
 										      <th class="tabla-header--item" scope="col">Ubicacion</th>
+										      <th class="tabla-header--item" scope="col">Dpto.</th>
 										      <th class="tabla-header--item" scope="col">Marca</th>
-										      <th class="tabla-header--item" scope="col">Proveedor</th>
 										      <th class="tabla-header--item" scope="col"></th>
 										      
 										      <th style="display: none" scope="col">Caducidad</th>
@@ -218,8 +218,8 @@
 												      <td class="tabla-body--row" id="uds-<%=f.getCodficha()%>"><%=f.getStock()%></td>
 												      <td class="tabla-body--row" id="calidad-<%=f.getCodficha()%>"><%=f.getCalidad()%></td>
 												      <td class="tabla-body--row" id="ubicacion-<%=f.getCodficha()%>"><%=f.getUbicacion().getNombre()%></td>
+												      <td class="tabla-body--row" id="dpto-<%=f.getCodficha()%>"><%=f.getUbicacion().getDpto()%></td>
 												      <td class="tabla-body--row" id="marca-<%=f.getCodficha()%>"><%=f.getMarca()%></td>
-												      <td class="tabla-body--row" id="proveedor-<%=f.getCodficha()%>"><%=f.getProveedor()%></td>
 
 												      <td id="caducidad-<%=f.getCodficha()%>" style="display: none"><%=f.getCaducidadCal()%></td>											      
 												      <td id="lote-<%=f.getCodficha()%>" style="display: none"><%=f.getLote()%></td>										      
@@ -227,7 +227,7 @@
 												      
 												      <td id="cas-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getCas()%></td>	
 												      <td id="formula-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getFormula()%></td>											      
-												      <td id="dpto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getDpto()%></td>											      
+												      <td id="proveedor-<%=f.getCodficha()%>" style="display: none"><%=f.getProveedor()%></td>											      
 												      <td id="area-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getArea()%></td>											      
 												      <td id="centro-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getCentro()%></td>											      
 												      <td id="oculto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().esOculta()%></td>											      
@@ -248,64 +248,73 @@
 							<div class="col align-self-end">
 								
 								<div class="row extra-info mx-1" id="container-info" style="height:236px; display:none">
-									<div class="col"><div class="row">
-									<div class="col-12 px-4">
-                                        <div class="row justify-content-end pt-1">
-                                            <div class="col-1 text-right" onclick='ocultarExtraInfo()'><i class="fas fa-times extra-info__boton"></i></div>
-                                        </div>
-
-                                        <div class="row pt-2">
-                                            <div class="col-4 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Caducidad<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-caducidad"><p>
-                                            </div>
-                                            <div class="col-4 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Lote<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-lote"><p>
-                                            </div>
-                                            <div class="col-4 form-inline">
-                                                <p class="extra-info__label d-inline-flex">Residuo<p>
-                                                <p class="extra-info__input flex-fill" id="extra-info-residuo"><p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row pt-3 justify-content-between" style="height: 50%">
-                                        	<div class="col-5 container-tabla-extra-info">
-                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
-													<table id="tabla-entradas" class="table table-borderless table-hover table-sm">
-														<thead >
-														    <tr class="tabla-header">
-														      <th class="tabla-header--item" scope="col">Entrada</th>
-														      <th class="tabla-header--item" scope="col">Fecha</th>
-														    </tr>
-												  		</thead>
-														
-														 <tbody id="body-entradas" class="tabla-body">
-													    </tbody>
-													</table>
-												</div>
-                                        	</div>
-                                        	
-                                        	<div class="col-5 container-tabla-extra-info">
-                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
-													<table id="tabla-salidas" class="table table-borderless table-hover table-sm">
-														<thead >
-														    <tr class="tabla-header">
-														    	<th class="tabla-header--item" scope="col">Salida</th>
-														    	<th class="tabla-header--item" scope="col">Fecha</th>
-														    </tr>
-												  		</thead>
-														
-														 <tbody id="body-salidas" class="tabla-body">
-													    </tbody>
-													</table>
-												</div>
-                                        	</div>
-                                        
-                                        </div>
-                                        
+									<div class="col">
+										<div class="row" style="height: 100%">
+											<div class="col-12 px-4">
+		                                        <div class="row justify-content-end pt-1">
+		                                            <div class="col-1 text-right" onclick='ocultarExtraInfo()'><i class="fas fa-times extra-info__boton"></i></div>
+		                                        </div>
+		
+		                                        <div class="row pt-2">
+		                                            <div class="col-3 form-inline">
+		                                                <p class="extra-info__label d-inline-flex" title="Fecha caducidad">Cad.<p>
+		                                                <p class="extra-info__input flex-fill" id="extra-info-caducidad" title="Fecha caducidad"><p>
+		                                            </div>
+		                                            <div class="col-3 form-inline">
+		                                                <p class="extra-info__label d-inline-flex">Lote<p>
+		                                                <p class="extra-info__input flex-fill" id="extra-info-lote"><p>
+		                                            </div>
+		                                            <div class="col-2 form-inline">
+		                                                <p class="extra-info__label d-inline-flex" title="Residuo">Res.<p>
+		                                                <p class="extra-info__input flex-fill" id="extra-info-residuo" title="Residuo"><p>
+		                                            </div>
+		                                            <div class="col-4 form-inline">
+		                                                <p class="extra-info__label d-inline-flex" title="Proveedor">Prov.<p>
+		                                                <p class="extra-info__input flex-fill" id="extra-info-proveedor" title="Proveedor"><p>
+		                                            </div>
+		                                            
+		                                        </div>
+		                                        
+		                                     	                                        
+		                                        
+		                                         <div class="row pt-3 justify-content-between" style="height: 50%">
+		                                        	<div class="col-5 container-tabla-extra-info">
+		                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
+															<table id="tabla-entradas" class="table table-borderless table-hover table-sm">
+																<thead >
+																    <tr class="tabla-header">
+																      <th class="tabla-header--item" scope="col">Entrada</th>
+																      <th class="tabla-header--item" scope="col">Fecha</th>
+																    </tr>
+														  		</thead>
+																
+																 <tbody id="body-entradas" class="tabla-body">
+															    </tbody>
+															</table>
+														</div>
+		                                        	</div>
+		                                        	
+		                                        	<div class="col-5 container-tabla-extra-info">
+		                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
+															<table id="tabla-salidas" class="table table-borderless table-hover table-sm">
+																<thead >
+																    <tr class="tabla-header">
+																    	<th class="tabla-header--item" scope="col">Salida</th>
+																    	<th class="tabla-header--item" scope="col">Fecha</th>
+																    </tr>
+														  		</thead>
+																
+																 <tbody id="body-salidas" class="tabla-body">
+															    </tbody>
+															</table>
+														</div>
+		                                        	</div>
+		                                        
+		                                        </div>
+		                                        
+		                                    </div>
+	                                    </div>
                                     </div>
-                                    </div></div>
 								
 								</div>
 								

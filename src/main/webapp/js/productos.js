@@ -6,6 +6,18 @@ function inicializar() {
 	$(document.body).on("click", "td:not(.info)", function() {
 		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
+		
+	configurarMultiSelect("peligros");
+	configurarMultiSelect("prudencias");
+	configurarMultiSelect("pictogramas");
+}
+
+function configurarMultiSelect(elemento){
+	$('#insertar-' + elemento + ' option').mousedown(function(e) {
+	    e.preventDefault();
+	    $(this).prop('selected', !$(this).prop('selected'));
+	    return false;
+	});
 }
 
 function insertar() {
@@ -14,6 +26,11 @@ function insertar() {
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = "";
 	});
+	
+	deselecInfo("peligros");
+	deselecInfo("prudencias");
+	deselecInfo("pictogramas");
+	
 	document.getElementById("tituloModal").innerText = "Nuevo producto"
 	$("#modalProducto").modal();
 }
@@ -21,15 +38,34 @@ function insertar() {
 function editar(cod) {
 	accion = "editar";
 	codigo = cod;
-	var campos = ["cas", "nombre", "formula", "f_des", "einecs", "ec"];
+	
+	var campos = ["cas", "nombre", "formula", "f_des", "peso", "einecs", "ec", "precauciones", "msds"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = document
 				.getElementById(valor + "-" + cod).innerText;
 	});
 	
-
+	selectInfo("peligros", cod);
+	selectInfo("prudencias", cod);
+	selectInfo("pictogramas", cod);
+	
 	document.getElementById("tituloModal").innerText = "Editar producto (#"+cod+")";
 	$("#modalProducto").modal();
+}
+
+function deselecInfo(elemento){
+	selector = document.getElementById("insertar-" + elemento);
+	opt =  selector.getElementsByTagName("option");
+	for (i = 0; i < opt.length; i++) {
+		opt[i].selected = false;
+	}
+}
+
+function selectInfo(elemento, cod){
+	deselecInfo(elemento);
+	$("#" + elemento + "-" + cod + " option").each(function(){
+		$("#insertar-" + elemento).find("#" + $(this).val()).prop("selected","selected");
+	});
 }
 
 function cancelar() {
@@ -74,13 +110,20 @@ function reiniciarFiltro(){
 	filtrado();
 }
 
-function mostrarExtraInfo(codentrada) {
-	var campos = ["peso", "einecs", "ec"];
+function mostrarExtraInfo(cas) {
+	var campos = ["peso", "einecs", "ec", "precauciones"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("extra-info-" + valor).innerText = document
-				.getElementById(valor + "-" + codentrada).innerText;
+				.getElementById(valor + "-" + cas).innerText;
 	});
-
+	
+	if(document.getElementById("msds-"+cas).innerText != ""){
+		document.getElementById("extra-info-msds").classList.add("extra-info__link");
+		document.getElementById("extra-info-msds").href = document.getElementById("msds-"+cas).innerText;
+	}
+	
+	mostrarPeligorsPrudencias(cas);
+	
 	document.getElementById("fila-tabla").style.height = "35%";
 	document.getElementById("fila-info").style.height = "65%";
 	document.getElementById("container-info").style.display = "";

@@ -7,6 +7,13 @@ INSERT INTO centro (nombre) values ("Facultad de Ciencias");
 
 UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, area=1, fecha_creacion = NOW() WHERE idusuario = 1;
 
+INSERT INTO peligro values ('H200','Explosivo inestable'), ('H201','Explosivo; peligro de explosión en masa'), ('H202','Explosivo; grave peligro de proyección'), ('H203','Explosivo; peligro de incendio, de onda expansiva o de proyección.');		
+INSERT INTO prudencia values ('P101','Si se necesita consejo médico, tener a mano el envase o la etiqueta.'), ('P102','Mantener fuera del alcance de los niños. '), ('P103','Leer la etiqueta antes del uso.');		
+INSERT INTO pictograma values ('GHS01','Bomba explotando'), ('GHS02','Llama'), ('GHS03','LLama sobre un círculo'), ('GHS04','Bombona de gas'), ('GHS05','Corrosión'), ('GHS06','Calavera y tibias cruzadas'), ('GHS07','Signo de exclamación'), ('GHS08','Peligro para la salud'), ('GHS09','Medio ambiente');		
+
+INSERT INTO prudencia_producto values ('7439-93-2', 'P101');
+INSERT INTO peligro_producto values ('7439-93-2', 'H200');
+INSERT INTO peligro_producto values ('7439-93-2', 'GHS01');
 
 INSERT INTO calidad (nombre) VALUES ('Excelente'), ('Buena'), ('Normal'), ('Regular'), ('Pésima');
 INSERT INTO ubicacion (nombre, area, centro, oculta) VALUES ('Armario 1', 1, 1, 'False'), ('Armario 2', 1, 1, 'False'), ('Nevera', 1, 1, 'False'), ('Cajón', 1, 1, 'False'), ('Taquilla', 1, 1, 'True');
@@ -28,24 +35,32 @@ INSERT INTO entrada (ficha, fecha, lote, unidades, capacidad, g_ml) VALUES (2, N
 update entrada set g_ml = 'g' where ficha=1;
 
 
-SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion
-							FROM usuarios 
-                            INNER JOIN area ON usuarios.area = area.codarea
-							WHERE usuario = 'admin';
-                            
+select marca.nombre as marca, proveedor.nombre as proveedor from prov_marca
+inner join proveedor on proveedor.codproveedor = prov_marca.proveedor
+inner join marca on marca.codmarca = prov_marca.marca
+where proveedor.codproveedor = 2;
+
+
+select codarea from area where nombre = "Orgánica";
+
 select * from usuarios where usuario = 'admin';
 
 DELETE FROM usuarios WHERE idusuario>2;
 
 DELETE FROM centro WHERE codcentro=4;
 
-select * from ubicacion;
+select * from prudencia_producto;
+
+DELETE FROM prudencia_producto WHERE cas='7439-93-2' and frase = 'P101';
+
+select * from peligro_producto;
+
 
 select * from dpto;
 
-select * from entrada;
+select * from prov_marca;
 
-select * from area;
+select * from ficha;
 
 select * from usuarios;
 

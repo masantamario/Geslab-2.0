@@ -2,6 +2,7 @@ package geslab.database;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 import geslab.database.admin.Departamento;
@@ -92,10 +93,24 @@ public class Test {
 //
 //        System.out.println(filtrado);
 		
-		String n = "4.002602";
-		BigDecimal b = new BigDecimal(n);
+//		String n = "4.002602";
+//		BigDecimal b = new BigDecimal(n);
+//		
+//		System.out.println(b);
 		
-		System.out.println(b);
+		ArrayList<String> origen = new ArrayList<String>(Arrays.asList("Pedro", "Mario", "Carla", "Isma"));
+		ArrayList<String> update = new ArrayList<String>(Arrays.asList("Mario", "Carla", "Luis"));
+		
+		ArrayList<String> eliminar = new ArrayList<String>(origen);
+		ArrayList<String> añadir = new ArrayList<String>(update);
+		
+		eliminar.removeAll(update);
+		añadir.removeAll(origen);
+		
+		System.out.println("ELIMINAR: " + eliminar);
+		System.out.println("AÑADIR: " + añadir);
+		
+		
 		
 	}
 	

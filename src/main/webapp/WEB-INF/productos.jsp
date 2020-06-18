@@ -26,6 +26,9 @@
 	<%
 	Usuario usuario = (Usuario) request.getAttribute("usuario");
 	ArrayList<Producto> productos = (ArrayList<Producto>) request.getAttribute("productos");
+	ArrayList<Peligro> peligros = (ArrayList<Peligro>) request.getAttribute("peligros");
+	ArrayList<Prudencia> prudencias = (ArrayList<Prudencia>) request.getAttribute("prudencias");
+	ArrayList<Pictograma> pictogramas = (ArrayList<Pictograma>) request.getAttribute("pictogramas");
 	%>
 	<div class="container-fluid">
 		<div class="container">
@@ -126,9 +129,35 @@
 												   <td id="peso-<%=p.getCas()%>" style="display: none"><%=p.getPeso_mol()%></td>											       
  												   <td id="einecs-<%=p.getCas()%>" style="display: none"><%=p.getN_einecs()%></td>											       
  												   <td id="ec-<%=p.getCas()%>" style="display: none"><%=p.getN_ec()%></td>
+ 												   <td id="precauciones-<%=p.getCas()%>" style="display: none"><%=p.getPrecauciones()%></td>
+ 												   <td id="msds-<%=p.getCas()%>" style="display: none"><%=p.getMsds()%></td>
+ 												   
+ 												   <td style="display: none">
+												      	<select id="peligros-<%=p.getCas()%>">
+									                    	<%for(Peligro pel: p.getPeligros()){%>
+									                    		<option><%=pel.getFrase()%></option>
+									                    	<%}%>
+			                    						</select>
+													</td>
+													
+													<td style="display: none">
+												      	<select id="prudencias-<%=p.getCas()%>">
+									                    	<%for(Prudencia pru: p.getPrudencias()){%>
+									                    		<option><%=pru.getFrase()%></option>
+									                    	<%}%>
+			                    						</select>
+													</td>
+													
+													<td style="display: none">
+												      	<select id="pictogramas-<%=p.getCas()%>">
+									                    	<%for(Pictograma pic: p.getPictogramas()){%>
+									                    		<option><%=pic.getReferencia()%></option>
+									                    	<%}%>
+			                    						</select>
+													</td>
 
 											      <td class="tabla-body--row info" style="text-align: right;">
-											      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=p.getCas()%>)">
+											      	<button type="button" id="" class="boton-tabla__accion" onclick="editar('<%=p.getCas()%>')">
 											      		<i class="fas fa-pen"></i></button></td>
 											    </tr>
 										 	<%} %>
@@ -140,7 +169,7 @@
 							<div class="col align-self-end">
 							
 								<div class="row extra-info mx-1" id="container-info" style="height:236px; display:none">
-										<div class="col"><div class="row">
+										<div class="col"><div class="row" style="height: 100%">
 											<div class="col-12 px-4">
 		                                        <div class="row justify-content-end pt-1">
 		                                            <div class="col-1 text-right" onclick='ocultarExtraInfo()'><i class="fas fa-times extra-info__boton"></i></div>
@@ -162,25 +191,65 @@
 		                                        </div>
 		                                        
 		                                        <div class="row pt-2">
-		                                            <div class="col-8">
-		                                                <div class="row">
-		                                                    <div class="col-12 form-inline">
-		                                                        <p class="extra-info__label d-inline-flex">Peligro<p>
-		                                                        <p class="extra-info__input flex-fill" id="extra-info-peligro"><p>
-		                                                    </div>
-		                                                </div>
-		                                                <div class="row pt-2">
-		                                                    <div class="col-12 form-inline">
-		                                                        <p class="extra-info__label d-inline-flex">Prudencia<p>
-		                                                        <p class="extra-info__input flex-fill" id="extra-info-prudencia"><p>
-		                                                    </div>
-		                                                </div>
+		                                        	<div class="col-10 form-inline">
+		                                                <p class="extra-info__label d-inline-flex" title="Precauciones">Prec.<p>
+		                                                <p class="extra-info__input flex-fill" id="extra-info-precauciones"><p>
 		                                            </div>
-		                                            <div class="col-4">
-		                                                <div class="row">
-		                                                    <p class="extra-info__label d-inline-flex">Pictogramas<p>
-		                                                </div>
+		                                            <div class="col-2 form-inline">
+		                                                <a class="extra-info__label" target="_blank" id="extra-info-msds" title="Hoja de seguridad">MSDS</a>
 		                                            </div>
+		        
+		                                        </div>
+		                                        
+		                                       <div class="row pt-3" style="height: 50%">
+		                                        	<div class="col-3 container-tabla-extra-info">
+		                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
+															<table id="tabla-peligros" class="table table-borderless table-hover table-sm">
+																<thead >
+																    <tr class="tabla-header">
+																      <th class="tabla-header--item" scope="col">Peligros</th>
+																    </tr>
+														  		</thead>
+																
+																 <tbody id="body-peligros" class="tabla-body">
+															    </tbody>
+															</table>
+														</div>
+		                                        	</div>
+		                                        	
+		                                        	<div class="col-3 container-tabla-extra-info">
+		                                        		<div class="col table-responsive" data-simplebar data-simplebar-auto-hide="true" style="height: 100%">
+															<table id="tabla-prudencias" class="table table-borderless table-hover table-sm">
+																<thead >
+																    <tr class="tabla-header">
+																    	<th class="tabla-header--item" scope="col">Prudencias</th>
+																    </tr>
+														  		</thead>
+																
+																 <tbody id="body-prudencias" class="tabla-body">
+															    </tbody>
+															</table>
+														</div>
+		                                        	</div>
+		                                        	
+		                                        	<div class="col-5 px-5" style="height: 100%">
+		                                        		<div class="row pt-1 align-items-start" style="height: 50%">
+		                                        			<div class="col col__pic"><img id="GHS01" class="img-fluid" alt="GHS01"></div>
+		                                        			<div class="col col__pic"><img id="GHS02" class="img-fluid" alt="GHS02"></div>
+		                                        			<div class="col col__pic"><img id="GHS03" class="img-fluid" alt="GHS03"></div>
+		                                        			<div class="col col__pic"><img id="GHS04" class="img-fluid" alt="GHS04"></div>
+		                                        			<div class="col col__pic"><img id="GHS05" class="img-fluid" alt="GHS05"></div>
+
+		                 
+		                                        		</div>
+		                                        		<div class="row pb-1 px-4 align-items-end" style="height: 50%">
+		                                        			<div class="col col__pic"><img id="GHS06" class="img-fluid" alt="GHS06"></div>
+		                                        			<div class="col col__pic"><img id="GHS07" class="img-fluid" alt="GHS07"></div>
+		                                        			<div class="col col__pic"><img id="GHS08" class="img-fluid" alt="GHS08"></div>
+		                                        			<div class="col col__pic"><img id="GHS09" class="img-fluid" alt="GHS09"></div>
+		                                        		</div>
+		                                        	</div>
+		                                        
 		                                        </div>
 		                                        
 		                                    </div>
@@ -202,7 +271,7 @@
 		</div>
 	</div>
 	<div class="modal fade" id="modalProducto" tabindex="-1" role="dialog" aria-labelledby="modalProducto" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
+	  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
 	    <div class="modal-content">
 	    	<form id="insertar-producto" action="/productos.do" method="post">
 		    	<div id="variables" style="display: none;">
@@ -219,38 +288,35 @@
 	        	<div class="col px-4">
 	        	
 	        		<div class="row">
-                        <div class="col-6">
+                        <div class="col-3">
                             <p class="modal__label">Cas</p>
                             <input class="modal__input" type="text" id="insertar-cas" name="insertar-cas">
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <p class="modal__label">Nombre</p>
                             <input class="modal__input" type="text" id="insertar-nombre" name="insertar-nombre">
                         </div>
-                        
-	        		</div>
-	        		<div class="row pt-2">
-	        			<div class="col-6">
+                        <div class="col-2">
                             <p class="modal__label">Fórmula</p>
                             <input class="modal__input" type="text" id="insertar-formula" name="insertar-formula">
                         </div>
-                        <div class="col-6">
-                            <p class="modal__label">F. desarrollada</p>
-                            <input class="modal__input" type="text" id="insertar-f_des" name="insertar-f_des">
+                        <div class="col-3">
+                            <p class="modal__label" title="Peso molecular">PM</p>
+                            <input class="modal__input" type="text" id="insertar-peso" name="insertar-peso" title="Peso molecular">
                         </div>
                         
 	        		</div>
-	        		
+	 	        		
 	        		<div class="row pt-2">
-	        			<div class="col-2">
-                            <p class="modal__label">PM</p>
-                            <input class="modal__input" type="text" id="insertar-peso" name="insertar-peso">
+	        			<div class="col-6">
+                            <p class="modal__label">F. desarrollada</p>
+                            <input class="modal__input" type="text" id="insertar-f_des" name="insertar-f_des">
                         </div>
-	        			<div class="col-5">
+	        			<div class="col-3">
                             <p class="modal__label">No Einecs</p>
                             <input class="modal__input" type="text" id="insertar-einecs" name="insertar-einecs">
                         </div>
-                        <div class="col-5">
+                        <div class="col-3">
                             <p class="modal__label">No Ec</p>
                             <input class="modal__input" type="text" id="insertar-ec" name="insertar-ec">
                         </div>
@@ -267,6 +333,41 @@
 	        			<div class="col">
                             <p class="modal__label">MSDS</p>
                             <input class="modal__input" type="text" id="insertar-msds" name="insertar-msds">
+                        </div>
+	        		</div>
+	        		
+	        		<div class="row pt-2">
+	        			<div class="col-4">
+                            <p class="modal__label">Peligros</p>
+                            <div class="form-group">
+			                    <select class="mul-select modal__select" multiple="multiple" id="insertar-peligros" name="insertar-peligros">
+			                    	<%for(Peligro p: peligros){%>
+			                    		<option class="modal__select--opcion" title="<%=p.getIndicacion()%>" id=<%=p.getFrase()%>><%=p.getFrase()%></option>
+			                    	<%}%>
+			                    </select>
+			                </div> 
+                        </div>
+                        
+                        <div class="col-4">
+                            <p class="modal__label">Prudencias</p>
+                            <div class="form-group">
+			                    <select class="mul-select modal__select" multiple="multiple" id="insertar-prudencias" name="insertar-prudencias">
+			                    	<%for(Prudencia p: prudencias){%>
+			                    		<option class="modal__select--opcion" title="<%=p.getConsejo()%>" id=<%=p.getFrase()%>><%=p.getFrase()%></option>
+			                    	<%}%>
+			                    </select>
+			                </div> 
+                        </div>
+                        
+                        <div class="col-4">
+                            <p class="modal__label">Pictogramas</p>
+                            <div class="form-group">
+			                    <select class="mul-select modal__select" multiple="multiple" id="insertar-pictogramas" name="insertar-pictogramas">
+			                    	<%for(Pictograma p: pictogramas){%>
+			                    		<option class="modal__select--opcion" title="<%=p.getDescripcion()%>" id=<%=p.getReferencia()%>><%=p.getReferencia()%></option>
+			                    	<%}%>
+			                    </select>
+			                </div> 
                         </div>
 	        		</div>
 	        		
@@ -289,6 +390,54 @@
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
 	<script src="../js/productos.js"></script>
 	<script> inicializar(); </script>
+	
+	<script> 
+		function mostrarPeligorsPrudencias(cas){
+			$("#tabla-peligros tbody tr").remove(); 
+			$("#tabla-prudencias tbody tr").remove(); 
+			bodyPel = document.getElementById("body-peligros");
+			bodyPru = document.getElementById("body-prudencias");
+			
+			<%for(Pictograma pic : pictogramas){%>
+				var foto = document.getElementById("<%=pic.getReferencia()%>");
+				foto.src = "../images/" + "<%=pic.getReferencia()%>" + ".png";
+			<%}%>
+			
+			
+			<% for(Producto p : productos){%>
+				if(cas == "<%=p.getCas()%>"){
+					<%for(Peligro pel : p.getPeligros()){%>
+						fila = document.createElement("tr");
+						fila.classList.add("tabla-body--row");
+						var peligro = document.createElement("td");
+						frasePeligro = document.createTextNode("<%=pel.getFrase()%>");
+						peligro.title = "<%=pel.getIndicacion()%>";
+						peligro.appendChild(frasePeligro);
+						fila.appendChild(peligro);
+						bodyPel.appendChild(fila);
+					<%}%>
+					
+					<%for(Prudencia pru : p.getPrudencias()){%>
+						fila = document.createElement("tr");
+						fila.classList.add("tabla-body--row");
+						var prudencia = document.createElement("td");
+						frasePrudencia = document.createTextNode("<%=pru.getFrase()%>");
+						prudencia.title = "<%=pru.getConsejo()%>";
+						prudencia.appendChild(frasePrudencia);
+						fila.appendChild(prudencia);
+						bodyPru.appendChild(fila);
+					<%}%>
+					
+					<%for(Pictograma pic : p.getPictogramas()){%>
+						var foto = document.getElementById("<%=pic.getReferencia()%>");
+						foto.src = "../images/" + "<%=pic.getReferencia()%>" + "-active.png";
+					<%}%>
+				}
+			<%}%>
+		}
+		
+		
+	</script>
 	
 </body>
 </html>

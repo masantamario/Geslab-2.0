@@ -61,7 +61,7 @@ function cancelarEntSal() {
 }
 
 function mostrarExtraInfo(codficha) {
-	var campos = [ "lote", "residuo" ];
+	var campos = [ "lote", "residuo", "proveedor"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("extra-info-" + valor).innerText = document
 				.getElementById(valor + "-" + codficha).innerText;
