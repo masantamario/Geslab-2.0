@@ -489,3 +489,4 @@
 0:0:0:0:0:0:0:1 - - [18/Jun/2020:14:07:30 +0200] "GET /productos.do HTTP/1.1" 200 28049 http-bio-8080-exec-1 118
 0:0:0:0:0:0:0:1 - - [18/Jun/2020:14:07:39 +0200] "POST /productos.do HTTP/1.1" 302 - http-bio-8080-exec-1 45
 0:0:0:0:0:0:0:1 - - [18/Jun/2020:14:07:39 +0200] "GET /productos.do HTTP/1.1" 200 28661 http-bio-8080-exec-1 23
+0:0:0:0:0:0:0:1 - - [18/Jun/2020:14:14:28 +0200] "GET /images/GHS01-active.png HTTP/1.1" 304 - http-bio-8080-exec-1 24
