@@ -90,10 +90,9 @@ public class ProductosServlet extends HttpServlet {
 			break;
 			
 		case "editar":
-			Producto producto = cn.leerProducto(cas);
-			Producto productoEdit= new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
+			Producto producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
 					msds, peligros, prudencias, pictogramas);
-			cn.updateProducto(producto, productoEdit);
+			cn.updateProducto(producto);
 			break;
 		}
 		cn.cerrarConexion();

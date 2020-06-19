@@ -3,6 +3,7 @@ package geslab.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +25,8 @@ public class ProveedoresServlet extends HttpServlet {
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
 
-	private HttpServletRequest request = null;
-	private HttpServletResponse response = null;
+//	private HttpServletRequest request = null;
+//	private HttpServletResponse response = null;
 	private Conexion cn = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,8 +57,8 @@ public class ProveedoresServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.request = request;
-		this.response = response;
+//		this.request = request;
+//		this.response = response;
 
 		String accion = request.getParameter("accion");
 		String codigo = request.getParameter("codigo");
@@ -70,14 +71,25 @@ public class ProveedoresServlet extends HttpServlet {
 		String tlfn = request.getParameter("insertar-tlfn");
 		String fax = request.getParameter("insertar-fax");
 		String email = request.getParameter("insertar-mail");
-		ArrayList<String> marcas = new ArrayList<String>(Arrays.asList(request.getParameterValues("insertar-marcas")));
-		System.out.println(marcas);
+		
+		String[] marcasString = request.getParameterValues("insertar-marcas");
+		List<String> marcasList = new ArrayList<String>();
+		if(marcasString != null) marcasList = Arrays.asList(marcasString);
+		ArrayList<String> marcas = new ArrayList<String>(marcasList);
+
 		switch (accion) {
 		case "insertar":
-			cn.insertarProveedor(new Proveedor(0, nombre, direccion, tlfn, fax, email, marcas));
+			if (!cn.existeProveedor(nombre))
+				cn.insertarProveedor(new Proveedor(0, nombre, direccion, tlfn, fax, email, marcas));
 			break;
 		case "editar":
-//			cn.insertarProveedor(new Proveedor(0, nombre, direccion, tlfn, fax, email));
+			String n = cn.leerProveedor(Integer.valueOf(codigo)).getNombre();
+			if(n.equals(nombre) || (!n.equals(nombre) && !cn.existeProveedor(nombre))) {
+				cn.updateProveedor(new Proveedor(Integer.valueOf(codigo), nombre, direccion, tlfn, fax, email, marcas));
+			}else {
+				System.out.println("Nombre no válido");
+			}
+						
 			break;
 
 		}

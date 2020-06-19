@@ -204,7 +204,12 @@
 	        		<div class="row pt-2">
                         <div class="col-12">
                             <p class="modal__label">Area</p>
-                            <input class="modal__input" type="text" id="insertar-area" name="insertar-area" value="<%=usuario.getArea()%>">
+                            <select class="modal__input" id="insertar-area" name="insertar-area">
+                            	<option selected></option>
+								<%for(Area a:areas){ %>
+									<option><%=a.getNombre()%></option>
+								<%}%>
+							</select>
                         </div>
 	        		</div>
 	        		

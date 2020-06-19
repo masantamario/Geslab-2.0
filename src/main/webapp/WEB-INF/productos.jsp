@@ -43,7 +43,7 @@
 					    <%=usuario.getNombre()%></a>
 					
 					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				  			<a class="dropdown-item header__dropdown-item" href="/index.do" >Entradas/Salidas</a>
+				  			<a class="dropdown-item header__dropdown-item" href="/index.do" >Existencias</a>
 <!-- 				  			<a class="dropdown-item header__dropdown-item" href="/productos.do" >Productos</a> -->
 				  			<a class="dropdown-item header__dropdown-item" href="/ubicaciones.do" >Ubicaciones</a>
 				  			<a class="dropdown-item header__dropdown-item" href="/calidades.do" >Calidades</a>

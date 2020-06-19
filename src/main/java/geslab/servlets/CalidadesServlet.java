@@ -1,8 +1,6 @@
 package geslab.servlets;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +12,6 @@ import javax.servlet.http.HttpSession;
 import geslab.database.Conexion;
 import geslab.database.admin.Usuario;
 import geslab.database.user.Calidad;
-import geslab.database.user.Entrada;
-import geslab.database.user.Ficha;
-import geslab.database.user.Producto;
-import geslab.database.user.Ubicacion;
 
 /**
  * Servlet implementation class IndexServlet
@@ -28,10 +22,9 @@ public class CalidadesServlet extends HttpServlet {
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
 
-	private HttpServletRequest request = null;
-	private HttpServletResponse response = null;
+//	private HttpServletRequest request = null;
+//	private HttpServletResponse response = null;
 	private Conexion cn = null;
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,14 +35,14 @@ public class CalidadesServlet extends HttpServlet {
 			if (usuario.getNombre().equals("")) {
 				response.sendRedirect("/registro.do");
 			} else {
-				
+
 				Conexion cn = new Conexion();
 
 				request.setAttribute("calidades", cn.leerCalidades());
 				request.setAttribute("usuario", usuario);
-				
+
 				cn.cerrarConexion();
-				
+
 				request.getRequestDispatcher("/WEB-INF/calidades.jsp").forward(request, response);
 			}
 		} else {
@@ -60,26 +53,31 @@ public class CalidadesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.request = request;
-		this.response = response;
+//		this.request = request;
+//		this.response = response;
 		String accion = request.getParameter("accion");
 		String codigo = request.getParameter("codigo");
 		cn = new Conexion();
 		System.out.println("Accion: " + accion);
 		System.out.println("Código: " + codigo);
+		String nombre = request.getParameter("insertar-nombre");
 
 		switch (accion) {
 		case "insertar":
-			String nombre = request.getParameter("insertar-nombre");
-			cn.insertarCalidad(new Calidad(0, nombre));
+			if (!cn.existeCalidad(nombre))
+				cn.insertarCalidad(new Calidad(0, nombre));
 			break;
-
+		case "editar":
+			String n = cn.leerCalidad(Integer.valueOf(codigo)).getNombre();
+			if (n.equals(nombre) || (!n.equals(nombre) && !cn.existeCalidad(nombre))) {
+				cn.updateCalidad(new Calidad(Integer.valueOf(codigo), nombre));
+			} else {
+				System.out.println("Nombre no válido");
+			}
+			break;
 		}
 		cn.cerrarConexion();
 		response.sendRedirect("/calidades.do");
 	}
-
-
-	
 
 }

@@ -3,7 +3,7 @@ var codigo = "";
 
 function insertar() {
 	accion = "insertar";
-	var campos = ["nombre", "centro", "oculta"];
+	var campos = ["nombre", "area", "centro", "oculta"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = "";
 	});
@@ -14,7 +14,7 @@ function insertar() {
 function editar(cod) {
 	accion = "editar";
 	codigo = cod;
-	var campos = ["nombre", "centro"];
+	var campos = ["nombre", "area", "centro"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = document
 				.getElementById(valor + "-" + cod).innerText;

@@ -168,6 +168,81 @@ public class Conexion {
 		return ficha;
 	}
 
+	public Boolean existeUbicacion(String nombre, String area, String centro) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Boolean retorno = false;
+		try {
+			pstm = conexion.prepareStatement("select * from ubicacion where nombre = ? AND area = ? AND centro = ?");
+			pstm.setString(1, nombre);
+			pstm.setString(2, area);
+			pstm.setString(3, centro);
+
+			rs = pstm.executeQuery();
+			retorno = rs.next();
+
+		} catch (SQLException e) {
+			printSQLException(e, "EXISTE UBICACION");
+		} finally {
+			cerrarRsPstm(rs, pstm, "existeUbicacion");
+		}
+		return retorno;
+	}
+
+	public Boolean existeCalidad(String nombre) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Boolean retorno = false;
+		try {
+			pstm = conexion.prepareStatement("select * from calidad where nombre = ?");
+			pstm.setString(1, nombre);
+			rs = pstm.executeQuery();
+			retorno = rs.next();
+
+		} catch (SQLException e) {
+			printSQLException(e, "EXISTE CALIDAD");
+		} finally {
+			cerrarRsPstm(rs, pstm, "existeCalidad");
+		}
+		return retorno;
+	}
+
+	public Boolean existeMarca(String nombre) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Boolean retorno = false;
+		try {
+			pstm = conexion.prepareStatement("select * from marca where nombre = ?");
+			pstm.setString(1, nombre);
+			rs = pstm.executeQuery();
+			retorno = rs.next();
+
+		} catch (SQLException e) {
+			printSQLException(e, "EXISTE MARCA");
+		} finally {
+			cerrarRsPstm(rs, pstm, "existeMarca");
+		}
+		return retorno;
+	}
+	
+	public Boolean existeProveedor(String nombre) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Boolean retorno = false;
+		try {
+			pstm = conexion.prepareStatement("select * from proveedor where nombre = ?");
+			pstm.setString(1, nombre);
+			rs = pstm.executeQuery();
+			retorno = rs.next();
+
+		} catch (SQLException e) {
+			printSQLException(e, "EXISTE PROVEEDOR");
+		} finally {
+			cerrarRsPstm(rs, pstm, "existeProveedor");
+		}
+		return retorno;
+	}
+
 	public Usuario leerUsuario(String u) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -222,8 +297,8 @@ public class Conexion {
 				ArrayList<Prudencia> prudencias = leerPrudenciasProducto(cas);
 				ArrayList<Pictograma> pictogramas = leerPictogramasProducto(cas);
 
-				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
-						msds, peligros, prudencias, pictogramas);
+				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones, msds,
+						peligros, prudencias, pictogramas);
 			}
 		} catch (SQLException e) {
 			printSQLException(e, "LEER PRODUCTO");
@@ -238,30 +313,30 @@ public class Conexion {
 	private ArrayList<Peligro> leerPeligrosProducto(String cas) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-	
+
 		ArrayList<Peligro> peligros = new ArrayList<Peligro>();
-	
+
 		try {
-			pstm = conexion
-					.prepareStatement("select peligro.frase as frase, peligro.indicacion as indicacion from peligro_producto "
+			pstm = conexion.prepareStatement(
+					"select peligro.frase as frase, peligro.indicacion as indicacion from peligro_producto "
 							+ "inner join peligro on peligro_producto.frase = peligro.frase "
 							+ "where peligro_producto.cas = ?");
 			pstm.setString(1, cas);
 			rs = pstm.executeQuery();
-	
+
 			while (rs.next()) {
 				String frase = rs.getString("frase");
 				String indicacion = rs.getString("indicacion");
 				peligros.add(new Peligro(frase, indicacion));
 			}
-			
+
 		} catch (SQLException e) {
 			printSQLException(e, "LEER PELIGROS PRODUCTO");
-	
+
 		} finally {
 			cerrarRsPstm(rs, pstm, "leerPeligrosProducto");
 		}
-	
+
 		return peligros;
 	}
 
@@ -272,8 +347,8 @@ public class Conexion {
 		ArrayList<Prudencia> prudencias = new ArrayList<Prudencia>();
 
 		try {
-			pstm = conexion
-					.prepareStatement("select prudencia.frase as frase, prudencia.consejo as consejo from prudencia_producto "
+			pstm = conexion.prepareStatement(
+					"select prudencia.frase as frase, prudencia.consejo as consejo from prudencia_producto "
 							+ "inner join prudencia on prudencia_producto.frase = prudencia.frase "
 							+ "where prudencia_producto.cas = ?");
 			pstm.setString(1, cas);
@@ -284,7 +359,7 @@ public class Conexion {
 				String consejo = rs.getString("consejo");
 				prudencias.add(new Prudencia(frase, consejo));
 			}
-			
+
 		} catch (SQLException e) {
 			printSQLException(e, "LEER PRUDENCIAS PRODUCTO");
 
@@ -294,7 +369,7 @@ public class Conexion {
 
 		return prudencias;
 	}
-	
+
 	private ArrayList<Pictograma> leerPictogramasProducto(String cas) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -302,8 +377,8 @@ public class Conexion {
 		ArrayList<Pictograma> pictogramas = new ArrayList<Pictograma>();
 
 		try {
-			pstm = conexion
-					.prepareStatement("select pictograma.referencia as referencia, pictograma.descripcion as descripcion from pictograma_producto "
+			pstm = conexion.prepareStatement(
+					"select pictograma.referencia as referencia, pictograma.descripcion as descripcion from pictograma_producto "
 							+ "inner join pictograma on pictograma_producto.referencia = pictograma.referencia "
 							+ "where pictograma_producto.cas = ?");
 			pstm.setString(1, cas);
@@ -314,7 +389,7 @@ public class Conexion {
 				String descripcion = rs.getString("descripcion");
 				pictogramas.add(new Pictograma(referencia, descripcion));
 			}
-			
+
 		} catch (SQLException e) {
 			printSQLException(e, "LEER PICTOGRAMAS PRODUCTO");
 
@@ -353,9 +428,105 @@ public class Conexion {
 		} finally {
 			cerrarRsPstm(rs, pstm, "leerUbicacion");
 		}
-
 		return ubicacion;
+	}
 
+//	public Boolean leerCalidad(int codcalidad) {
+//		PreparedStatement pstm = null;
+//		ResultSet rs = null;
+//		Boolean retorno = false;
+//		
+//		try {
+//			pstm = conexion.prepareStatement(
+//					"SELECT * from calidad where codcalidad = ?");
+//			pstm.setInt(1, codcalidad);
+//			rs = pstm.executeQuery();
+//
+//			retorno = rs.next();
+//		} catch (SQLException e) {
+//			printSQLException(e, "LEER CALIDAD");
+//		} finally {
+//			cerrarRsPstm(rs, pstm, "leerCalidad");
+//		}
+//		return retorno;
+//	}
+
+	public Marca leerMarca(int codmarca) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Marca marca = null;
+
+		try {
+			pstm = conexion.prepareStatement("SELECT * from marca where codmarca = ?");
+			pstm.setInt(1, codmarca);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String tlf = rs.getString("telefono");
+				String direccion = rs.getString("direccion");
+				ArrayList<String> proveedores = leerProovedoresMarca(codmarca);
+
+				marca = new Marca(codmarca, nombre, tlf, direccion, proveedores);
+			}
+		} catch (SQLException e) {
+			printSQLException(e, "LEER MARCA");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerMarca");
+		}
+		return marca;
+	}
+	
+	public Proveedor leerProveedor(int codprov) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Proveedor proveedor = null;
+		
+		try {
+			pstm = conexion.prepareStatement(
+					"SELECT * from proveedor where codproveedor = ?");
+			pstm.setInt(1, codprov);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String direccion = rs.getString("direccion");
+				String tlf = rs.getString("tfno");
+				String fax = rs.getString("fax");
+				String mail = rs.getString("email");
+				ArrayList<String> marcas = leerMarcasProveedor(codprov);
+
+				proveedor = new Proveedor(codprov, nombre, direccion, tlf, fax, mail, marcas);
+			}
+		} catch (SQLException e) {
+			printSQLException(e, "LEER PROVEEDOR");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerProveedor");
+		}
+		return proveedor;
+	}
+	
+	public Calidad leerCalidad(int codcalidad) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Calidad calidad = null;
+
+		try {
+			pstm = conexion.prepareStatement("SELECT * from calidad where codcalidad = ?");
+			pstm.setInt(1, codcalidad);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				String nombre = rs.getString("nombre");
+				
+				calidad = new Calidad(codcalidad, nombre);
+			}
+		} catch (SQLException e) {
+			printSQLException(e, "LEER CALIDAD");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerCalidad");
+		}
+		return calidad;
 	}
 
 	public Ficha leerFicha(int cod) {
@@ -525,7 +696,7 @@ public class Conexion {
 
 		return productos;
 	}
-	
+
 	public ArrayList<Peligro> leerPeligros() {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -550,8 +721,7 @@ public class Conexion {
 
 		return peligros;
 	}
-	
-	
+
 	public ArrayList<Prudencia> leerPrudencias() {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -576,7 +746,7 @@ public class Conexion {
 
 		return prudencias;
 	}
-	
+
 	public ArrayList<Pictograma> leerPictogramas() {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -1030,7 +1200,7 @@ public class Conexion {
 		}
 		return correcto;
 	}
-	
+
 	public boolean insertarSalida(Salida s) {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
@@ -1294,28 +1464,28 @@ public class Conexion {
 		}
 		return correcto;
 	}
-	
-	public boolean updateProducto(Producto producto, Producto productoEdit) {
+
+	public boolean updateProducto(Producto producto) {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
 			pstm = conexion.prepareStatement(
 					"UPDATE producto set formula = ?, form_desarrollada = ?, peso_mol = ?, numero_einecs = ?, "
 							+ "numero_ec = ?, precauciones = ?, msds = ? WHERE cas = ?");
-			
-			pstm.setString(1, productoEdit.getFormula());
-			pstm.setString(2, productoEdit.getFormula_des());
-			pstm.setBigDecimal(3, productoEdit.getPeso_mol());
-			pstm.setString(4, productoEdit.getN_einecs());
-			pstm.setString(5, productoEdit.getN_ec());
-			pstm.setString(6, productoEdit.getPrecauciones());
-			pstm.setString(7, productoEdit.getMsds());
-			pstm.setString(8, productoEdit.getCas());
+
+			pstm.setString(1, producto.getFormula());
+			pstm.setString(2, producto.getFormula_des());
+			pstm.setBigDecimal(3, producto.getPeso_mol());
+			pstm.setString(4, producto.getN_einecs());
+			pstm.setString(5, producto.getN_ec());
+			pstm.setString(6, producto.getPrecauciones());
+			pstm.setString(7, producto.getMsds());
+			pstm.setString(8, producto.getCas());
 			pstm.executeUpdate();
-			
-			updatePeligroProducto(producto, productoEdit);
-			updatePrudenciaProducto(producto, productoEdit);
-			updatePictogramaProducto(producto, productoEdit);
+
+			updatePeligroProducto(producto);
+			updatePrudenciaProducto(producto);
+			updatePictogramaProducto(producto);
 
 		} catch (SQLException ex) {
 			printSQLException(ex, "UPDATE PRODUCTO");
@@ -1325,91 +1495,242 @@ public class Conexion {
 
 		return correcto;
 	}
-	
-	public boolean updatePeligroProducto(Producto producto, Producto productoEdit) throws SQLException {
+
+	public boolean updatePeligroProducto(Producto producto) throws SQLException {
 		String cas = producto.getCas();
-		ArrayList<String> origenPel = producto.getFrasesPeligro();
-		ArrayList<String> updatePel = productoEdit.getFrasesPeligro();
+
+		ArrayList<String> origenPel = leerProducto(cas).getFrasesPeligro();
+		ArrayList<String> updatePel = producto.getFrasesPeligro();
 		ArrayList<String> eliminarPel = new ArrayList<String>(origenPel);
 		ArrayList<String> añadirPel = new ArrayList<String>(updatePel);
 		eliminarPel.removeAll(updatePel);
 		añadirPel.removeAll(origenPel);
-		
-		for(String p : eliminarPel) {
-			PreparedStatement pstm = conexion.prepareStatement("DELETE FROM peligro_producto WHERE cas = ? and frase = ?");
+
+		for (String p : eliminarPel) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("DELETE FROM peligro_producto WHERE cas = ? and frase = ?");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
 			pstm.executeUpdate();
 			cerrarRsPstm(null, pstm, "updatePeligroProducto");
 		}
-		
-		for(String p : añadirPel) {
-			PreparedStatement pstm = conexion.prepareStatement("INSERT INTO peligro_producto (cas, frase) values (?, ?)");
+
+		for (String p : añadirPel) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("INSERT INTO peligro_producto (cas, frase) values (?, ?)");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
 			pstm.executeUpdate();
 			cerrarRsPstm(null, pstm, "updatePeligroProducto");
 		}
-		
+
 		return false;
 	}
-	
-	public boolean updatePrudenciaProducto(Producto producto, Producto productoEdit) throws SQLException {
+
+	public boolean updatePrudenciaProducto(Producto producto) throws SQLException {
 		String cas = producto.getCas();
-		ArrayList<String> origenPru = producto.getFrasesPrudencia();
-		ArrayList<String> updatePru = productoEdit.getFrasesPrudencia();
+		ArrayList<String> origenPru = leerProducto(cas).getFrasesPrudencia();
+		ArrayList<String> updatePru = producto.getFrasesPrudencia();
 		ArrayList<String> eliminarPru = new ArrayList<String>(origenPru);
 		ArrayList<String> añadirPru = new ArrayList<String>(updatePru);
 		eliminarPru.removeAll(updatePru);
 		añadirPru.removeAll(origenPru);
-		
-		for(String p : eliminarPru) {
-			PreparedStatement pstm = conexion.prepareStatement("DELETE FROM prudencia_producto WHERE cas = ? and frase = ?");
+
+		for (String p : eliminarPru) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("DELETE FROM prudencia_producto WHERE cas = ? and frase = ?");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
 			pstm.executeUpdate();
 			cerrarRsPstm(null, pstm, "updatePrudenciaProducto");
 		}
-		
-		for(String p : añadirPru) {
-			PreparedStatement pstm = conexion.prepareStatement("INSERT INTO prudencia_producto (cas, frase) values (?, ?)");
+
+		for (String p : añadirPru) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("INSERT INTO prudencia_producto (cas, frase) values (?, ?)");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
 			pstm.executeUpdate();
 			cerrarRsPstm(null, pstm, "updatePrudenciaProducto");
 		}
-		
+
 		return false;
 	}
-	
-	public boolean updatePictogramaProducto(Producto producto, Producto productoEdit) throws SQLException {
+
+	public boolean updatePictogramaProducto(Producto producto) throws SQLException {
 		String cas = producto.getCas();
-		ArrayList<String> origenPic = producto.getReferenciasPictograma();
-		ArrayList<String> updatePic = productoEdit.getReferenciasPictograma();
+		ArrayList<String> origenPic = leerProducto(cas).getReferenciasPictograma();
+		ArrayList<String> updatePic = producto.getReferenciasPictograma();
 		ArrayList<String> eliminarPic = new ArrayList<String>(origenPic);
 		ArrayList<String> añadirPic = new ArrayList<String>(updatePic);
 		eliminarPic.removeAll(updatePic);
 		añadirPic.removeAll(origenPic);
-		
-		for(String p : eliminarPic) {
-			PreparedStatement pstm = conexion.prepareStatement("DELETE FROM pictograma_producto WHERE cas = ? and referencia = ?");
+
+		for (String p : eliminarPic) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("DELETE FROM pictograma_producto WHERE cas = ? and referencia = ?");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
 			pstm.executeUpdate();
 			cerrarRsPstm(null, pstm, "updatePictogramaProducto");
 		}
-		
-		for(String p : añadirPic) {
-			PreparedStatement pstm = conexion.prepareStatement("INSERT INTO pictograma_producto (cas, referencia) values (?, ?)");
+
+		for (String p : añadirPic) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("INSERT INTO pictograma_producto (cas, referencia) values (?, ?)");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
 			pstm.executeUpdate();
 			cerrarRsPstm(null, pstm, "updatePictogramaProducto");
 		}
-		
+
 		return false;
 	}
 
+	public boolean updateUbicacion(Ubicacion u) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement(
+					"UPDATE ubicacion SET nombre = ?, area=(SELECT codarea FROM area WHERE nombre=?), "
+							+ "centro = (SELECT codcentro FROM centro WHERE nombre=?), oculta = ? WHERE codubicacion = ?");
+			pstm.setString(1, u.getNombre());
+			pstm.setString(2, u.getArea());
+			pstm.setString(3, u.getCentro());
+			pstm.setString(4, Boolean.toString(u.isOculta()));
+			pstm.setInt(5, u.getCodubicacion());
+			pstm.executeUpdate();
+
+		} catch (SQLException e) {
+			printSQLException(e, "UPDATE UBICACION");
+		} finally {
+			cerrarRsPstm(null, pstm, "updateUbicacion");
+		}
+		return correcto;
+	}
+
+	public boolean updateCalidad(Calidad c) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion.prepareStatement("UPDATE calidad SET nombre = ? WHERE codcalidad = ?");
+			pstm.setString(1, c.getNombre());
+			pstm.setInt(2, c.getCodcalidad());
+			pstm.executeUpdate();
+
+		} catch (SQLException e) {
+			printSQLException(e, "UPDATE CALIDAD");
+		} finally {
+			cerrarRsPstm(null, pstm, "updateCalidad");
+		}
+		return correcto;
+	}
+
+	public boolean updateMarca(Marca m) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion
+					.prepareStatement("UPDATE marca SET nombre = ?, telefono = ?, direccion = ? WHERE codmarca = ?");
+			pstm.setString(1, m.getNombre());
+			pstm.setString(2, m.getTelefono());
+			pstm.setString(3, m.getDireccion());
+			pstm.setInt(4, m.getCodmarca());
+			pstm.executeUpdate();
+
+			updateMarcaProvMarca(m);
+
+		} catch (SQLException e) {
+			printSQLException(e, "UPDATE MARCA");
+		} finally {
+			cerrarRsPstm(null, pstm, "updateMarca");
+		}
+		return correcto;
+	}
+
+	private void updateMarcaProvMarca(Marca marca) throws SQLException {
+		int cod = marca.getCodmarca();
+		ArrayList<String> origenProv = leerMarca(cod).getProveedores();
+		ArrayList<String> updateProv = marca.getProveedores();
+		ArrayList<String> eliminarProv = new ArrayList<String>(origenProv);
+		ArrayList<String> añadirProv = new ArrayList<String>(updateProv);
+		eliminarProv.removeAll(updateProv);
+		añadirProv.removeAll(origenProv);
+
+		for (String p : eliminarProv) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("DELETE FROM prov_marca WHERE proveedor = (select codproveedor from proveedor where nombre = ?) "
+							+ "and marca = ?");
+			pstm.setString(1, p);
+			pstm.setInt(2, cod);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updateMarcaProvMarca");
+		}
+
+		for (String p : añadirProv) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("INSERT INTO prov_marca (proveedor, marca) values ((select codproveedor from proveedor where nombre = ?), ?)");
+			pstm.setString(1, p);
+			pstm.setInt(2, cod);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updateMarcaProvMarca");
+		}
+
+	}
+	
+	public boolean updateProveedor(Proveedor p) {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		try {
+			pstm = conexion
+					.prepareStatement("UPDATE proveedor SET nombre = ?, direccion = ?, tfno = ?, fax = ?, email = ? WHERE codproveedor = ?");
+			pstm.setString(1, p.getNombre());
+			pstm.setString(2, p.getDireccion());
+			pstm.setString(3, p.getTelefono());
+			pstm.setString(4, p.getFax());
+			pstm.setString(5, p.getEmail());
+			pstm.setInt(6, p.getCodproveedor());
+			pstm.executeUpdate();
+
+			updateMarcaProvMarca(p);
+
+		} catch (SQLException e) {
+			printSQLException(e, "UPDATE PROVEEDOR");
+		} finally {
+			cerrarRsPstm(null, pstm, "updateProveedor");
+		}
+		return correcto;
+	}
+	
+	private void updateMarcaProvMarca(Proveedor proveedor) throws SQLException {
+		int cod = proveedor.getCodproveedor();
+		ArrayList<String> origenMarcas = leerProveedor(cod).getMarcas();
+		ArrayList<String> updateMarcas = proveedor.getMarcas();
+		ArrayList<String> eliminarMarcas = new ArrayList<String>(origenMarcas);
+		ArrayList<String> añadirMarcas = new ArrayList<String>(updateMarcas);
+		eliminarMarcas.removeAll(updateMarcas);
+		añadirMarcas.removeAll(origenMarcas);
+
+		for (String m : eliminarMarcas) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("DELETE FROM prov_marca WHERE marca = (select codmarca from marca where nombre = ?) "
+							+ "and proveedor = ?");
+			pstm.setString(1, m);
+			pstm.setInt(2, cod);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updateProveedorProvMarca");
+		}
+
+		for (String m : añadirMarcas) {
+			PreparedStatement pstm = conexion
+					.prepareStatement("INSERT INTO prov_marca (marca, proveedor) values ((select codmarca from marca where nombre = ?), ?)");
+			pstm.setString(1, m);
+			pstm.setInt(2, cod);
+			pstm.executeUpdate();
+			cerrarRsPstm(null, pstm, "updateProveedorProvMarca");
+		}
+
+	}
 
 	public boolean cambiarContrasena(Usuario u, String p) {
 		PreparedStatement pstm = null;
