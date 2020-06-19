@@ -233,10 +233,13 @@
 												      <td id="oculto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().esOculta()%></td>											      
 	
 												      <td class="tabla-body--row info" style="text-align: right;">
+												      <%if(usuario.getArea().equals(f.getUbicacion().getArea())){%>
 												      	<button type="button" id="boton-entrada" class="boton-tabla__accion boton-tabla__accion--add" onclick="entSal(<%=f.getCodficha()%>, 'entrada')">
 												      		<i class="fas fa-plus"></i></button>
 												      	<button type="button" id="boton-salida" class="boton-tabla__accion" onclick="entSal(<%=f.getCodficha()%>, 'salida')">
-												      		<i class="fas fa-minus"></i></i></button></td>
+												      		<i class="fas fa-minus"></i></i></button>
+												      <%}%>
+												      </td>
 												    </tr>
 											 	<%} %>
 											 	
@@ -387,7 +390,9 @@
                             <select class="modal__input" id="insertar-ubicacion" name="insertar-ubicacion">
                             	<option selected></option>
 								<%for(Ubicacion u:ubicaciones){ %>
-									<option><%=u.getNombre()%></option>
+									<%if(usuario.getArea().equals(u.getArea())){%>
+										<option><%=u.getNombre()%></option>
+									<%}%>
 								<%}%>
 							</select>
                         </div>

@@ -41,7 +41,7 @@ public class UbicacionesServlet extends HttpServlet {
 				request.setAttribute("departamentos", cn.leerDepartamentos());
 				request.setAttribute("areas", cn.leerAreas());
 				request.setAttribute("centros", cn.leerCentros());
-				request.setAttribute("ubicaciones", cn.leerUbicaciones());
+				request.setAttribute("ubicaciones", cn.leerUbicaciones(usuario));
 				request.setAttribute("proveedores", cn.leerProveedores());
 				request.setAttribute("usuario", usuario);
 
@@ -68,7 +68,7 @@ public class UbicacionesServlet extends HttpServlet {
 
 		String nombre = request.getParameter("insertar-nombre");
 		String centro = request.getParameter("insertar-centro");
-		String area = request.getParameter("insertar-area");
+		String area = usuario.getArea();
 		Boolean oculta = (request.getParameter("insertar-oculta") != null);
 
 		switch (accion) {

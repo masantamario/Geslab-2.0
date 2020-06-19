@@ -149,8 +149,11 @@
 												      <td class="tabla-body--row" id="oculta-<%=u.getCodubicacion()%>"><%=u.esOculta()%></td>
 	
 												      <td class="tabla-body--row" style="text-align: right;">
+												      <%if(usuario.getArea().equals(u.getArea())){%>
 												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=u.getCodubicacion()%>)">
-												      		<i class="fas fa-pen"></i></button></td>
+												      		<i class="fas fa-pen"></i></button>
+												      <%} %>
+												      </td>
 												    </tr>
 											 	<%} %>
 									    </tbody>
@@ -204,12 +207,7 @@
 	        		<div class="row pt-2">
                         <div class="col-12">
                             <p class="modal__label">Area</p>
-                            <select class="modal__input" id="insertar-area" name="insertar-area">
-                            	<option selected></option>
-								<%for(Area a:areas){ %>
-									<option><%=a.getNombre()%></option>
-								<%}%>
-							</select>
+                            <input class="modal__input" disabled type="text" id="insertar-area" name="insertar-area" value=<%=usuario.getArea()%>>
                         </div>
 	        		</div>
 	        		

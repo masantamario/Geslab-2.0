@@ -13,7 +13,7 @@ INSERT INTO pictograma values ('GHS01','Bomba explotando'), ('GHS02','Llama'), (
 
 INSERT INTO prudencia_producto values ('7439-93-2', 'P101');
 INSERT INTO peligro_producto values ('7439-93-2', 'H200');
-INSERT INTO peligro_producto values ('7439-93-2', 'GHS01');
+INSERT INTO pictograma_producto values ('7439-93-2', 'GHS01');
 
 INSERT INTO calidad (nombre) VALUES ('Excelente'), ('Buena'), ('Normal'), ('Regular'), ('Pésima');
 INSERT INTO ubicacion (nombre, area, centro, oculta) VALUES ('Armario 1', 1, 1, 'False'), ('Armario 2', 1, 1, 'False'), ('Nevera', 1, 1, 'False'), ('Cajón', 1, 1, 'False'), ('Taquilla', 1, 1, 'True');
@@ -58,11 +58,27 @@ select * from peligro_producto;
 
 select * from dpto;
 
-select * from prov_marca;
+select marca.codmarca as Codmarca, marca.nombre as Marca, proveedor.codproveedor as Codprov, proveedor.nombre as Prov from prov_marca 
+inner join marca on marca.codmarca = prov_marca.marca
+inner join proveedor on proveedor.codproveedor= prov_marca.proveedor;
+
+DELETE FROM prov_marca WHERE proveedor = (select codproveedor from proveedor where nombre = 'Addittex') and marca = 1;
 
 select * from ficha;
 
 select * from usuarios;
+
+select ubicacion.nombre as Ubicacion, area.nombre as Area, ubicacion.oculta as Oculta from ubicacion
+inner join area on ubicacion.area = area.codarea
+where (area.nombre != 'Orgánica' and ubicacion.oculta = 'true') or (area.nombre = 'Orgánica');
+
+select codficha, capacidad, g_ml, fechacaducidad, lote, residuo, stock, calidad.nombre AS calidad, ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, producto 
+from ficha inner join calidad on ficha.calidad = calidad.codcalidad
+inner join proveedor on ficha.proveedor = proveedor.codproveedor
+inner join marca on ficha.marca = marca.codmarca
+inner join ubicacion on ficha.ubicacion = ubicacion.codubicacion
+where (ubicacion.area != (select codarea from area where nombre = 'Orgánica') and ubicacion.oculta = 'false') or (ubicacion.area = (select codarea from area where nombre = 'Orgánica'));
+
 
 SELECT codarea FROM area WHERE nombre="Orgánica";
 

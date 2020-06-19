@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
 	private HttpSession sesion = null;
 
 	private HttpServletRequest request = null;
-	private HttpServletResponse response = null;
+//	private HttpServletResponse response = null;
 	private Conexion cn = null;
 
 	// Variables ficha
@@ -59,14 +59,14 @@ public class IndexServlet extends HttpServlet {
 				request.setAttribute("departamentos", cn.leerDepartamentos());
 				request.setAttribute("areas", cn.leerAreas());
 				request.setAttribute("centros", cn.leerCentros());
-				request.setAttribute("ubicaciones", cn.leerUbicaciones());
+				request.setAttribute("ubicaciones", cn.leerUbicaciones(usuario));
 				request.setAttribute("proveedores", cn.leerProveedores());
 				request.setAttribute("marcas", cn.leerMarcas());
 				request.setAttribute("calidades", cn.leerCalidades());
 				request.setAttribute("productos", cn.leerProductos());
-				request.setAttribute("fichas", cn.leerFichas());
-				request.setAttribute("entradas", cn.leerEntradas());
-				request.setAttribute("salidas", cn.leerSalidas());
+				request.setAttribute("fichas", cn.leerFichas(usuario));
+				request.setAttribute("entradas", cn.leerEntradas(usuario));
+				request.setAttribute("salidas", cn.leerSalidas(usuario));
 				request.setAttribute("usuario", usuario);
 				
 				cn.cerrarConexion();
@@ -82,7 +82,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		this.request = request;
-		this.response = response;
+//		this.response = response;
 		String accion = request.getParameter("accion");
 		String codigo = request.getParameter("codigo");
 		cn = new Conexion();
@@ -128,7 +128,7 @@ public class IndexServlet extends HttpServlet {
 		}
 		capacidad = new BigDecimal(request.getParameter("insertar-cpcd"));
 		g_ml = request.getParameter("insertar-g-ml");
-		for (Ubicacion u : cn.leerUbicaciones()) {
+		for (Ubicacion u : cn.leerUbicaciones(usuario)) {
 			String nombre = request.getParameter("insertar-ubicacion");
 			if (u.getNombre().equals(nombre)) {
 				ubicacion = u;

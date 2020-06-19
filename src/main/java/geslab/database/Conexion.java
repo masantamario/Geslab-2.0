@@ -772,7 +772,7 @@ public class Conexion {
 		return pictogramas;
 	}
 
-	public ArrayList<Ficha> leerFichas() {
+	public ArrayList<Ficha> leerFichas(Usuario usuario) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Ficha> fichas = new ArrayList<Ficha>();
@@ -782,7 +782,12 @@ public class Conexion {
 					+ "calidad.nombre AS calidad, ubicacion, proveedor.nombre AS proveedor, marca.nombre AS marca, producto "
 					+ "from ficha inner join calidad on ficha.calidad = calidad.codcalidad "
 					+ "inner join proveedor on ficha.proveedor = proveedor.codproveedor "
-					+ "inner join marca on ficha.marca = marca.codmarca");
+					+ "inner join marca on ficha.marca = marca.codmarca "
+					+ "inner join ubicacion on ficha.ubicacion = ubicacion.codubicacion "
+					+ "where (ubicacion.area != (select codarea from area where nombre = ?) and ubicacion.oculta = 'false') "
+					+ "or (ubicacion.area = (select codarea from area where nombre = ?))");
+			pstm.setString(1, usuario.getArea());
+			pstm.setString(2, usuario.getArea());
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
@@ -813,13 +818,18 @@ public class Conexion {
 		return fichas;
 	}
 
-	public ArrayList<Ubicacion> leerUbicaciones() {
+	public ArrayList<Ubicacion> leerUbicaciones(Usuario usuario) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
 
 		try {
-			pstm = conexion.prepareStatement("select codubicacion from ubicacion");
+//			pstm = conexion.prepareStatement("select codubicacion from ubicacion");
+			pstm = conexion.prepareStatement("select codubicacion from ubicacion " + 
+					"inner join area on ubicacion.area = area.codarea " + 
+					"where (area.nombre != ? and ubicacion.oculta = 'false') or (area.nombre = ?)");
+			pstm.setString(1, usuario.getArea());
+			pstm.setString(2, usuario.getArea());
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
@@ -1037,18 +1047,18 @@ public class Conexion {
 		return salidas;
 	}
 
-	public ArrayList<Entrada> leerEntradas() {
+	public ArrayList<Entrada> leerEntradas(Usuario usuario) {
 		ArrayList<Entrada> entradas = new ArrayList<Entrada>();
-		ArrayList<Ficha> fichas = leerFichas();
+		ArrayList<Ficha> fichas = leerFichas(usuario);
 		for (Ficha f : fichas) {
 			entradas.addAll(leerEntradasFicha(f));
 		}
 		return entradas;
 	}
 
-	public ArrayList<Salida> leerSalidas() {
+	public ArrayList<Salida> leerSalidas(Usuario usuario) {
 		ArrayList<Salida> salidas = new ArrayList<Salida>();
-		ArrayList<Ficha> fichas = leerFichas();
+		ArrayList<Ficha> fichas = leerFichas(usuario);
 		for (Ficha f : fichas) {
 			salidas.addAll(leerSalidasFicha(f));
 		}
