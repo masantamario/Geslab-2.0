@@ -20,6 +20,9 @@
 </head>
 
 <body>
+	<%
+	String mensaje = (String) request.getAttribute("mensaje");
+	%>
 
 	<div class="container-fluid-login">
 		
@@ -69,8 +72,19 @@
 									</div>
 								</div>
 
-								<div class="row justify-content-end mt-5 px-3">
-									<button type="submit" class="btn login-form__button py-0 px-3">Entrar</button>
+								<div class="row align-items-center mt-5 px-3">
+									<div class="col-8 px-0">
+										<%if(mensaje != null){ %>
+										<div id="mensaje" class="mensaje-alerta form-inline mr-4 justify-content-between">
+	                                         <p class="d-inline-flex pr-4"><%=mensaje%><p>
+	                                         <button id="cerrar-mensaje" type="button" class="close flex-fill" aria-label="Close" style="color: #ff0837;"><span aria-hidden="true">&times;</span></button>
+                                     	</div>
+                                     	<%} %>
+									</div>
+									
+									<div class="col-4 px-0">
+										<button type="submit" class="btn float-right login-form__button py-0 px-3">Entrar</button>
+									</div>
 								</div>
 
 							</form>
@@ -86,6 +100,16 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="../js/bootstrap/bootstrap.min.js"></script>
+	<script>
+	
+	
+	$( document ).ready(function() {
+		$(document).on("click", "#cerrar-mensaje", function() {
+			$('#mensaje').css("display", "none");
+		});
+	});
+	
+	</script>
 
 </body>
 

@@ -48,7 +48,7 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException {
 		sesion = request.getSession();
 		usuario = (Usuario) sesion.getAttribute("usuario");
-
+		
 		if (usuario != null) {
 			if (usuario.getNombre().equals("")) {
 				response.sendRedirect("/registro.do");
@@ -68,9 +68,12 @@ public class IndexServlet extends HttpServlet {
 				request.setAttribute("entradas", cn.leerEntradas(usuario));
 				request.setAttribute("salidas", cn.leerSalidas(usuario));
 				request.setAttribute("usuario", usuario);
+//				request.setAttribute("mensaje", request.getParameter("mensaje"));
+
+				request.setAttribute("mensaje", sesion.getAttribute("mensaje"));
 				
 				cn.cerrarConexion();
-				
+
 				request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 			}
 		} else {
@@ -90,13 +93,16 @@ public class IndexServlet extends HttpServlet {
 		System.out.println("Código: " + codigo);
 
 		Ficha ficha = null;
-		switch (accion) {
+		String mensaje = null;
+		
+		try {
+			switch (accion) {
 			case "insertar":
 				leerParametrosFicha();
-				ficha = new Ficha(0, producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, caducidad, lote, residuo, 0);
-				if(cn.existeFicha(ficha) == null) {
-					cn.insertarFicha(ficha);
-				}
+				ficha = new Ficha(0, producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, caducidad, lote,
+						residuo, 0);
+				cn.insertarFicha(ficha);
+	
 				break;
 			case "entrada":
 				leerParametrosEntSal();
@@ -104,18 +110,30 @@ public class IndexServlet extends HttpServlet {
 				Entrada entrada = new Entrada(0, ficha, fecha, unidades, usuario.getIdusuario());
 				cn.insertarEntrada(entrada);
 				break;
-			
+	
 			case "salida":
 				leerParametrosEntSal();
 				ficha = cn.leerFicha(Integer.parseInt(codigo));
 				Salida salida = new Salida(0, ficha, fecha, unidades, usuario.getIdusuario());
 				cn.insertarSalida(salida);
 				break;
-			
+	
+			}
+		}catch(Exception msg) {
+			mensaje = msg.getMessage();
+			sesion.setAttribute("mensaje", mensaje);
 		}
 
 		cn.cerrarConexion();
 		response.sendRedirect("/index.do");
+
+//		request.getRequestDispatcher("/WEB-INF/index.jsp").include(request, response);
+//		getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").include(request, response);
+	
+//		String url = null;
+//		url = mensaje == null ? "/index.do" : "/index.do?mensaje=" + mensaje;
+//		response.sendRedirect(url);
+
 	}
 
 	private void leerParametrosFicha() {
@@ -146,7 +164,7 @@ public class IndexServlet extends HttpServlet {
 	private void leerParametrosEntSal() {
 		fecha = Date.valueOf(request.getParameter("insertar-fecha"));
 		unidades = Integer.parseInt(request.getParameter("insertar-unidades"));
-		
+
 	}
 
 }

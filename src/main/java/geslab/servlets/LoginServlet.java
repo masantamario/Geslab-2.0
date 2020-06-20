@@ -44,16 +44,17 @@ public class LoginServlet extends HttpServlet {
 		Conexion cn = new Conexion();
 		String u = request.getParameter("usuario");
 		String p = cn.encriptar(request.getParameter("password"));
-		Usuario usuario = cn.existeUsuario(u, p);
-		cn.cerrarConexion();
-
-		if (usuario != null) {
+		
+		try {
+			Usuario usuario = cn.existeUsuario(u, p);
+			cn.cerrarConexion();
 			System.out.println("Usuario válido");
 			HttpSession session = request.getSession();
 			session.setAttribute("usuario", usuario);
 			redirigirUsuario(usuario);
-		} else {
-			System.out.println("Usuario inválido");
+
+		}catch(Exception msg) {
+			request.setAttribute("mensaje", "Datos incorrectos");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}
 	}

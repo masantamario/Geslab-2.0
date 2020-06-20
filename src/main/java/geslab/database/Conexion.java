@@ -108,7 +108,7 @@ public class Conexion {
 		return null;
 	}
 
-	public Usuario existeUsuario(String u, String p) {
+	public Usuario existeUsuario(String u, String p) throws Exception {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Usuario usuario = null;
@@ -118,11 +118,15 @@ public class Conexion {
 			pstm.setString(1, u);
 			pstm.setString(2, p);
 			rs = pstm.executeQuery();
-			if (rs.next())
+			if (rs.next()) {
 				usuario = leerUsuario(u);
+			}else {
+				throw new Exception("Datos incorrectos");
+			}
 
 		} catch (SQLException e) {
 			printSQLException(e, "EXISTE USUARIO");
+			throw new Exception("Error al comprobar si EXISTE el USUARIO");
 		} finally {
 			cerrarRsPstm(rs, pstm, "existeUsuario");
 		}
@@ -137,10 +141,10 @@ public class Conexion {
 
 		try {
 			pstm = conexion.prepareStatement("select * from ficha where producto = ? AND capacidad = ? AND "
-					+ "g_ml = ? AND" + "calidad = (select codcalidad from calidad where nombre = ?) AND "
-					+ "ubicacion = ? AND" + "marca = (select codmarca from marca where nombre = ?) AND "
+					+ "g_ml = ? AND calidad = (select codcalidad from calidad where nombre = ?) AND "
+					+ "ubicacion = ? AND marca = (select codmarca from marca where nombre = ?) AND "
 					+ "proveedor = (select codproveedor from proveedor where nombre = ?) AND "
-					+ "fechacaducidad = ? AND" + "lote = ? AND" + "residuo = ?");
+					+ "fechacaducidad = ? AND lote = ? AND residuo = ?");
 			pstm.setString(1, f.getProducto().getCas());
 			pstm.setDouble(2, f.getCapacidad().doubleValue());
 			pstm.setString(3, f.getG_ml());
@@ -251,7 +255,7 @@ public class Conexion {
 		try {
 			pstm = conexion.prepareStatement(
 					"SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion "
-							+ "FROM usuarios INNER JOIN area ON usuarios.area = area.codarea " + "WHERE usuario = ?;");
+							+ "FROM usuarios INNER JOIN area ON usuarios.area = area.codarea WHERE usuario = ?;");
 
 			pstm.setString(1, u);
 			rs = pstm.executeQuery();
@@ -1154,40 +1158,46 @@ public class Conexion {
 		return correcto;
 	}
 
-	public boolean insertarFicha(Ficha f) {
+	public boolean insertarFicha(Ficha f) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
-
-		try {
-			pstm = conexion.prepareStatement(
-					"INSERT INTO ficha(producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, fechacaducidad, lote, residuo, stock) VALUES "
-							+ "(?, ?, ?, (select codcalidad from calidad where nombre = ?), ?, "
-							+ "(select codmarca from marca where nombre = ?), "
-							+ "(select codproveedor from proveedor where nombre = ?), ?, ?, ?, ?)");
-			pstm.setString(1, f.getProducto().getCas());
-			pstm.setBigDecimal(2, f.getCapacidad());
-			pstm.setString(3, f.getG_ml());
-			pstm.setString(4, f.getCalidad());
-			pstm.setInt(5, f.getUbicacion().getCodubicacion());
-			pstm.setString(6, f.getMarca());
-			pstm.setString(7, f.getProveedor());
-			pstm.setDate(8, f.getCaducidadIns());
-			pstm.setString(9, f.getLote());
-			pstm.setString(10, Boolean.toString(f.isResiduo()));
-			pstm.setInt(11, f.getStock());
-
-			pstm.executeUpdate();
-
-		} catch (SQLException e) {
-			printSQLException(e, "INSERTAR ficha");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarFicha");
+		
+		if (existeFicha(f) == null) {
+			try {
+				pstm = conexion.prepareStatement(
+						"INSERT INTO ficha(producto, capacidad, g_ml, calidad, ubicacion, marca, proveedor, fechacaducidad, lote, residuo, stock) VALUES "
+								+ "(?, ?, ?, (select codcalidad from calidad where nombre = ?), ?, "
+								+ "(select codmarca from marca where nombre = ?), "
+								+ "(select codproveedor from proveedor where nombre = ?), ?, ?, ?, ?)");
+				pstm.setString(1, f.getProducto().getCas());
+				pstm.setBigDecimal(2, f.getCapacidad());
+				pstm.setString(3, f.getG_ml());
+				pstm.setString(4, f.getCalidad());
+				pstm.setInt(5, f.getUbicacion().getCodubicacion());
+				pstm.setString(6, f.getMarca());
+				pstm.setString(7, f.getProveedor());
+				pstm.setDate(8, f.getCaducidadIns());
+				pstm.setString(9, f.getLote());
+				pstm.setString(10, Boolean.toString(f.isResiduo()));
+				pstm.setInt(11, f.getStock());
+	
+				pstm.executeUpdate();
+	
+			} catch (SQLException e) {
+				printSQLException(e, "INSERTAR ficha");
+				throw new Exception("Error al INSERTAR la ficha");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarFicha");
+			}
+		
+		}else {
+			throw new Exception("La ficha ya existe");
 		}
 
 		return correcto;
 	}
 
-	public boolean insertarEntrada(Entrada e) {
+	public boolean insertarEntrada(Entrada e) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		if (e.getCodentrada() == 0) {
@@ -1204,14 +1214,17 @@ public class Conexion {
 
 			} catch (SQLException ex) {
 				printSQLException(ex, "INSERTAR ENTRADA");
+				throw new Exception("Error SQL");
 			} finally {
 				cerrarRsPstm(null, pstm, "insertarEntrada");
 			}
+		}else {
+			throw new Exception("Código de entrada incorrecto");
 		}
 		return correcto;
 	}
 
-	public boolean insertarSalida(Salida s) {
+	public boolean insertarSalida(Salida s) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		if (s.getCodsalida() == 0) {
@@ -1228,14 +1241,17 @@ public class Conexion {
 
 			} catch (SQLException ex) {
 				printSQLException(ex, "INSERTAR SALIDA");
+				throw new Exception("Error SQL");
 			} finally {
 				cerrarRsPstm(null, pstm, "insertarSalida");
 			}
+		}else {
+			throw new Exception("Código de salida incorrecto");
 		}
 		return correcto;
 	}
 
-	private boolean actualizarStock(int codficha, int unidades) {
+	private boolean actualizarStock(int codficha, int unidades) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
@@ -1246,6 +1262,7 @@ public class Conexion {
 
 		} catch (SQLException ex) {
 			printSQLException(ex, "ACTUALIZAR STOCK");
+			throw new Exception("Error actualizando stock");
 		} finally {
 			cerrarRsPstm(null, pstm, "actualizarStock");
 		}

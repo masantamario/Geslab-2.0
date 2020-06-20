@@ -6,7 +6,6 @@ function inicializar() {
 	$(document.body).on("click", "td:not(.info)", function() {
 		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
-	// $('.count').prop('disabled', true);
 	$(document).on('click', '.plus', function() {
 		$('.count').val(parseInt($('.count').val()) + 1);
 	});
@@ -15,6 +14,10 @@ function inicializar() {
 		if ($('.count').val() == 0) {
 			$('.count').val(1);
 		}
+	});
+	
+	$(document).on("click", "#cerrar-mensaje", function() {
+		$('#mensaje').css("display", "none");
 	});
 }
 

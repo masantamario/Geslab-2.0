@@ -26,6 +26,7 @@
 	<%
 	
 	Usuario usuario = (Usuario) request.getAttribute("usuario");
+	String mensaje = (String) request.getAttribute("mensaje");
 	ArrayList<Area> areas = (ArrayList<Area>) request.getAttribute("areas");
 	ArrayList<Departamento> departamentos = (ArrayList<Departamento>) request.getAttribute("departamentos");
 	ArrayList<Centro> centros = (ArrayList<Centro>) request.getAttribute("centros");
@@ -322,8 +323,20 @@
 								</div>
 								
 								
-								<div class="row py-3" style="height: 20%" id="fila-insertar">
+								<div class="row py-3 align-items-center" style="height: 20%" id="fila-insertar">
+									
 									<div class="col">
+										<%if(mensaje != null){ %>
+										<div id="mensaje" class="mensaje-alerta form-inline mr-4 justify-content-between float-right">
+	                                         <p class="d-inline-flex pr-4"><%=mensaje%><p>
+	                                         <button id="cerrar-mensaje" type="button" class="close flex-fill" aria-label="Close" style="color: #ff0837;"><span aria-hidden="true">&times;</span></button>
+                                     	</div>
+                                     	<%
+                                     	request.getSession().setAttribute("mensaje", null);
+										} %>
+									</div>
+									
+									<div class="col-3">
 										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva ficha</button>
 									</div>
 								</div>
