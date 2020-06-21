@@ -26,7 +26,7 @@ function configurarMultiSelect(elemento){
 
 function insertar() {
 	accion = "insertar";
-	var campos = ["cas", "nombre", "formula", "f_des", "peso", "einecs", "ec", "precauciones", "msds"];
+	var campos = ["cas", "nombre", "formula", "f_des", "pureza", "peso", "einecs", "ec", "precauciones", "msds"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = "";
 	});
@@ -43,7 +43,7 @@ function editar(cod) {
 	accion = "editar";
 	codigo = cod;
 	
-	var campos = ["cas", "nombre", "formula", "f_des", "peso", "einecs", "ec", "precauciones", "msds"];
+	var campos = ["cas", "nombre", "formula", "f_des", "pureza", "peso", "einecs", "ec", "precauciones", "msds"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = document
 				.getElementById(valor + "-" + cod).innerText;

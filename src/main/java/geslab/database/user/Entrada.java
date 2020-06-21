@@ -12,13 +12,15 @@ public class Entrada {
 	private Ficha ficha;
 	private Date fecha;
 	private int unidades;
+	private String nota;
 	private int usuario;
 
-	public Entrada(int codentrada, Ficha ficha, Date fecha, int unidades, int usuario) {
+	public Entrada(int codentrada, Ficha ficha, Date fecha, int unidades, String nota, int usuario) {
 		this.codentrada = codentrada;
 		this.ficha = ficha;
 		this.fecha = fecha;
 		this.unidades = unidades;
+		this.nota = nota;
 		this.usuario = usuario;
 	}
 
@@ -46,6 +48,10 @@ public class Entrada {
 
 	public int getUnidades() {
 		return unidades;
+	}
+
+	public String getNota() {
+		return nota;
 	}
 
 	public int getUsuario() {

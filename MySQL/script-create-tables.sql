@@ -66,8 +66,8 @@ CREATE TABLE producto(
 	cas varchar(12),
     formula char(30),
     form_desarrollada text,
-    peso_mol decimal(20, 9),
-    pureza decimal(3, 3),
+    peso_mol decimal(20, 5),
+    pureza decimal(6, 3),
     numero_einecs varchar(9),
     numero_ec varchar(7),
     precauciones varchar(100) null,
@@ -216,3 +216,4 @@ CREATE TABLE salida(
 
 INSERT INTO usuarios (usuario, contrasena) VALUES ('admin', 'Y1ZAbRz18/ZxnLRt0CMMYA==');
 UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, fecha_creacion = NOW() WHERE idusuario = 1;
+INSERT INTO pictograma values ('GHS01','Bomba explotando'), ('GHS02','Llama'), ('GHS03','LLama sobre un círculo'), ('GHS04','Bombona de gas'), ('GHS05','Corrosión'), ('GHS06','Calavera y tibias cruzadas'), ('GHS07','Signo de exclamación'), ('GHS08','Peligro para la salud'), ('GHS09','Medio ambiente');		

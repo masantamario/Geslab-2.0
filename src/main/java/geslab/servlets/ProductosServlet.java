@@ -35,7 +35,7 @@ public class ProductosServlet extends HttpServlet {
 
 	// Variables producto
 	private String cas, nombre, formula, formula_des, n_einecs, n_ec, precauciones, msds;
-	private BigDecimal peso_mol;
+	private BigDecimal peso_mol, pureza;
 	ArrayList<Peligro> peligros = new ArrayList<Peligro>();
 	ArrayList<Prudencia> prudencias = new ArrayList<Prudencia>();
 	ArrayList<Pictograma> pictogramas = new ArrayList<Pictograma>();
@@ -81,13 +81,13 @@ public class ProductosServlet extends HttpServlet {
 			leerParametrosProducto();
 			switch (accion) {
 			case "insertar":
-				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones, msds,
+				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, pureza, n_einecs, n_ec, precauciones, msds,
 						peligros, prudencias, pictogramas);
 				cn.insertarProducto(producto);
 				break;
 
 			case "editar":
-				producto = new Producto(codigo, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones,
+				producto = new Producto(codigo, nombre, formula, formula_des, peso_mol, pureza, n_einecs, n_ec, precauciones,
 						msds, peligros, prudencias, pictogramas);
 				cn.updateProducto(producto);
 				break;
@@ -118,6 +118,9 @@ public class ProductosServlet extends HttpServlet {
 
 			String pm = request.getParameter("insertar-peso");
 			peso_mol = pm.equals("") || pm.equals("null") ? null : new BigDecimal(pm);
+			
+			String pu = request.getParameter("insertar-pureza");
+			pureza = pu.equals("") || pu.equals("null") ? null : new BigDecimal(pu);
 
 			n_einecs = request.getParameter("insertar-einecs");
 			n_ec = request.getParameter("insertar-ec");

@@ -248,6 +248,27 @@ public class Conexion {
 		}
 		return retorno;
 	}
+	
+	public Boolean existeProvMarca(String prov, String marca) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Boolean retorno = false;
+		try {
+			pstm = conexion.prepareStatement("select * from prov_marca where "
+					+ "proveedor = (select codproveedor from proveedor where nombre = ?) "
+					+ "and marca = (select codmarca from marca where nombre = ?)");
+			pstm.setString(1, prov);
+			pstm.setString(2, marca);
+			rs = pstm.executeQuery();
+			retorno = rs.next();
+
+		} catch (SQLException e) {
+			printSQLException(e, "EXISTE PROVMARCA");
+		} finally {
+			cerrarRsPstm(rs, pstm, "existeProvMarca");
+		}
+		return retorno;
+	}
 
 	public Usuario leerUsuario(String u) throws Exception {
 		PreparedStatement pstm = null;
@@ -296,6 +317,7 @@ public class Conexion {
 				String formula_des = rs.getString("form_desarrollada");
 				String n_einecs = rs.getString("numero_einecs");
 				BigDecimal peso_mol = rs.getBigDecimal("peso_mol");
+				BigDecimal pureza = rs.getBigDecimal("pureza");
 				String n_ec = rs.getString("numero_ec");
 				String precauciones = rs.getString("precauciones");
 				String nombre = rs.getString("nombre");
@@ -304,7 +326,7 @@ public class Conexion {
 				ArrayList<Prudencia> prudencias = leerPrudenciasProducto(cas);
 				ArrayList<Pictograma> pictogramas = leerPictogramasProducto(cas);
 
-				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, n_einecs, n_ec, precauciones, msds,
+				producto = new Producto(cas, nombre, formula, formula_des, peso_mol, pureza, n_einecs, n_ec, precauciones, msds,
 						peligros, prudencias, pictogramas);
 			}
 		} catch (SQLException e) {
@@ -1011,9 +1033,10 @@ public class Conexion {
 				int codentrada = rs.getInt("codentrada");
 				Date fecha = rs.getDate("fecha");
 				int unidades = rs.getBigDecimal("unidades").intValue();
+				String nota = rs.getString("nota");
 				int usuario = rs.getInt("usuario");
 
-				entradas.add(new Entrada(codentrada, ficha, fecha, unidades, usuario));
+				entradas.add(new Entrada(codentrada, ficha, fecha, unidades, nota, usuario));
 			}
 
 		} catch (SQLException e) {
@@ -1040,9 +1063,10 @@ public class Conexion {
 				int codsalida = rs.getInt("codsalida");
 				Date fecha = rs.getDate("fecha");
 				int unidades = rs.getBigDecimal("unidades").intValue();
+				String nota = rs.getString("nota");
 				int usuario = rs.getInt("usuario");
 
-				salidas.add(new Salida(codsalida, ficha, fecha, unidades, usuario));
+				salidas.add(new Salida(codsalida, ficha, fecha, unidades, nota, usuario));
 			}
 
 		} catch (SQLException e) {
@@ -1186,6 +1210,8 @@ public class Conexion {
 				pstm.setInt(11, f.getStock());
 	
 				correcto = pstm.executeUpdate() == 1 ? true : false;
+				
+				if(correcto) insertarProvMarca(f.getProveedor(), f.getMarca());
 	
 			} catch (SQLException e) {
 				printSQLException(e, "INSERTAR ficha");
@@ -1207,11 +1233,12 @@ public class Conexion {
 		if (e.getCodentrada() == 0) {
 			try {
 				pstm = conexion
-						.prepareStatement("INSERT INTO entrada (ficha, fecha, unidades, usuario) values (?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO entrada (ficha, fecha, unidades, nota, usuario) values (?, ?, ?, ?, ?)");
 				pstm.setInt(1, e.getFicha().getCodficha());
 				pstm.setDate(2, new Date(e.getFechaIns().getTime()));
 				pstm.setInt(3, e.getUnidades());
-				pstm.setInt(4, e.getUsuario());
+				pstm.setString(4, e.getNota());
+				pstm.setInt(5, e.getUsuario());
 				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 				correcto = actualizarStock(e.getFicha().getCodficha(), e.getUnidades() + e.getFicha().getStock());
@@ -1234,11 +1261,12 @@ public class Conexion {
 		if (s.getCodsalida() == 0) {
 			try {
 				pstm = conexion
-						.prepareStatement("INSERT INTO salida (ficha, fecha, unidades, usuario) values (?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO salida (ficha, fecha, unidades, nota, usuario) values (?, ?, ?, ?)");
 				pstm.setInt(1, s.getFicha().getCodficha());
 				pstm.setDate(2, new Date(s.getFechaIns().getTime()));
 				pstm.setInt(3, s.getUnidades());
-				pstm.setInt(4, s.getUsuario());
+				pstm.setString(4, s.getNota());
+				pstm.setInt(5, s.getUsuario());
 				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 				correcto = actualizarStock(s.getFicha().getCodficha(), s.getFicha().getStock() - s.getUnidades());
@@ -1282,16 +1310,17 @@ public class Conexion {
 		if (leerProducto(p.getCas()) == null) {
 			try {
 				pstm = conexion.prepareStatement(
-						"INSERT INTO producto (cas, formula, form_desarrollada, peso_mol, numero_einecs, numero_ec, precauciones, msds) "
-								+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
+						"INSERT INTO producto (cas, formula, form_desarrollada, peso_mol, pureza, numero_einecs, numero_ec, precauciones, msds) "
+								+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				pstm.setString(1, p.getCas());
 				pstm.setString(2, p.getFormula());
 				pstm.setString(3, p.getFormula_des());
 				pstm.setBigDecimal(4, p.getPeso_mol());
-				pstm.setString(5, p.getN_einecs());
-				pstm.setString(6, p.getN_ec());
-				pstm.setString(7, p.getPrecauciones());
-				pstm.setString(8, p.getMsds());
+				pstm.setBigDecimal(5, p.getPureza());
+				pstm.setString(6, p.getN_einecs());
+				pstm.setString(7, p.getN_ec());
+				pstm.setString(8, p.getPrecauciones());
+				pstm.setString(9, p.getMsds());
 	
 				correcto = pstm.executeUpdate() == 1 ? true : false;
 	
@@ -1427,19 +1456,21 @@ public class Conexion {
 	public boolean insertarProvMarca(String p, String m) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement("INSERT INTO prov_marca (proveedor, marca) values "
-					+ "((select codproveedor from proveedor where nombre=?), (select codmarca from marca where nombre=?))");
-			pstm.setString(1, p);
-			pstm.setString(2, m);
-
-			correcto = pstm.executeUpdate() == 1 ? true : false;
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "INSERTAR ProvMarca");
-			throw new Exception("Error asignando proveedor-marca");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarProvMarca");
+		if(!existeProvMarca(p, m)) {
+			try {
+				pstm = conexion.prepareStatement("INSERT INTO prov_marca (proveedor, marca) values "
+						+ "((select codproveedor from proveedor where nombre=?), (select codmarca from marca where nombre=?))");
+				pstm.setString(1, p);
+				pstm.setString(2, m);
+	
+				correcto = pstm.executeUpdate() == 1 ? true : false;
+	
+			} catch (SQLException ex) {
+				printSQLException(ex, "INSERTAR ProvMarca");
+				throw new Exception("Error asignando proveedor-marca");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarProvMarca");
+			}
 		}
 
 		return correcto;
@@ -1522,22 +1553,23 @@ public class Conexion {
 		return correcto;
 	}
 
-	public boolean updateProducto(Producto producto) {
+	public boolean updateProducto(Producto producto) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
 			pstm = conexion.prepareStatement(
-					"UPDATE producto set formula = ?, form_desarrollada = ?, peso_mol = ?, numero_einecs = ?, "
+					"UPDATE producto set formula = ?, form_desarrollada = ?, peso_mol = ?, pureza = ?, numero_einecs = ?, "
 							+ "numero_ec = ?, precauciones = ?, msds = ? WHERE cas = ?");
 
 			pstm.setString(1, producto.getFormula());
 			pstm.setString(2, producto.getFormula_des());
 			pstm.setBigDecimal(3, producto.getPeso_mol());
-			pstm.setString(4, producto.getN_einecs());
-			pstm.setString(5, producto.getN_ec());
-			pstm.setString(6, producto.getPrecauciones());
-			pstm.setString(7, producto.getMsds());
-			pstm.setString(8, producto.getCas());
+			pstm.setBigDecimal(4, producto.getPureza());
+			pstm.setString(5, producto.getN_einecs());
+			pstm.setString(6, producto.getN_ec());
+			pstm.setString(7, producto.getPrecauciones());
+			pstm.setString(8, producto.getMsds());
+			pstm.setString(9, producto.getCas());
 			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			updatePeligroProducto(producto);
@@ -1546,6 +1578,7 @@ public class Conexion {
 
 		} catch (SQLException ex) {
 			printSQLException(ex, "UPDATE PRODUCTO");
+			throw new Exception("Error actualizando producto");
 		} finally {
 			cerrarRsPstm(null, pstm, "updateProducto");
 		}

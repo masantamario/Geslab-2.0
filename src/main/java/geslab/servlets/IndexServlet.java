@@ -31,16 +31,19 @@ public class IndexServlet extends HttpServlet {
 	private Conexion cn = null;
 
 	// Variables ficha
-	private String calidad, proveedor, marca;
+	private String calidad, proveedor, marca, lote, g_ml;
 	private Ubicacion ubicacion = null;
 	private Producto producto = null;
-
-	// Variables entrada-salida
-	private Date fecha, caducidad;
-	private String lote, g_ml;
-	private int unidades;
 	private BigDecimal capacidad;
 	private boolean residuo;
+	private Date caducidad;
+
+
+	// Variables entrada-salida
+	private Date fecha;
+	private int unidades;
+	private String nota;
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -99,14 +102,14 @@ public class IndexServlet extends HttpServlet {
 			case "entrada":
 				leerParametrosEntSal();
 				ficha = cn.leerFicha(Integer.parseInt(codigo));
-				Entrada entrada = new Entrada(0, ficha, fecha, unidades, usuario.getIdusuario());
+				Entrada entrada = new Entrada(0, ficha, fecha, unidades, nota, usuario.getIdusuario());
 				cn.insertarEntrada(entrada);
 				break;
 
 			case "salida":
 				leerParametrosEntSal();
 				ficha = cn.leerFicha(Integer.parseInt(codigo));
-				Salida salida = new Salida(0, ficha, fecha, unidades, usuario.getIdusuario());
+				Salida salida = new Salida(0, ficha, fecha, unidades, nota, usuario.getIdusuario());
 				cn.insertarSalida(salida);
 				break;
 
@@ -180,6 +183,7 @@ public class IndexServlet extends HttpServlet {
 			fecha = Date.valueOf(f);
 			
 			unidades = Integer.parseInt(request.getParameter("insertar-unidades"));
+			nota = request.getParameter("insertar-nota");
 		} catch (Throwable exception) {
 			if(exception.getClass().toString().equals("class java.lang.Exception")) {
 				throw new Exception(exception.getMessage());	

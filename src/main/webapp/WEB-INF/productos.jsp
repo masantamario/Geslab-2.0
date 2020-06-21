@@ -110,6 +110,7 @@
 									      <th class="tabla-header--item" scope="col">Cas</th>
 									      <th class="tabla-header--item" scope="col">Nombre</th>
 									      <th class="tabla-header--item" scope="col">Fórmula</th>
+									      <th class="tabla-header--item" scope="col">Pureza</th>
 									      <th class="tabla-header--item" scope="col">F. Desarrollada</th>
 									      <th class="tabla-header--item" scope="col"></th>
 									      
@@ -125,6 +126,7 @@
 											      <td class="tabla-body--row" id="cas-<%=p.getCas()%>"><%=p.getCas()%></td>
 											      <td class="tabla-body--row" id="nombre-<%=p.getCas()%>"><%=p.getNombre()%></td>
 											      <td class="tabla-body--row" id="formula-<%=p.getCas()%>"><%=p.getFormula()%></td>
+											      <td class="tabla-body--row" id="pureza-<%=p.getCas()%>"><%=p.getPurezaString()%></td>
 											      <td class="tabla-body--row" id="f_des-<%=p.getCas()%>"><%=p.getFormula_des()%></td>
 											      
 												   <td id="peso-<%=p.getCas()%>" style="display: none"><%=p.getPeso_molString()%></td>											       
@@ -305,7 +307,7 @@
                             <p class="modal__label">Cas *</p>
                             <input class="modal__input" type="text" id="insertar-cas" name="insertar-cas">
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <p class="modal__label">Nombre *</p>
                             <input class="modal__input" type="text" id="insertar-nombre" name="insertar-nombre">
                         </div>
@@ -313,7 +315,11 @@
                             <p class="modal__label">Fórmula *</p>
                             <input class="modal__input" type="text" id="insertar-formula" name="insertar-formula">
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
+                            <p class="modal__label" title="Peso molecular">Pureza</p>
+                            <input class="modal__input" type="text" id="insertar-pureza" name="insertar-pureza" title="Pureza">
+                        </div>
+                        <div class="col-2">
                             <p class="modal__label" title="Peso molecular">PM</p>
                             <input class="modal__input" type="text" id="insertar-peso" name="insertar-peso" title="Peso molecular">
                         </div>

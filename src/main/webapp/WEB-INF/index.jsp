@@ -495,9 +495,14 @@
 		                        <span class="plus boton-tabla__accion boton-tabla__accion--add">+</span>
 		                    </div>
                         <div class="col-12 pt-3">
-                            <p class="modal__label">Fecha</p>
+                            <p class="modal__label">Fecha *</p>
                             <input class="modal__input" type="date" id="insertar-fecha" name="insertar-fecha">
                         </div> 
+                        
+                        <div class="col-12 pt-3">
+                            <p class="modal__label">Nota</p>
+                            <input class="modal__input" type="text" id="insertar-nota" name="insertar-nota">
+                        </div>
                         
 	        		</div>
 	        		
@@ -529,6 +534,7 @@
 			<% for(Entrada e : entradas){%>
 				if(codficha == "<%=e.getFicha().getCodficha()%>"){
 					fila = document.createElement("tr");
+					fila.title = "<%=e.getNota()%>";
 					var fecha = document.createElement("td");
 					var uds = document.createElement("td");
 					textoFecha = document.createTextNode("<%=e.getFecha()%>");
@@ -549,6 +555,7 @@
 			<% for(Salida s : salidas){%>
 				if(codficha == "<%=s.getFicha().getCodficha()%>"){
 					fila = document.createElement("tr");
+					fila.title = "<%=s.getNota()%>";
 					var fecha = document.createElement("td");
 					var uds = document.createElement("td");
 					textoFecha = document.createTextNode("<%=s.getFecha()%>");

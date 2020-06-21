@@ -60,6 +60,7 @@ function confirmarEntSal() {
 function cancelarEntSal() {
 	accion = "";
 	document.getElementById("insertar-unidades").value = "1";
+	document.getElementById("insertar-nota").value = "";
 	$("#modalEntSal").modal("hide");
 }
 

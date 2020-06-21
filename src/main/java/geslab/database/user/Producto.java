@@ -9,6 +9,7 @@ public class Producto{
 		private String formula;
 		private String formula_des;
 		private BigDecimal peso_mol;
+		private BigDecimal pureza;
 		private String n_einecs;
 		private String n_ec;
 		private String precauciones;
@@ -18,13 +19,14 @@ public class Producto{
 		private ArrayList<Pictograma> pictogramas;
 		
 		
-		public Producto(String cas, String nombre, String formula, String formula_des, BigDecimal peso_mol, String n_einecs, String n_ec,
+		public Producto(String cas, String nombre, String formula, String formula_des, BigDecimal peso_mol, BigDecimal pureza, String n_einecs, String n_ec,
 				String precauciones, String msds, ArrayList<Peligro> peligros, ArrayList<Prudencia> prudencias, ArrayList<Pictograma> pictogramas) {
 			this.cas = cas;
 			this.nombre = nombre;
 			this.formula = formula;
 			this.formula_des = formula_des;
 			this.peso_mol = peso_mol;
+			this.pureza = pureza;
 			this.n_einecs = n_einecs;
 			this.n_ec = n_ec;
 			this.precauciones = precauciones;
@@ -62,12 +64,21 @@ public class Producto{
 			return precauciones;
 		}
 
-		public String getPeso_molString() {
-			return peso_mol == null ? "" : peso_mol.toString();
-		}
 		
 		public BigDecimal getPeso_mol() {
 			return peso_mol;
+		}
+		
+		public String getPeso_molString() {
+			return peso_mol == null ? "" : peso_mol.toString();
+		}
+
+		public BigDecimal getPureza() {
+			return pureza;
+		}
+		
+		public String getPurezaString() {
+			return pureza == null ? "" : pureza.toString();
 		}
 
 		public String getMsds() {
