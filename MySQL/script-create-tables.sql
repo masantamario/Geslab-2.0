@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS 
-      	usuarios, 
+	usuarios, 
 	salida, 
 	entrada, 
 	ficha, 
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS
    
 CREATE TABLE dpto(
 	coddpto int auto_increment,
-	nombre char(25),
+	nombre char(40),
     constraint PK_dpto primary key clustered (coddpto)
 );
     
@@ -45,7 +45,7 @@ CREATE TABLE centro(
 
 CREATE TABLE ubicacion(
 	codubicacion int auto_increment,
-    nombre varchar(30),
+    nombre varchar(40),
     area int,
     centro int,
     oculta char(5),
@@ -58,7 +58,7 @@ CREATE TABLE ubicacion(
 
 CREATE TABLE calidad(
 	codcalidad int auto_increment,
-	nombre char(10),
+	nombre char(40),
     constraint PK_calidad primary key clustered(codcalidad)
 );
 
@@ -67,9 +67,10 @@ CREATE TABLE producto(
     formula char(30),
     form_desarrollada text,
     peso_mol decimal(20, 9),
+    pureza decimal(3, 3),
     numero_einecs varchar(9),
     numero_ec varchar(7),
-    precauciones varchar(40) null,
+    precauciones varchar(100) null,
     msds text,
     constraint PK_producto primary key clustered (cas)
 );
@@ -83,7 +84,7 @@ CREATE TABLE nombre_producto(
 
 CREATE TABLE peligro(
 	frase varchar(9),
-    indicacion varchar(200),
+    indicacion varchar(255),
     constraint PK_peligro primary key clustered (frase)
 );
 CREATE TABLE peligro_producto(
@@ -96,7 +97,7 @@ CREATE TABLE peligro_producto(
 
 CREATE TABLE prudencia(
 	frase varchar(9),
-    consejo varchar(200),
+    consejo varchar(255),
     constraint PK_pruencia primary key clustered (frase)
 );
 CREATE TABLE prudencia_producto(
@@ -123,7 +124,7 @@ CREATE TABLE pictograma_producto(
 
 CREATE TABLE proveedor(
 	codproveedor int auto_increment,
-    nombre varchar(40),
+    nombre varchar(50),
     direccion varchar(40) null,
     tfno char(20) null,
     fax char(20) null,
@@ -134,7 +135,7 @@ CREATE TABLE proveedor(
 
 CREATE TABLE marca(
 	codmarca int auto_increment,
-	nombre char(20),
+	nombre varchar(50),
     telefono varchar(20),
     direccion varchar(100),
     constraint PK_marca primary key clustered(codmarca)
@@ -183,8 +184,8 @@ CREATE TABLE ficha(
     constraint PK_ficha primary key (codficha),
     constraint FK_calidad_ficha foreign key (calidad) references calidad(codcalidad),
     constraint FK_ubicacion_ficha foreign key (ubicacion) references ubicacion(codubicacion),
-    constraint FK_proveedor foreign key (proveedor) references prov_marca(proveedor),
-    constraint FK_marca_ficha foreign key (marca) references prov_marca(marca),
+    constraint FK_proveedor foreign key (proveedor) references proveedor(codproveedor),
+    constraint FK_marca_ficha foreign key (marca) references marca(codmarca),
     constraint FK_producto_ficha foreign key (producto) references producto(cas),
     constraint CK_s_n_entrada check ((residuo = 'true') OR (residuo = 'false'))
 );
@@ -194,6 +195,7 @@ CREATE TABLE entrada (
     ficha int,
     unidades decimal(6),
     fecha datetime,
+    nota varchar(100),
     usuario int,
     constraint PK_entrada primary key (codentrada),
     constraint FK_ficha_entrada foreign key (ficha) references ficha(codficha),
@@ -205,9 +207,12 @@ CREATE TABLE salida(
     ficha int,
 	unidades decimal(6),
     fecha datetime,
+    nota varchar(100),
     usuario int,
     constraint PK_salida primary key (codsalida),
     constraint FK_ficha_salida foreign key (ficha) references ficha(codficha),
     constraint FK_usuario_salida foreign key (usuario) references usuarios(idusuario)
 );
 
+INSERT INTO usuarios (usuario, contrasena) VALUES ('admin', 'Y1ZAbRz18/ZxnLRt0CMMYA==');
+UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, fecha_creacion = NOW() WHERE idusuario = 1;

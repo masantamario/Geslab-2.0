@@ -376,7 +376,7 @@
 	        	
 	        		<div class="row">
 	        			<div class="col-6">
-                            <p class="modal__label">Producto</p>
+                            <p class="modal__label">Producto *</p>
                             <select class="modal__input" id="insertar-producto" name="insertar-producto">
                             	<option selected></option>
 								<%for(Producto p:productos){ %>
@@ -386,11 +386,11 @@
                         </div>
           
                         <div class="col-4">
-                            <p class="modal__label">Capacidad</p>
+                            <p class="modal__label">Capacidad *</p>
                             <input class="modal__input" type="text" id="insertar-cpcd" name="insertar-cpcd">
                         </div>
                         <div class="col-2">
-                            <p class="modal__label">g/ml</p>
+                            <p class="modal__label">g/ml *</p>
                             <select class="modal__input" id="insertar-g-ml" name="insertar-g-ml">
 								<option selected></option>
 								<option>g</option>
@@ -400,7 +400,7 @@
 	        		</div>
 	        		<div class="row pt-4">
 	        			<div class="col-4">
-                            <p class="modal__label">Ubicación</p>
+                            <p class="modal__label">Ubicación *</p>
                             <select class="modal__input" id="insertar-ubicacion" name="insertar-ubicacion">
                             	<option selected></option>
 								<%for(Ubicacion u:ubicaciones){ %>
@@ -411,7 +411,7 @@
 							</select>
                         </div>
                         <div class="col-4">
-                            <p class="modal__label">Marca</p>
+                            <p class="modal__label">Marca *</p>
                             <select class="modal__input" id="insertar-marca" name="insertar-marca">
                             	<option selected></option>
 								<%for(Marca m:marcas){ %>
@@ -420,7 +420,7 @@
 							</select>
                         </div>
                         <div class="col-4">
-                            <p class="modal__label">Proovedor</p>
+                            <p class="modal__label">Proovedor *</p>
                             <select class="modal__input" id="insertar-proveedor" name="insertar-proveedor">
                             	<option selected></option>
 								<%for(Proveedor p:proveedores){ %>
@@ -432,7 +432,7 @@
 	        		
 	        		<div class="row pt-4">
 	        			<div class="col-4">
-                            <p class="modal__label">Calidad</p>
+                            <p class="modal__label">Calidad *</p>
                             <select class="modal__input" id="insertar-calidad" name="insertar-calidad">
                             	<option selected></option>
 								<%for(Calidad c:calidades){ %>
@@ -441,11 +441,11 @@
 							</select>
                         </div>
                         <div class="col-4">
-                            <p class="modal__label">Lote</p>
+                            <p class="modal__label">Lote *</p>
                             <input class="modal__input" type="text" id="insertar-lote" name="insertar-lote">
                         </div>
                         <div class="col-4">
-                            <p class="modal__label">Caducidad</p>
+                            <p class="modal__label">Caducidad *</p>
                             <input class="modal__input" type="date" id="insertar-caducidad" name="insertar-caducidad">
                         </div>
 	        		</div>

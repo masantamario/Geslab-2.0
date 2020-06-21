@@ -1,5 +1,6 @@
 
 INSERT INTO usuarios (usuario, contrasena) VALUES ('admin', 'Y1ZAbRz18/ZxnLRt0CMMYA==');
+UPDATE usuarios SET nombre = 'Administrador', mail = 'admin@prueba.es', federada = 'false', activo = 'true', rol = 1, area=1, fecha_creacion = NOW() WHERE idusuario = 1;
 
 INSERT INTO dpto (nombre) values ('Química');
 INSERT INTO area (nombre, dpto) values ("Orgánica", 1);

@@ -257,7 +257,7 @@ public class Conexion {
 		try {
 			pstm = conexion.prepareStatement(
 					"SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion "
-							+ "FROM usuarios INNER JOIN area ON usuarios.area = area.codarea WHERE usuario = ?;");
+							+ "FROM usuarios left JOIN area ON usuarios.area = area.codarea WHERE usuario = ?;");
 
 			pstm.setString(1, u);
 			rs = pstm.executeQuery();

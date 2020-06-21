@@ -117,14 +117,6 @@ public class IndexServlet extends HttpServlet {
 
 		cn.cerrarConexion();
 		response.sendRedirect("/index.do");
-
-		request.getRequestDispatcher("/WEB-INF/index.jsp").include(request, response);
-//		getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").include(request, response);
-
-//		String url = null;
-//		url = mensaje == null ? "/index.do" : "/index.do?mensaje=" + mensaje;
-//		response.sendRedirect(url);
-
 	}
 
 	private void leerParametrosFicha() throws Exception {
