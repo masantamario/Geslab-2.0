@@ -1,6 +1,7 @@
 var accion = "";
 var codigo = "";
 
+
 function inicializar(){
 	$("input").attr("spellcheck", "false");
 	
@@ -8,6 +9,9 @@ function inicializar(){
 		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
 	
+	$(document).on("click", "#cerrar-mensaje", function() {
+		$('#mensaje').css("display", "none");
+	});
 	
 	$('#insertar-proveedores option').mousedown(function(e) {
 	    e.preventDefault();

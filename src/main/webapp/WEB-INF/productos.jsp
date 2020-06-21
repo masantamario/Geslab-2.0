@@ -25,6 +25,7 @@
 	<%@page import="geslab.database.user.*"%>
 	<%
 	Usuario usuario = (Usuario) request.getAttribute("usuario");
+	String mensaje = (String) request.getAttribute("mensaje");
 	ArrayList<Producto> productos = (ArrayList<Producto>) request.getAttribute("productos");
 	ArrayList<Peligro> peligros = (ArrayList<Peligro>) request.getAttribute("peligros");
 	ArrayList<Prudencia> prudencias = (ArrayList<Prudencia>) request.getAttribute("prudencias");
@@ -126,7 +127,7 @@
 											      <td class="tabla-body--row" id="formula-<%=p.getCas()%>"><%=p.getFormula()%></td>
 											      <td class="tabla-body--row" id="f_des-<%=p.getCas()%>"><%=p.getFormula_des()%></td>
 											      
-												   <td id="peso-<%=p.getCas()%>" style="display: none"><%=p.getPeso_mol()%></td>											       
+												   <td id="peso-<%=p.getCas()%>" style="display: none"><%=p.getPeso_molString()%></td>											       
  												   <td id="einecs-<%=p.getCas()%>" style="display: none"><%=p.getN_einecs()%></td>											       
  												   <td id="ec-<%=p.getCas()%>" style="display: none"><%=p.getN_ec()%></td>
  												   <td id="precauciones-<%=p.getCas()%>" style="display: none"><%=p.getPrecauciones()%></td>
@@ -257,8 +258,20 @@
 									
 								</div>
 									
-								<div class="row py-3" style="height: 20%" id="fila-insertar">
+								<div class="row py-3 align-items-center" style="height: 20%" id="fila-insertar">
+									
 									<div class="col">
+										<%if(mensaje != null){ %>
+										<div id="mensaje" class="mensaje-alerta form-inline mr-4 justify-content-between float-right">
+	                                         <p class="d-inline-flex pr-4"><%=mensaje%><p>
+	                                         <button id="cerrar-mensaje" type="button" class="close flex-fill" aria-label="Close" style="color: #ff0837;"><span aria-hidden="true">&times;</span></button>
+                                     	</div>
+                                     	<%
+                                     	request.getSession().setAttribute("mensaje", null);
+										} %>
+									</div>
+									
+									<div class="col-4">
 										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nuevo producto</button>
 									</div>
 								</div>
@@ -289,15 +302,15 @@
 	        	
 	        		<div class="row">
                         <div class="col-3">
-                            <p class="modal__label">Cas</p>
+                            <p class="modal__label">Cas *</p>
                             <input class="modal__input" type="text" id="insertar-cas" name="insertar-cas">
                         </div>
                         <div class="col-4">
-                            <p class="modal__label">Nombre</p>
+                            <p class="modal__label">Nombre *</p>
                             <input class="modal__input" type="text" id="insertar-nombre" name="insertar-nombre">
                         </div>
                         <div class="col-2">
-                            <p class="modal__label">Fórmula</p>
+                            <p class="modal__label">Fórmula *</p>
                             <input class="modal__input" type="text" id="insertar-formula" name="insertar-formula">
                         </div>
                         <div class="col-3">

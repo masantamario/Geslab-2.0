@@ -74,6 +74,17 @@ function editar(e) {
 	document.getElementById("btn-insertar").disabled = true;
 }
 
+function reiniciarPass(c){
+	codigo = c;
+	accion = "pass";
+	$("#modalPass").modal();
+}
+
+function confirmarPass(c){
+	confirmar(codigo);
+}
+
+
 function cancelarEditar(e) {
 	accion = "";
 	el = elemento;

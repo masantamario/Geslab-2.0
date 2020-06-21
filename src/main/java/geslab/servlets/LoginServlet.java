@@ -24,12 +24,12 @@ public class LoginServlet extends HttpServlet {
 		this.response = response;
 		HttpSession sesion = request.getSession();
 		Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-		
+
 		String accion = request.getParameter("accion");
 		if (accion != null && accion.equals("logout")) {
 			request.getSession().invalidate();
 		}
-		
+
 		if (usuario == null) {
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		} else {
@@ -44,17 +44,19 @@ public class LoginServlet extends HttpServlet {
 		Conexion cn = new Conexion();
 		String u = request.getParameter("usuario");
 		String p = cn.encriptar(request.getParameter("password"));
-		
+
 		try {
 			Usuario usuario = cn.existeUsuario(u, p);
 			cn.cerrarConexion();
-			System.out.println("Usuario válido");
+			if (usuario.getRol() != Rol.ADMINISTRADOR && !usuario.getActivo())
+				throw new Exception("Usuario inactivo");
+
 			HttpSession session = request.getSession();
 			session.setAttribute("usuario", usuario);
 			redirigirUsuario(usuario);
 
-		}catch(Exception msg) {
-			request.setAttribute("mensaje", "Datos incorrectos");
+		} catch (Exception msg) {
+			request.setAttribute("mensaje", msg.getMessage());
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}
 	}

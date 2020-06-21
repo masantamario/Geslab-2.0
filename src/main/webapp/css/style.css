@@ -170,6 +170,11 @@ body{
 	background: #13d7bc;
 }
 
+.boton-tabla__accion--pass{
+	color: #ffffff;
+	background: #899cf8;
+}
+
 .boton-tabla__accion--add{
 	color: #ffffff;
 	background: #4d69f4;

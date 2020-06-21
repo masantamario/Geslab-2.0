@@ -330,7 +330,10 @@
 												</td>
 												<td class="tabla-body--row" style="text-align: right; display: none"
 													id="conf-canc-editar-usuario-<%=u.getIdusuario()%>">
-													
+													<button type="button" title="Reiniciar contraseña"
+														onclick="reiniciarPass(<%=u.getIdusuario()%>)"
+														id="btn-reiniciar-pass-<%=u.getIdusuario()%>"
+														class="boton-tabla__accion boton-tabla__accion--pass"><i class="fas fa-sync-alt"></i></button>
 													<button type="submit"
 														id="btn-confirmar-area-<%=u.getIdusuario()%>"
 														class="boton-tabla__accion boton-tabla__accion--success"><i class="fas fa-check"></i></button>
@@ -391,6 +394,31 @@
 			</div>
 
 		</div>
+	</div>
+	
+	<div class="modal fade" id="modalPass" tabindex="-1" role="dialog" aria-labelledby="modalPass" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header justify-content-between">
+      		<div class="col">
+      			<h5 class="modal-title" id="tituloModal">Reiniciar contraseña</h5>
+      		</div>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col px-4">
+                	<p class="modal__label">La contraseña del usuario se reiniciara a su valor por defecto, junto con su nombre y su correo.</p>
+                	<p class="modal__label">Esta acción no se puede deshacer.</p>
+                	<p class="modal__label"><br><b>¿Desea continuar?</b></p>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn boton-tabla__cancelar" onclick="cancelarEditar('')">Cancelar</button>
+	        <button type="button" class="btn boton-tabla__añadir" onclick="confirmarPass()" id="botonInsertar">Confirmar</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>

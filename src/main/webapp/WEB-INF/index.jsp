@@ -340,6 +340,7 @@
 										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva ficha</button>
 									</div>
 								</div>
+								
 							</div>
 							
 						</div>

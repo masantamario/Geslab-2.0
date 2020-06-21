@@ -35,22 +35,26 @@ public class AdminServlet extends HttpServlet {
 			if (request.getParameter("tabla") != null)
 				mostrarTabla = request.getParameter("tabla");
 
-			Conexion cn = new Conexion();
-			ArrayList<Usuario> usuarios = cn.leerUsuarios();
-			ArrayList<Departamento> departamentos = cn.leerDepartamentos();
-			ArrayList<Centro> centros = cn.leerCentros();
-			ArrayList<Area> areas = cn.leerAreas();
-			Rol[] roles = Rol.values();
-			cn.cerrarConexion();
-
-			request.setAttribute("usuario", usuario);
-			request.setAttribute("mostrarTabla", mostrarTabla);
-			request.setAttribute("usuarios", usuarios);
-			request.setAttribute("departamentos", departamentos);
-			request.setAttribute("areas", areas);
-			request.setAttribute("centros", centros);
-			request.setAttribute("roles", roles);
-			request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+			try {
+				Conexion cn = new Conexion();
+				ArrayList<Usuario> usuarios = cn.leerUsuarios();
+				ArrayList<Departamento> departamentos = cn.leerDepartamentos();
+				ArrayList<Centro> centros = cn.leerCentros();
+				ArrayList<Area> areas = cn.leerAreas();
+				Rol[] roles = Rol.values();
+				cn.cerrarConexion();
+	
+				request.setAttribute("usuario", usuario);
+				request.setAttribute("mostrarTabla", mostrarTabla);
+				request.setAttribute("usuarios", usuarios);
+				request.setAttribute("departamentos", departamentos);
+				request.setAttribute("areas", areas);
+				request.setAttribute("centros", centros);
+				request.setAttribute("roles", roles);
+				request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+			}catch(Exception msg) {
+				sesion.setAttribute("mensaje", msg.getMessage());
+			}
 		}else {
 			response.sendRedirect("/login.do");
 		}
@@ -71,6 +75,7 @@ public class AdminServlet extends HttpServlet {
 		System.out.println("Código: " + codigo);
 
 		System.out.println("Insertando " + elemento);
+		
 		switch (elemento) {
 		case "usuario":
 			response = accionUsuario(accion, codigo);
@@ -85,6 +90,7 @@ public class AdminServlet extends HttpServlet {
 			response = accionCentro(accion, codigo);
 			break;
 		}
+		
 		cn.cerrarConexion();
 		response.sendRedirect("/admin.do?tabla=" + elemento);
 
@@ -129,14 +135,18 @@ public class AdminServlet extends HttpServlet {
 		String ar = (String) request.getParameter("area-usuario-" + codigo);
 		boolean f = (request.getParameter("federada-usuario-" + codigo) != null);
 		boolean a = (request.getParameter("activo-usuario-" + codigo) != null);
-
-		System.out.println("-- USUARIO: " + u);
-		System.out.println("-- ROL: " + r);
-		System.out.println("-- FEDERADA: " + f);
-		System.out.println("-- ACTIVO: " + a);
-//		new Usuario(id, u, r, ar, f, a).insertar();
-		cn.insertarUsuario(new Usuario(id, u, r, ar, f, a));
-		System.out.println("Usuario añadido");
+		Usuario us = new Usuario(id, u, r, ar, f, a);
+		if(accion.equals("pass")) {
+			cn.resetearContrasena(us);
+			System.out.println("Contraseña reiniciada correctamente");
+		}else {
+			System.out.println("-- USUARIO: " + u);
+			System.out.println("-- ROL: " + r);
+			System.out.println("-- FEDERADA: " + f);
+			System.out.println("-- ACTIVO: " + a);
+			cn.insertarUsuario(us);
+			System.out.println("Usuario añadido");
+		}
 
 		return response;
 	}

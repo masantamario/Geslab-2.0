@@ -6,6 +6,10 @@ function inicializar() {
 	$(document.body).on("click", "td:not(.info)", function() {
 		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
+	
+	$(document).on("click", "#cerrar-mensaje", function() {
+		$('#mensaje').css("display", "none");
+	});
 		
 	configurarMultiSelect("peligros");
 	configurarMultiSelect("prudencias");
@@ -22,7 +26,7 @@ function configurarMultiSelect(elemento){
 
 function insertar() {
 	accion = "insertar";
-	var campos = ["cas", "nombre", "formula", "f_des", "einecs", "ec", "precauciones"];
+	var campos = ["cas", "nombre", "formula", "f_des", "peso", "einecs", "ec", "precauciones", "msds"];
 	campos.forEach(function(valor, indice, array) {
 		document.getElementById("insertar-" + valor).value = "";
 	});
@@ -120,6 +124,9 @@ function mostrarExtraInfo(cas) {
 	if(document.getElementById("msds-"+cas).innerText != ""){
 		document.getElementById("extra-info-msds").classList.add("extra-info__link");
 		document.getElementById("extra-info-msds").href = document.getElementById("msds-"+cas).innerText;
+	}else{
+		document.getElementById("extra-info-msds").classList.remove("extra-info__link");
+		document.getElementById("extra-info-msds").href = "#";
 	}
 	
 	mostrarPeligorsPrudencias(cas);

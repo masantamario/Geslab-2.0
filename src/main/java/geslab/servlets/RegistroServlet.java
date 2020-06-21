@@ -36,25 +36,26 @@ public class RegistroServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Conexion cn = new Conexion();
-		String nombre = request.getParameter("nombre");
-		String correo = request.getParameter("correo");
-		String pass = cn.encriptar(request.getParameter("password"));
-		System.out.println(nombre);
-		System.out.println(correo);
-		System.out.println(pass);
 		
-		usuario.setNombre(nombre);
-		usuario.setMail(correo);
-//		usuario.cambiarContrasena(pass);
-		cn.cambiarContrasena(usuario, pass);
+		try {
+			String nombre = request.getParameter("nombre");
+			String correo = request.getParameter("correo");
+			String pass = cn.encriptar(request.getParameter("password"));
 		
-		System.out.println(usuario.getNombre());
-		System.out.println(usuario.getMail());
+			usuario.setNombre(nombre);
+			usuario.setMail(correo);
+			cn.cambiarContrasena(usuario, pass);
+			
+			System.out.println(usuario.getNombre());
+			System.out.println(usuario.getMail());
+			
+			cn.updateUsuario(usuario);
+			
+			sesion.setAttribute("usuario", cn.leerUsuario(usuario.getUsuario()));
+		}catch(Exception msg) {
+			sesion.setAttribute("mensaje", msg.getMessage());
+		}
 		
-//		usuario.update();
-		cn.updateUsuario(usuario);
-		
-		sesion.setAttribute("usuario", cn.leerUsuario(usuario.getUsuario()));
 		cn.cerrarConexion();
 		response.sendRedirect("/index.do");
 	}

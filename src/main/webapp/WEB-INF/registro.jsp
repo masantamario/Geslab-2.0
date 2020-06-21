@@ -22,12 +22,10 @@
 <body>
 
 	<svg class="animacion" viewBox="0 0 992 558">
-
- 			<path class="st0" d="M122.81-1.29c151.59,227.38,273.31,271.97,356.52,270.58c182.96-3.06,264.46-229.83,578.32-334.45
+ 			<path class="animacion__pink-wave" d="M122.81-1.29c151.59,227.38,273.31,271.97,356.52,270.58c182.96-3.06,264.46-229.83,578.32-334.45
   				c105.05-35.02,197.3-43.4,256.65-45.29"/>
- 			<path class="st1" d="M84.48-23.35c7.46,40.15,74.57,374.82,336.77,480.77c38.27,15.46,140.95,56.96,252,20.9
+ 			<path class="animacion__purple-wave" d="M84.48-23.35c7.46,40.15,74.57,374.82,336.77,480.77c38.27,15.46,140.95,56.96,252,20.9
   				c96.05-31.18,150.17-104.73,205.55-180c112.22-152.52,88.9-225.33,173.03-303.1c48.08-44.45,134.61-93.61,300.77-89.42"/>
-			
 		</svg>
 
 	<script src="../js/anime.min.js"></script>
@@ -41,41 +39,41 @@
 				</div>
 			</div>
 
-			<div class="row align-items-center py-6">
+			<div class="row align-items-center justify-content-center py-6">
 				
 				<div class="col-6">
 					<div class="row justify-content-center">
-					<p class="col-12 descripcion-txt text-center my-3 pl-0 ">¡Bienvenido a GesLab! <br><br>Estas ingresando con un usuario nuevo, por lo que para continuar deberás de introducir los siguientes datos.</p>
+					<p class="col-12 login-info__texto text-center my-3 pl-0 ">¡Bienvenido a GesLab! <br><br>Estas ingresando con un usuario nuevo, por lo que para continuar deberás de introducir los siguientes datos.</p>
 					</div>
 					<div class="row">
-						<div class="col-12 login-container py-3 px-4">
+						<div class="col-12 login-form py-3 px-4">
 							<form action="/registro.do" method="post">
 								<div class="row align-items-center">
-									<label for="nombre-ip" class="col-4 login-label">Nombre</label>
+									<label for="nombre-ip" class="col-4 login-form__label">Nombre</label>
 									<div class="col-8">
-										<input type="text" class="col-12 login-input" name="nombre"
-											id="nombre-ip" placeholder="Jaimito Borromeo">
+										<input type="text" class="col-12 login-form__input" name="nombre"
+											id="nombre-ip" placeholder="Mario Santamaria">
 									</div>
 								</div>
 								
 								<div class="row align-items-center mt-2">
-									<label for="correo-ip" class="col-4 login-label">Correo</label>
+									<label for="correo-ip" class="col-4 login-form__label">Correo</label>
 									<div class="col-8">
-										<input type="text" class="col-12 login-input" name="correo"
-											id="correo-ip" placeholder="jaimito.b@ubu.es">
+										<input type="text" class="col-12 login-form__input" name="correo"
+											id="correo-ip" placeholder="msa@ubu.es">
 									</div>
 								</div>
 
 								<div class="row align-items-center mt-2">
-									<label for="password-ip" class="col-6 login-label">Contraseña</label>
+									<label for="password-ip" class="col-6 login-form__label">Contraseña</label>
 									<div class="col-6">
-										<input type="password" class="col-12 login-input"
+										<input type="password" class="col-12 login-form__input"
 											name="password" id="password-ip" placeholder="********">
 									</div>
 								</div>
 
 								<div class="row justify-content-end mt-4 px-3">
-									<button type="submit" class="btn login-button py-0 px-3">Entrar</button>
+									<button type="submit" class="btn login-form__button py-0 px-3">Entrar</button>
 								</div>
 
 							</form>

@@ -25,12 +25,16 @@ public class MarcasServlet extends HttpServlet {
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
 
-//	private HttpServletRequest request = null;
-//	private HttpServletResponse response = null;
+	private HttpServletRequest request = null;
 	private Conexion cn = null;
+
+	// Variables marca
+	private String nombre, tlfn, direccion;
+	ArrayList<String> proveedores = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		this.request = request;
 		sesion = request.getSession();
 		usuario = (Usuario) sesion.getAttribute("usuario");
 
@@ -44,6 +48,7 @@ public class MarcasServlet extends HttpServlet {
 				request.setAttribute("marcas", cn.leerMarcas());
 				request.setAttribute("proveedores", cn.leerProveedores());
 				request.setAttribute("usuario", usuario);
+				request.setAttribute("mensaje", sesion.getAttribute("mensaje"));
 
 				cn.cerrarConexion();
 
@@ -57,41 +62,56 @@ public class MarcasServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		this.request = request;
-//		this.response = response;
-
+		this.request = request;
 		String accion = request.getParameter("accion");
 		String codigo = request.getParameter("codigo");
 		cn = new Conexion();
-		System.out.println("Accion: " + accion);
-		System.out.println("Código: " + codigo);
 
-		String nombre = request.getParameter("insertar-nombre");
-		String tlfn = request.getParameter("insertar-tlfn");
-		String direccion = request.getParameter("insertar-direccion");
-
-		String[] provString = request.getParameterValues("insertar-proveedores");
-		List<String> provList = new ArrayList<String>();
-		if (provString != null)
-			provList = Arrays.asList(provString);
-		ArrayList<String> proveedores = new ArrayList<String>(provList);
-
-		switch (accion) {
-		case "insertar":
-			if (!cn.existeMarca(nombre))
+		try {
+			leerParametrosMarca();
+			switch (accion) {
+			case "insertar":
 				cn.insertarMarca(new Marca(0, nombre, tlfn, direccion, proveedores));
-			break;
-		case "editar":
-			String n = cn.leerMarca(Integer.valueOf(codigo)).getNombre();
-			if (n.equals(nombre) || (!n.equals(nombre) && !cn.existeMarca(nombre))) {
-				cn.updateMarca(new Marca(Integer.valueOf(codigo), nombre, tlfn, direccion, proveedores));
-			} else {
-				System.out.println("Nombre no válido");
+				break;
+			case "editar":
+				String n = cn.leerMarca(Integer.valueOf(codigo)).getNombre();
+				if (n.equals(nombre) || (!n.equals(nombre) && !cn.existeMarca(nombre))) {
+					cn.updateMarca(new Marca(Integer.valueOf(codigo), nombre, tlfn, direccion, proveedores));
+				} else {
+					throw new Exception("Nombre no válido");
+				}
+				break;
 			}
-			break;
+		} catch (Exception msg) {
+			sesion.setAttribute("mensaje", msg.getMessage());
 		}
+
 		cn.cerrarConexion();
 		response.sendRedirect("/marcas.do");
+	}
+
+	private void leerParametrosMarca() throws Exception {
+		try {
+			nombre = request.getParameter("insertar-nombre");
+			if (nombre.equals(""))
+				throw new Exception("Campo nombre obligatorio");
+
+			tlfn = request.getParameter("insertar-tlfn");
+			direccion = request.getParameter("insertar-direccion");
+
+			String[] provString = request.getParameterValues("insertar-proveedores");
+			List<String> provList = new ArrayList<String>();
+			if (provString != null)
+				provList = Arrays.asList(provString);
+			proveedores = new ArrayList<String>(provList);
+
+		} catch (Throwable exception) {
+			if (exception.getClass().toString().equals("class java.lang.Exception")) {
+				throw new Exception(exception.getMessage());
+			} else {
+				throw new Exception("Parámetros de marca incorrectos");
+			}
+		}
 	}
 
 }

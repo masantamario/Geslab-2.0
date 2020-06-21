@@ -1,6 +1,12 @@
 var accion = "";
 var codigo = "";
 
+function inicializar(){
+	$(document).on("click", "#cerrar-mensaje", function() {
+		$('#mensaje').css("display", "none");
+	});
+}
+
 function insertar() {
 	accion = "insertar";
 	var campos = ["nombre"];

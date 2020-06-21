@@ -45,6 +45,8 @@ select codarea from area where nombre = "Orgánica";
 
 select * from usuarios where usuario = 'admin';
 
+UPDATE usuarios SET nombre = null, mail = null WHERE idusuario= 4;
+
 DELETE FROM usuarios WHERE idusuario>2;
 
 DELETE FROM centro WHERE codcentro=4;
@@ -53,7 +55,7 @@ select * from prudencia_producto;
 
 DELETE FROM prudencia_producto WHERE cas='7439-93-2' and frase = 'P101';
 
-select * from peligro_producto;
+select * from ficha;
 
 
 select * from dpto;

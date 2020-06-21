@@ -62,6 +62,10 @@ public class Producto{
 			return precauciones;
 		}
 
+		public String getPeso_molString() {
+			return peso_mol == null ? "" : peso_mol.toString();
+		}
+		
 		public BigDecimal getPeso_mol() {
 			return peso_mol;
 		}

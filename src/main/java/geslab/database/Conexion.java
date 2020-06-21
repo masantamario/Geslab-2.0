@@ -89,24 +89,24 @@ public class Conexion {
 		return null;
 	}
 
-	public String desencriptar(String strToDecrypt) {
-		try {
-			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-			IvParameterSpec ivspec = new IvParameterSpec(iv);
-
-			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-			KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
-			SecretKey tmp = factory.generateSecret(spec);
-			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
-
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
-			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-		} catch (Exception e) {
-			System.out.println("Error while decrypting: " + e.toString());
-		}
-		return null;
-	}
+//	public String desencriptar(String strToDecrypt) {
+//		try {
+//			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+//			IvParameterSpec ivspec = new IvParameterSpec(iv);
+//
+//			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+//			KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 256);
+//			SecretKey tmp = factory.generateSecret(spec);
+//			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+//
+//			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+//			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+//			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+//		} catch (Exception e) {
+//			System.out.println("Error while decrypting: " + e.toString());
+//		}
+//		return null;
+//	}
 
 	public Usuario existeUsuario(String u, String p) throws Exception {
 		PreparedStatement pstm = null;
@@ -177,7 +177,9 @@ public class Conexion {
 		ResultSet rs = null;
 		Boolean retorno = false;
 		try {
-			pstm = conexion.prepareStatement("select * from ubicacion where nombre = ? AND area = ? AND centro = ?");
+			pstm = conexion.prepareStatement("select * from ubicacion where nombre = ? "
+					+ "AND area = (select codarea from area where nombre = ?) "
+					+ "AND centro = (select codcentro from centro where nombre = ?)");
 			pstm.setString(1, nombre);
 			pstm.setString(2, area);
 			pstm.setString(3, centro);
@@ -247,7 +249,7 @@ public class Conexion {
 		return retorno;
 	}
 
-	public Usuario leerUsuario(String u) {
+	public Usuario leerUsuario(String u) throws Exception {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Usuario usuario = null;
@@ -269,6 +271,7 @@ public class Conexion {
 			cerrarRsPstm(rs, pstm, "leerUsuario");
 		} catch (SQLException e) {
 			printSQLException(e, "LEER USUARIO");
+			throw new Exception("Error al LEER el USUARIO");
 		} finally {
 			cerrarRsPstm(rs, pstm, "leerUsuario");
 		}
@@ -509,7 +512,7 @@ public class Conexion {
 		}
 		return proveedor;
 	}
-	
+		
 	public Calidad leerCalidad(int codcalidad) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -533,7 +536,7 @@ public class Conexion {
 		return calidad;
 	}
 
-	public Ficha leerFicha(int cod) {
+	public Ficha leerFicha(int cod) throws Exception {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Ficha ficha = null;
@@ -566,6 +569,7 @@ public class Conexion {
 
 		} catch (SQLException e) {
 			printSQLException(e, "LEER FICHA");
+			throw new Exception("Error al LEER FICHA #" + cod);
 
 		} finally {
 			cerrarRsPstm(rs, pstm, "leerFicha");
@@ -653,7 +657,7 @@ public class Conexion {
 		return areas;
 	}
 
-	public ArrayList<Usuario> leerUsuarios() {
+	public ArrayList<Usuario> leerUsuarios() throws Exception {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -1076,7 +1080,7 @@ public class Conexion {
 			try {
 				pstm = conexion.prepareStatement("INSERT INTO centro (nombre) VALUES (?)");
 				pstm.setString(1, c.getNombre());
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			} catch (SQLException e) {
 				printSQLException(e, "INSERTAR CENTRO");
@@ -1096,7 +1100,7 @@ public class Conexion {
 			try {
 				pstm = conexion.prepareStatement("INSERT INTO dpto (nombre) VALUES (?)");
 				pstm.setString(1, d.getNombre());
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			} catch (SQLException e) {
 				printSQLException(e, "INSERTAR DEPARTAMENTO");
@@ -1118,7 +1122,7 @@ public class Conexion {
 						"INSERT INTO area (nombre, dpto) VALUES (?, (SELECT coddpto FROM dpto WHERE nombre=?))");
 				pstm.setString(1, a.getNombre());
 				pstm.setString(2, a.getDpto());
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			} catch (SQLException e) {
 				printSQLException(e, "INSERTAR AREA");
@@ -1145,7 +1149,7 @@ public class Conexion {
 				pstm.setString(4, u.getArea());
 				pstm.setString(5, Boolean.toString(u.getFederada()));
 				pstm.setString(6, Boolean.toString(u.getActivo()));
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			} catch (SQLException e) {
 				printSQLException(e, "INSERTAR USUARIO");
@@ -1181,7 +1185,7 @@ public class Conexion {
 				pstm.setString(10, Boolean.toString(f.isResiduo()));
 				pstm.setInt(11, f.getStock());
 	
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 	
 			} catch (SQLException e) {
 				printSQLException(e, "INSERTAR ficha");
@@ -1208,13 +1212,13 @@ public class Conexion {
 				pstm.setDate(2, new Date(e.getFechaIns().getTime()));
 				pstm.setInt(3, e.getUnidades());
 				pstm.setInt(4, e.getUsuario());
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 				correcto = actualizarStock(e.getFicha().getCodficha(), e.getUnidades() + e.getFicha().getStock());
 
 			} catch (SQLException ex) {
 				printSQLException(ex, "INSERTAR ENTRADA");
-				throw new Exception("Error SQL");
+				throw new Exception("Error al INSERTAR ENTRADA");
 			} finally {
 				cerrarRsPstm(null, pstm, "insertarEntrada");
 			}
@@ -1235,13 +1239,13 @@ public class Conexion {
 				pstm.setDate(2, new Date(s.getFechaIns().getTime()));
 				pstm.setInt(3, s.getUnidades());
 				pstm.setInt(4, s.getUsuario());
-				pstm.executeUpdate();
+				correcto = pstm.executeUpdate() == 1 ? true : false;
 
 				correcto = actualizarStock(s.getFicha().getCodficha(), s.getFicha().getStock() - s.getUnidades());
 
 			} catch (SQLException ex) {
 				printSQLException(ex, "INSERTAR SALIDA");
-				throw new Exception("Error SQL");
+				throw new Exception("Error al INSERTAR SALIDA");
 			} finally {
 				cerrarRsPstm(null, pstm, "insertarSalida");
 			}
@@ -1270,132 +1274,157 @@ public class Conexion {
 
 	}
 
-	public boolean insertarProducto(Producto p) {
+	public boolean insertarProducto(Producto p) throws Exception {
 		PreparedStatement pstm = null;
 		PreparedStatement pstm2 = null;
 		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement(
-					"INSERT INTO producto (cas, formula, form_desarrollada, peso_mol, numero_einecs, numero_ec, precauciones, msds) "
-							+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
-			pstm.setString(1, p.getCas());
-			pstm.setString(2, p.getFormula());
-			pstm.setString(3, p.getFormula_des());
-			pstm.setBigDecimal(4, p.getPeso_mol());
-			pstm.setString(5, p.getN_einecs());
-			pstm.setString(6, p.getN_ec());
-			pstm.setString(7, p.getPrecauciones());
-			pstm.setString(8, p.getMsds());
-
-			pstm.executeUpdate();
-
-			pstm2 = conexion.prepareStatement("INSERT INTO nombre_producto (cas, nombre) values (?, ?)");
-			pstm2.setString(1, p.getCas());
-			pstm2.setString(2, p.getNombre());
-
-			pstm2.executeUpdate();
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "INSERTAR PRODUCTO");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarProducto");
-			cerrarRsPstm(null, pstm2, "insertarNombreProducto");
-		}
-
-		return correcto;
-	}
-
-	public boolean insertarCalidad(Calidad c) {
-		PreparedStatement pstm = null;
-		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement("INSERT INTO calidad (nombre) values (?)");
-			pstm.setString(1, c.getNombre());
-
-			pstm.executeUpdate();
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "INSERTAR CALIDAD");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarCalidad");
-		}
-
-		return correcto;
-	}
-
-	public boolean insertarUbicacion(Ubicacion u) {
-		PreparedStatement pstm = null;
-		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement("INSERT INTO ubicacion (nombre, area, centro, oculta) values "
-					+ "(?, (select codarea from area where nombre = ?), "
-					+ "(select codcentro from centro where nombre = ?), ?)");
-			pstm.setString(1, u.getNombre());
-			pstm.setString(2, u.getArea());
-			pstm.setString(3, u.getCentro());
-			pstm.setString(4, Boolean.toString(u.isOculta()));
-
-			pstm.executeUpdate();
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "INSERTAR UBICACION");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarUbicacion");
-		}
-
-		return correcto;
-	}
-
-	public boolean insertarMarca(Marca m) {
-		PreparedStatement pstm = null;
-		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement("INSERT INTO marca (nombre, telefono, direccion) values (?, ?, ?)");
-			pstm.setString(1, m.getNombre());
-			pstm.setString(2, m.getTelefono());
-			pstm.setString(3, m.getDireccion());
-			pstm.executeUpdate();
-
-			for (String p : m.getProveedores()) {
-				insertarProvMarca(p, m.getNombre());
+		
+		if (leerProducto(p.getCas()) == null) {
+			try {
+				pstm = conexion.prepareStatement(
+						"INSERT INTO producto (cas, formula, form_desarrollada, peso_mol, numero_einecs, numero_ec, precauciones, msds) "
+								+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
+				pstm.setString(1, p.getCas());
+				pstm.setString(2, p.getFormula());
+				pstm.setString(3, p.getFormula_des());
+				pstm.setBigDecimal(4, p.getPeso_mol());
+				pstm.setString(5, p.getN_einecs());
+				pstm.setString(6, p.getN_ec());
+				pstm.setString(7, p.getPrecauciones());
+				pstm.setString(8, p.getMsds());
+	
+				correcto = pstm.executeUpdate() == 1 ? true : false;
+	
+				pstm2 = conexion.prepareStatement("INSERT INTO nombre_producto (cas, nombre) values (?, ?)");
+				pstm2.setString(1, p.getCas());
+				pstm2.setString(2, p.getNombre());
+	
+				pstm2.executeUpdate();
+	
+			} catch (SQLException ex) {
+				printSQLException(ex, "INSERTAR PRODUCTO");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarProducto");
+				cerrarRsPstm(null, pstm2, "insertarNombreProducto");
 			}
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "INSERTAR MARCA");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarMarca");
+		}else {
+			throw new Exception("El producto ya existe");
 		}
 
 		return correcto;
 	}
 
-	public boolean insertarProveedor(Proveedor p) {
+	public boolean insertarCalidad(Calidad c) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
-		try {
-			pstm = conexion.prepareStatement(
-					"INSERT INTO proveedor (nombre, direccion, tfno, fax, email) values (?, ?, ?, ?, ?)");
-			pstm.setString(1, p.getNombre());
-			pstm.setString(2, p.getDireccion());
-			pstm.setString(3, p.getTelefono());
-			pstm.setString(4, p.getFax());
-			pstm.setString(5, p.getEmail());
-			pstm.executeUpdate();
-
-			for (String m : p.getMarcas()) {
-				insertarProvMarca(p.getNombre(), m);
+		if(!existeCalidad(c.getNombre())) {
+			try {
+				pstm = conexion.prepareStatement("INSERT INTO calidad (nombre) values (?)");
+				pstm.setString(1, c.getNombre());
+	
+				correcto = pstm.executeUpdate() == 1 ? true : false;
+	
+			} catch (SQLException ex) {
+				printSQLException(ex, "INSERTAR CALIDAD");
+				throw new Exception("Error insertando calidad");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarCalidad");
 			}
-
-		} catch (SQLException ex) {
-			printSQLException(ex, "INSERTAR PROVEEDOR");
-		} finally {
-			cerrarRsPstm(null, pstm, "insertarProveedor");
+		}else {
+			throw new Exception("La calidad ya existe");
 		}
 
 		return correcto;
 	}
 
-	public boolean insertarProvMarca(String p, String m) {
+	public boolean insertarUbicacion(Ubicacion u) throws Exception {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		if (!existeUbicacion(u.getNombre(), u.getArea(), u.getCentro())) {
+			try {
+				pstm = conexion.prepareStatement("INSERT INTO ubicacion (nombre, area, centro, oculta) values "
+						+ "(?, (select codarea from area where nombre = ?), "
+						+ "(select codcentro from centro where nombre = ?), ?)");
+				pstm.setString(1, u.getNombre());
+				pstm.setString(2, u.getArea());
+				pstm.setString(3, u.getCentro());
+				pstm.setString(4, Boolean.toString(u.isOculta()));
+	
+				correcto = pstm.executeUpdate() == 1 ? true : false;
+	
+			} catch (SQLException ex) {
+				printSQLException(ex, "INSERTAR UBICACION");
+				throw new Exception("Error insertando ubicación");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarUbicacion");
+			}
+		}else {
+			throw new Exception("La ubicación ya existe");
+		}
+
+		return correcto;
+	}
+
+	public boolean insertarMarca(Marca m) throws Exception {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		if(!existeMarca(m.getNombre())) {
+			try {
+				pstm = conexion.prepareStatement("INSERT INTO marca (nombre, telefono, direccion) values (?, ?, ?)");
+				pstm.setString(1, m.getNombre());
+				pstm.setString(2, m.getTelefono());
+				pstm.setString(3, m.getDireccion());
+				correcto = pstm.executeUpdate() == 1 ? true : false;
+	
+				for (String p : m.getProveedores()) {
+					insertarProvMarca(p, m.getNombre());
+				}
+	
+			} catch (SQLException ex) {
+				printSQLException(ex, "INSERTAR MARCA");
+				throw new Exception("Error insertando marca");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarMarca");
+			}
+		}else {
+			throw new Exception("La marca ya existe");
+		}
+
+		return correcto;
+	}
+
+	public boolean insertarProveedor(Proveedor p) throws Exception {
+		PreparedStatement pstm = null;
+		boolean correcto = false;
+		if(!existeProveedor(p.getNombre())) {
+			try {
+				pstm = conexion.prepareStatement(
+						"INSERT INTO proveedor (nombre, direccion, tfno, fax, email) values (?, ?, ?, ?, ?)");
+				pstm.setString(1, p.getNombre());
+				pstm.setString(2, p.getDireccion());
+				pstm.setString(3, p.getTelefono());
+				pstm.setString(4, p.getFax());
+				pstm.setString(5, p.getEmail());
+				correcto = pstm.executeUpdate() == 1 ? true : false;
+	
+				for (String m : p.getMarcas()) {
+					insertarProvMarca(p.getNombre(), m);
+				}
+	
+			} catch (SQLException ex) {
+				printSQLException(ex, "INSERTAR PROVEEDOR");
+				throw new Exception("Error insertando proveedor");
+			} finally {
+				cerrarRsPstm(null, pstm, "insertarProveedor");
+			}
+		} else {
+			throw new Exception("El proveedor ya existe");
+		}
+
+		return correcto;
+	}
+
+	public boolean insertarProvMarca(String p, String m) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
@@ -1404,10 +1433,11 @@ public class Conexion {
 			pstm.setString(1, p);
 			pstm.setString(2, m);
 
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException ex) {
 			printSQLException(ex, "INSERTAR ProvMarca");
+			throw new Exception("Error asignando proveedor-marca");
 		} finally {
 			cerrarRsPstm(null, pstm, "insertarProvMarca");
 		}
@@ -1422,7 +1452,7 @@ public class Conexion {
 			pstm = conexion.prepareStatement("UPDATE centro SET nombre = ? WHERE codcentro = ?");
 			pstm.setString(1, c.getNombre());
 			pstm.setInt(2, c.getCodcentro());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE CENTRO");
@@ -1439,7 +1469,7 @@ public class Conexion {
 			pstm = conexion.prepareStatement("UPDATE dpto SET nombre = ? WHERE coddpto = ?");
 			pstm.setString(1, d.getNombre());
 			pstm.setInt(2, d.getCoddpto());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE DEPARTAMENTO");
@@ -1458,7 +1488,7 @@ public class Conexion {
 			pstm.setString(1, a.getNombre());
 			pstm.setString(2, a.getDpto());
 			pstm.setInt(3, a.getCodarea());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE AREA");
@@ -1482,7 +1512,7 @@ public class Conexion {
 			pstm.setString(6, String.valueOf(u.getFederada()));
 			pstm.setString(7, String.valueOf(u.getActivo()));
 			pstm.setInt(8, u.getIdusuario());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE USUARIO");
@@ -1508,7 +1538,7 @@ public class Conexion {
 			pstm.setString(6, producto.getPrecauciones());
 			pstm.setString(7, producto.getMsds());
 			pstm.setString(8, producto.getCas());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			updatePeligroProducto(producto);
 			updatePrudenciaProducto(producto);
@@ -1524,8 +1554,8 @@ public class Conexion {
 	}
 
 	public boolean updatePeligroProducto(Producto producto) throws SQLException {
+		boolean correcto = false;
 		String cas = producto.getCas();
-
 		ArrayList<String> origenPel = leerProducto(cas).getFrasesPeligro();
 		ArrayList<String> updatePel = producto.getFrasesPeligro();
 		ArrayList<String> eliminarPel = new ArrayList<String>(origenPel);
@@ -1538,7 +1568,7 @@ public class Conexion {
 					.prepareStatement("DELETE FROM peligro_producto WHERE cas = ? and frase = ?");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 			cerrarRsPstm(null, pstm, "updatePeligroProducto");
 		}
 
@@ -1551,10 +1581,11 @@ public class Conexion {
 			cerrarRsPstm(null, pstm, "updatePeligroProducto");
 		}
 
-		return false;
+		return correcto;
 	}
 
 	public boolean updatePrudenciaProducto(Producto producto) throws SQLException {
+		boolean correcto = false;
 		String cas = producto.getCas();
 		ArrayList<String> origenPru = leerProducto(cas).getFrasesPrudencia();
 		ArrayList<String> updatePru = producto.getFrasesPrudencia();
@@ -1568,7 +1599,7 @@ public class Conexion {
 					.prepareStatement("DELETE FROM prudencia_producto WHERE cas = ? and frase = ?");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 			cerrarRsPstm(null, pstm, "updatePrudenciaProducto");
 		}
 
@@ -1581,10 +1612,11 @@ public class Conexion {
 			cerrarRsPstm(null, pstm, "updatePrudenciaProducto");
 		}
 
-		return false;
+		return correcto;
 	}
 
 	public boolean updatePictogramaProducto(Producto producto) throws SQLException {
+		boolean correcto = false;
 		String cas = producto.getCas();
 		ArrayList<String> origenPic = leerProducto(cas).getReferenciasPictograma();
 		ArrayList<String> updatePic = producto.getReferenciasPictograma();
@@ -1598,7 +1630,7 @@ public class Conexion {
 					.prepareStatement("DELETE FROM pictograma_producto WHERE cas = ? and referencia = ?");
 			pstm.setString(1, cas);
 			pstm.setString(2, p);
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 			cerrarRsPstm(null, pstm, "updatePictogramaProducto");
 		}
 
@@ -1611,10 +1643,10 @@ public class Conexion {
 			cerrarRsPstm(null, pstm, "updatePictogramaProducto");
 		}
 
-		return false;
+		return correcto;
 	}
 
-	public boolean updateUbicacion(Ubicacion u) {
+	public boolean updateUbicacion(Ubicacion u) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
@@ -1626,34 +1658,36 @@ public class Conexion {
 			pstm.setString(3, u.getCentro());
 			pstm.setString(4, Boolean.toString(u.isOculta()));
 			pstm.setInt(5, u.getCodubicacion());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE UBICACION");
+			throw new Exception("Error actualizando ubicación");
 		} finally {
 			cerrarRsPstm(null, pstm, "updateUbicacion");
 		}
 		return correcto;
 	}
 
-	public boolean updateCalidad(Calidad c) {
+	public boolean updateCalidad(Calidad c) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
 			pstm = conexion.prepareStatement("UPDATE calidad SET nombre = ? WHERE codcalidad = ?");
 			pstm.setString(1, c.getNombre());
 			pstm.setInt(2, c.getCodcalidad());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE CALIDAD");
+			throw new Exception("Error actualizando calidad");
 		} finally {
 			cerrarRsPstm(null, pstm, "updateCalidad");
 		}
 		return correcto;
 	}
 
-	public boolean updateMarca(Marca m) {
+	public boolean updateMarca(Marca m) throws Exception {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
@@ -1663,15 +1697,17 @@ public class Conexion {
 			pstm.setString(2, m.getTelefono());
 			pstm.setString(3, m.getDireccion());
 			pstm.setInt(4, m.getCodmarca());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			updateMarcaProvMarca(m);
 
 		} catch (SQLException e) {
 			printSQLException(e, "UPDATE MARCA");
+			throw new Exception("Error actualizando marca");
 		} finally {
 			cerrarRsPstm(null, pstm, "updateMarca");
 		}
+
 		return correcto;
 	}
 
@@ -1717,7 +1753,7 @@ public class Conexion {
 			pstm.setString(4, p.getFax());
 			pstm.setString(5, p.getEmail());
 			pstm.setInt(6, p.getCodproveedor());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 			updateMarcaProvMarca(p);
 
@@ -1766,7 +1802,7 @@ public class Conexion {
 			pstm = conexion.prepareStatement("UPDATE usuarios SET contrasena = ? WHERE idusuario= ?");
 			pstm.setString(1, p);
 			pstm.setInt(2, u.getIdusuario());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "CAMBIAR CONTRASEÑA");
@@ -1780,10 +1816,10 @@ public class Conexion {
 		PreparedStatement pstm = null;
 		boolean correcto = false;
 		try {
-			pstm = conexion.prepareStatement("UPDATE usuarios SET contrasena = ? WHERE idusuario= ?");
+			pstm = conexion.prepareStatement("UPDATE usuarios SET contrasena = ?, nombre = null, mail = null WHERE idusuario= ?");
 			pstm.setString(1, encriptar(u.getUsuario()));
 			pstm.setInt(2, u.getIdusuario());
-			pstm.executeUpdate();
+			correcto = pstm.executeUpdate() == 1 ? true : false;
 
 		} catch (SQLException e) {
 			printSQLException(e, "RESETEAR CONTRASEÑA");

@@ -21,13 +21,16 @@ public class UbicacionesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario = null;
 	private HttpSession sesion = null;
-
-//	private HttpServletRequest request = null;
-//	private HttpServletResponse response = null;
+	private HttpServletRequest request = null;
 	private Conexion cn = null;
+	
+	// Variables ubicación
+		private String nombre, centro, area;
+		private boolean oculta;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		this.request = request;
 		sesion = request.getSession();
 		usuario = (Usuario) sesion.getAttribute("usuario");
 
@@ -44,6 +47,7 @@ public class UbicacionesServlet extends HttpServlet {
 				request.setAttribute("ubicaciones", cn.leerUbicaciones(usuario));
 				request.setAttribute("proveedores", cn.leerProveedores());
 				request.setAttribute("usuario", usuario);
+				request.setAttribute("mensaje", sesion.getAttribute("mensaje"));
 
 				cn.cerrarConexion();
 
@@ -57,32 +61,55 @@ public class UbicacionesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		this.request = request;
-//		this.response = response;
-
+		this.request = request;
 		String accion = request.getParameter("accion");
 		String codigo = request.getParameter("codigo");
 		cn = new Conexion();
-		System.out.println("Accion: " + accion);
-		System.out.println("Código: " + codigo);
-
-		String nombre = request.getParameter("insertar-nombre");
-		String centro = request.getParameter("insertar-centro");
-		String area = usuario.getArea();
-		Boolean oculta = (request.getParameter("insertar-oculta") != null);
-
-		switch (accion) {
-		case "insertar":
-			if (!cn.existeUbicacion(nombre, area, centro)) {
+		try {
+			leerParametrosUbicacion();
+			switch (accion) {
+			case "insertar":
 				cn.insertarUbicacion(new Ubicacion(0, nombre, area, "", centro, oculta));
+				break;
+			case "editar":
+				cn.updateUbicacion(new Ubicacion(Integer.valueOf(codigo), nombre, area, "", centro, oculta));
+				
+				
+				String n = cn.leerUbicacion(Integer.valueOf(codigo)).getNombre();
+				if (n.equals(nombre) || (!n.equals(nombre) && !cn.existeUbicacion(nombre, area, centro))) {
+					cn.updateUbicacion(new Ubicacion(Integer.valueOf(codigo), nombre, area, "", centro, oculta));
+				} else {
+					throw new Exception("Nombre no válido");
+				}
+				break;
+				
 			}
-			break;
-		case "editar":
-			cn.updateUbicacion(new Ubicacion(Integer.valueOf(codigo), nombre, area, "", centro, oculta));
-			break;
+		} catch (Exception msg) {
+			sesion.setAttribute("mensaje", msg.getMessage());
 		}
+		
 		cn.cerrarConexion();
 		response.sendRedirect("/ubicaciones.do");
+	}
+	
+	private void leerParametrosUbicacion() throws Exception {
+		try {
+			nombre = request.getParameter("insertar-nombre");
+			if (nombre.equals("")) throw new Exception("Campo nombre obligatorio");
+			
+			centro = request.getParameter("insertar-centro");
+			if (centro.equals("")) throw new Exception("Campo centro obligatorio");
+			
+			area = usuario.getArea();
+			oculta = (request.getParameter("insertar-oculta") != null);
+			
+		}catch (Throwable exception) {
+			if(exception.getClass().toString().equals("class java.lang.Exception")) {
+				throw new Exception(exception.getMessage());	
+			}else {
+				throw new Exception("Parámetros de ubicación incorrectos");	
+			}
+		} 	
 	}
 
 }

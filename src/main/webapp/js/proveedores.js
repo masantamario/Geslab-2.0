@@ -8,6 +8,9 @@ function inicializar(){
 		mostrarExtraInfo(this.parentElement.dataset.fila);
 	});
 	
+	$(document).on("click", "#cerrar-mensaje", function() {
+		$('#mensaje').css("display", "none");
+	});
 	
 	$('#insertar-marcas option').mousedown(function(e) {
 	    e.preventDefault();
