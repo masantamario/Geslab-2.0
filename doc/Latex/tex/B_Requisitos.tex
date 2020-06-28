@@ -2,10 +2,1090 @@
 
 \section{Introducción}
 
+En el siguiente apartado se presentaran los diferentes objetivos a cumplir así como los requisitos funcionales que han dado funcionalidad a nuestra aplicación.
+
 \section{Objetivos generales}
+
+los objetivos principales del proyecto son:
+
+\begin{itemize}
+	\item Recrear la aplicación Geslab 1.0 como una aplicación web.
+	\item Mantener todas las funcionalidades que ya poseía.
+	\item Añadir distintos tipos de usuarios: administrador, gestor y usuario.
+	\item Añadir nuevos campos a la base de datos tales como: pureza, peso molecular, nº CAS, ...
+	\item Implementar un sistema de búsqueda intuitivo y funcional
+	\item La aplicación utilizará lenguaje Java
+	\item La base de datos utilizará MySql
+\end{itemize}
 
 \section{Catalogo de requisitos}
 
+Los requisitos que debe de satisfacer la aplicación son los siguientes.
+
+\subsection{Requisitos funcionales}
+
+\begin{itemize}
+\item \textbf{RF-1 Accesibilidad:} La aplicación deberá de ser accesible desde cualquier navegador web de la universidad.
+
+\item \textbf{RF-2 Administración:} La aplicación deberá permitir gestionar sus propios datos sin necesidad de alterar a mano la base de datos
+	\begin{itemize}
+	\item\textbf{ RF-2.1} Deberán de existir tres roles en la aplicación: administrador, gestor de inventario y usuario.
+	
+	\item \textbf{RF-2.2} El usuario solamente puede ver las existencias, sin poder modificar o añadir.
+	
+	\item \textbf{RF-2.3} El gestor de inventario puede añadir existencias y editar la información.
+	
+	\item \textbf{RF-2.4} El administrador puede gestionar los usuarios, las áreas, los departamentos y los centros.
+	
+	\item \textbf{RF-2.5} Los usuarios tienen que tener asignado un rol, una área a la que pertenecen, si es un usuario con cuenta federada o no, y si la cuenta esta activa.
+	
+	\item \textbf{RF-2.6} El administrador puede añadir y editar usuarios, pero no eliminar, por seguridad. Para ello esta la opción de dejar al usuario inactivo.
+	
+	\item \textbf{RF-2.7} Cada área debe de gestionar solamente sus propios productos.
+	
+	\item \textbf{RF-2.8} Cada área puede tener varias ubicaciones donde se pueden guardar los productos (armarios, estanterías..)
+	
+	\item \textbf{RF-2.9} Cada área puede ocultar sus ubicaciones o no al resto de áreas, de forma que las otras áreas no puedan conocer las existencias de los productos almacenados en esas ubicaciones.
+	
+	\end{itemize}
+	
+\item \textbf{RF-3 Gestión de productos}
+	\begin{itemize}
+	\item\textbf{ RF-3.1} Se almacenarán los productos con su Nº Cas, fórmula, fórmula desarrollada, peso molecular, pureza, Nº EINECS, Nº EC, precauciones y su hoja de seguridad(MSDS). De estos campos solamente serán obligatorios el nº cas y la fórmula.
+	
+	\item\textbf{ RF-3.2} Los productos serán comunes a todas las áreas.
+	
+	\item\textbf{ RF-3.3} Cada producto puede tener varios nombres (distintas nomenclaturas, en inglés, en español), por lo que se deberán almacenar también.
+	
+	\item\textbf{ RF-3.4} Al tener varios nombres, cada producto se diferenciará por su Nº CAS, al ser este único.
+	
+	\item\textbf{ RF-3.5} Cada producto además almacenará una serie de peligros, prudencias y pictogramas de seguridad asociados al mismo. Estos peligros prudencias y pictogramas han de ser comunes a todos los productos.
+	
+	\end{itemize}
+	
+\item \textbf{RF-4 Gestión de fichas}
+	\begin{itemize}
+	\item\textbf{ RF-4.1} Las existencias de los productos se gestiona a través de fichas. Cada ficha corresponde a un producto, de una capacidad (en gramos o mililitros), guardado en una 	ubicación, de una marca y un proveedor, con una calidad determinada, un nº de lote y una caducidad. Además se podrá indicar si cada ficha corresponde a un residuo o no. 
+	
+	\item\textbf{ RF-4.2} Todos los atributos de la ficha son obligatorios, ya que es la manera de diferenciarlos (no es lo mismo un bote de Helio que caduca en 2025 que un bote de Helio que caduca en 2022, por ejemplo).
+
+	\item\textbf{ RF-4.3} De cada ficha puede haber entradas o salidas, las cuales se almacenarán con la ficha a la que pertenecen, las unidades que entran o salen, la fecha, una nota y el usuario que la realiza.
+	
+	\item\textbf{ RF-4.4} Cada ficha tiene un stock, que es actualizado cada vez que se realiza una entrada o una salida.
+	
+	\item\textbf{ RF-4.5} Los usuarios pueden consultar el stock de todos las fichas de otras áreas siempre y cuando no se encuentren en una ubicación oculta.
+	
+	\item\textbf{ RF-4.6} Se podrá realizar un filtrado de las fichas para poder realizar una búsqueda más rápida.
+	
+	\item\textbf{ RF-4.7} Cada área podrá gestionar sus propias fichas, pudiendo añadir fichas o añadir entradas o salidas. No se permite el eliminado de fichas, entradas o salidas por seguridad.
+	\end{itemize} 
+	
+	\item \textbf{RF-5 Gestión de marcas y proveedores}
+	\begin{itemize}
+	\item\textbf{ RF-5.1} Se almacenarán las marcas y los proveedores, junto con información como el nombre, la dirección, el teléfono, el fax y el email. Las marcas y los proveedores son comunes a todos los usuarios.
+	
+	\item\textbf{ RF-5.2} También se almacenará la relación entre estos. Una proveedor puede llevar varias marcas, y una marca puede ser llevada por varios proveedores.
+	
+	\item\textbf{ RF-5.3} Cualquier área puede añadir o editar los proveedores y las marcas, así como la relación entre estas.
+	\end{itemize}
+	
+	\item \textbf{RF-6 Gestión de calidades}
+	\begin{itemize}
+	\item\textbf{ RF-6.1} También se almacenarán las calidades, siendo comunes a todos los usuarios y áreas.
+	
+	\item\textbf{ RF-6.2} Cualquier área puede añadir o editar las calidades.
+	
+	\end{itemize}
+	
+	\item \textbf{RF-7 Gestión de ubicaciones}
+	\begin{itemize}
+	\item\textbf{ RF-7.1} Se almacenarán las ubicaciones junto con su nombre, su area, su centro y si es oculta o no.
+	
+	\item\textbf{ RF-7.2} Cada área podrá gestionar sus propias ubicaciones, pero no las de las demás áreas. Las ubicaciones se pueden añadir o editar.
+	
+	\end{itemize}
+	
+\end{itemize}
+
+
+\subsection{Requisitos no funcionales}
+
+\begin{itemize}
+\item \textbf{RNF-1 Usabilidad:} La aplicación debe de ser intuitiva y cómoda de utilizar, usando elementos visuales conocidos para el usuario medio
+
+\item \textbf{RNF-2 Rendimiento:} El rendimiento de la aplicación ha de ser lo más óptimo posible, haciendo que su navegación sea fluida.
+
+\item \textbf{RNF-3 Mantenibilidad:} La aplicación debe de facilitar el mantenimiento y la posible incorporación de nuevas características.
+
+\item \textbf{RNF-4 Despliegue:} La aplicación debe de estar desplegada de forma que pueda ser accesible sin necesidad de realizar una ejecución local.
+
+\end{itemize}
+
+
 \section{Especificación de requisitos}
 
+\subsection{Actores}
 
+En nuestro caso existen cuatro actores, el administrador, el gestor de inventario, el usuario y la base de datos.
+
+\subsection{Diagramas de casos de uso}
+
+Veamos a continuación el diagrama de casos de uso de nuestro proyecto por niveles en las siguientes figuras.
+
+\imagen{Nivel-1}{Nivel 1 del diagrama de casos de uso.} {0.9}
+\imagen{Nivel-1A}{Nivel 1A del diagrama de casos de uso.} {0.9}
+\imagen{Nivel-1B}{Nivel 1B del diagrama de casos de uso.} {0.9}
+\imagen{Nivel-1C}{Nivel 1C del diagrama de casos de uso.} {0.9}
+
+%Gestion de centros -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu1}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 1}   & \textbf{Visualizar centros} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar los centros existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El administrador selecciona la pestaña Centros. 
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 1 - Visualizar centros}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu2}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 2}   & \textbf{Editar centros} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar los centros existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del centro que quiera editar. Después escribirá el nombre que quiere poner y pulsará en el botón de confirmar que aparece al lado del de editar. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el centro  editado. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un centro existente, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 2 - Editar centros}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu3}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 3}   & \textbf{Insertar centros} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite añadir un nuevo centro. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nuevo centro. Después escribirá el nombre que desea ponerle y pulsará en el botón de confirmar que aparece a la derecha de la fila.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el centro  añadido. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un centro existente, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 3 - Insertar centros}
+\end{table}
+
+%Gestion de departamentos -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu4}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 4}   & \textbf{Visualizar departamentos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar los departamentos existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El administrador selecciona la pestaña Departamentos. 
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 4 - Visualizar departamentos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu5}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 5}   & \textbf{Editar departamentos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar los departamentos existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del departamento que quiera editar. Después escribirá el nombre que quiere poner y pulsará en el botón de confirmar que aparece al lado del de editar. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el departamento  editado. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un departamento existente, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 5 - Editar departamentos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu6}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 6}   & \textbf{Insertar departamentos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite añadir un nuevo departamento. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nuevo departamento. Después escribirá el nombre que desea ponerle y pulsará en el botón de confirmar que aparece a la derecha de la fila.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el departamento  añadido. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un departamento existente, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 6 - Insertar departamentos}
+\end{table}
+
+
+%Gestion de áreas -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu7}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 7}   & \textbf{Visualizar áreas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar las áreas existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El administrador selecciona la pestaña Áreas. 
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 7 - Visualizar áreas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu8}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 8}   & \textbf{Editar áreas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar las áreas existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del área que quiera editar. Después escribirá el nombre que quiere poner y su departamento y pulsará en el botón de confirmar que aparece al lado del de editar. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el área  editada. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un área existente, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 8 - Editar áreas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu9}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 9}   & \textbf{Insertar áreas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite añadir un nuevo área. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nuevo Área. Después escribirá el nombre que desea ponerle y su departamento y pulsará en el botón de confirmar que aparece a la derecha de la fila.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el área añadida. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un departamento existente, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 9 - Insertar áreas}
+\end{table}
+
+%Gestion de usuarios -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu10}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 10}   & \textbf{Visualizar usuarios} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar los usuarios existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El administrador selecciona la pestaña Usuarios. 
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 10 - Visualizar usuarios}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu11}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 11}   & \textbf{Editar usuarios} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.6 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar los usuarios existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después escribirá el nombre que quiere poner, el rol, el área, si es federada y si esta activo y pulsará en el botón de confirmar que aparece al lado del de editar. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el usuario  editado. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un usuario existente o algún dato es inválido, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 11 - Editar usuarios}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu12}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 12}   & \textbf{Insertar usuarios} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4 \\ \midrule
+		\textbf{Descripción}     & Permite añadir un nuevo usuario. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nuevo usuario. Después escribirá el nombre que desea ponerle, el rol, el área, si es federada y si esta activo y pulsará en el botón de confirmar que aparece a la derecha de la fila.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el usuario  añadido. \\ \midrule
+		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un usuario existente o algún dato es inválido, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 12 - Insertar usuarios}
+\end{table}
+
+
+%Gestion de existencias -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu13}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 13}   & \textbf{Visualizar existencias} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar las existencias de fichas existentes, siempre y cuando no esten en una ubicación oculta de otro área. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		\begin{compactitem}
+			\item El gestor se dirige a la página de existencias 
+		\end{compactitem}
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 13 - Visualizar existencias}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu14}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 14}   & \textbf{Filtrar existencias} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.6 \\ \midrule
+		\textbf{Descripción}     & Permite filtrar las existencias en función de los parámetros: producto, cas, fórmula, departamento, área, centro, ubicación, marca, proveedor, calidad, ubicación oculta o residuo. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario rellena o selecciona un valor de los desplegables en la columna de filtrado de la izquierda. En cuanto inserte un carácter el filtrado se producirá automáticamente sin pulsar ningún botón. También puede borrar todos los filtros pulsando en el botón Reiniciar filtro.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación mostrará en la lista únicamente las fichas que coincidan con los parámetros de la búsqueda introducidos. \\ \midrule
+		\textbf{Excepciones} & - \\ \midrule
+		\textbf{Importancia} & Baja \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 14 - Filtrar existencias}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu15}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 15}   & \textbf{Insertar fichas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir una nueva ficha. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nueva ficha. Después elegirá el producto, su capacidad, g o ml, su ubicación, su marca, su proveedor, su calidad, el nº de lote, su caducidad y si es residuo o no y pulsará en el botón añadir del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con las ficha añadida. \\ \midrule
+		\textbf{Excepciones} & Si la ficha que inserta ya existe o algún dato es inválido, el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 15 - Insertar fichas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu16}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 16}   & \textbf{Añadir entradas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	& RF-4.3, RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir entradas de una ficha. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario.
+			\item La ficha debe de estar en una ubicación del mismo área a la que pertenece el usuario
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono + en la columna de la derecha de la fila de la ficha que desea. Después elegirá las unidades, la fecha y una nota y pulsará en el botón añadir del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el stock de la ficha añadido. \\ \midrule
+		\textbf{Excepciones} & Si algún dato es inválido, o deja la fecha vacía el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 16 - Añadir entradas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu17}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 17}   & \textbf{Añadir salidas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.3, RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir salidas de una ficha. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario.
+			\item La ficha debe de estar en una ubicación del mismo área a la que pertenece el usuario
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono - en la columna de la derecha de la fila de la ficha que desea. Después elegirá las unidades, la fecha y una nota y pulsará en el botón añadir del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el stock de la ficha restado. \\ \midrule
+		\textbf{Excepciones} & Si algún dato es inválido, o deja la fecha vacía el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 17 - Añadir salidas}
+\end{table}
+
+
+%Gestion de productos -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu18}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 18}   & \textbf{Visualizar productos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar los productos existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		\begin{compactitem}
+			\item El gestor se dirige a la página de productos 
+		\end{compactitem}
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 18 - Visualizar productos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu19}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 19}   & \textbf{Filtrar productos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.6 \\ \midrule
+		\textbf{Descripción}     & Permite filtrar los productos en función de los parámetros: cas, nombre, fórmula, nºeinecs y nºec. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario rellena o selecciona un valor de los desplegables en la columna de filtrado de la izquierda. En cuanto inserte un carácter el filtrado se producirá automáticamente sin pulsar ningún botón. También puede borrar todos los filtros pulsando en el botón Reiniciar filtro.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación mostrará en la lista únicamente los productos que coincidan con los parámetros de la búsqueda introducidos. \\ \midrule
+		\textbf{Excepciones} & - \\ \midrule
+		\textbf{Importancia} & Baja \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 19 - Filtrar productos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu20}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 20}   & \textbf{Insertar productos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir un nuevo producto. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nuevo producto. Después rellenará el cas, el nombre, la fórmula, pureza, peso molecular, f. desarrollada, nº einecs, nºec, precauciones, msds, peligros, prudencias y pictogramas y pulsará en el botón confirmar del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el producto añadido. \\ \midrule
+		\textbf{Excepciones} & Si el producto ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 20 - Insertar productos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu21}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 21}   & \textbf{Editar productos} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.6 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar los productos existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará el cas, el nombre, la fórmula, pureza, peso molecular, f. desarrollada, nº einecs, nºec, precauciones, msds, peligros, prudencias y pictogramas y pulsará en el botón de confirmar del modal. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el producto editado. \\ \midrule
+		\textbf{Excepciones} & Si el producto ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 21 - Editar productos}
+\end{table}
+
+%Gestion de ubicaciones -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu22}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 22}   & \textbf{Visualizar ubicaciones} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar las ubicaciones existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item La ubicación ha de estar en el mismo área de la que es el usuario
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		\begin{compactitem}
+			\item El gestor se dirige a la página de ubicaciones 
+		\end{compactitem}
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 22 - Visualizar ubicaciones}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu23}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 23}   & \textbf{Filtrar ubicaciones} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.6 \\ \midrule
+		\textbf{Descripción}     & Permite filtrar las ubicaciones en función de los parámetros: nombre, departamento, área, centro y ubicación oculta. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario rellena o selecciona un valor de los desplegables en la columna de filtrado de la izquierda. En cuanto inserte un carácter el filtrado se producirá automáticamente sin pulsar ningún botón. También puede borrar todos los filtros pulsando en el botón Reiniciar filtro.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación mostrará en la lista únicamente las ubicaciones que coincidan con los parámetros de la búsqueda introducidos. \\ \midrule
+		\textbf{Excepciones} & - \\ \midrule
+		\textbf{Importancia} & Baja \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 23 - Filtrar ubicaciones}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu24}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 24}   & \textbf{Insertar ubicaciones} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir una nueva ubicación. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nueva ubicación. Después rellenará el nombre, el área el centro, si es oculta o no y pulsará en el botón confirmar del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la ubicación añadida. \\ \midrule
+		\textbf{Excepciones} & Si la ubicación ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 24 - Insertar ubicaciones}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu25}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 25}   & \textbf{Editar ubicaciones} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.6 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar las ubicaciones existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará rellenará el nombre, el área el centro, si es oculta o no y pulsará en el botón de confirmar del modal. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la ubicación editada. \\ \midrule
+		\textbf{Excepciones} & Si la ubicación ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 25 - Editar ubicaciones}
+\end{table}
+
+%Gestion de calidades -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu26}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 26}   & \textbf{Visualizar calidades} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar las calidades existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		\begin{compactitem}
+			\item El gestor se dirige a la página de calidades 
+		\end{compactitem}
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 26 - Visualizar calidades}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu27}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 27}   & \textbf{Filtrar calidades} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.6 \\ \midrule
+		\textbf{Descripción}     & Permite filtrar las calidades en función del nombre. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario rellena el nombre en la columna de filtrado de la izquierda. En cuanto inserte un carácter el filtrado se producirá automáticamente sin pulsar ningún botón. También puede borrar todos los filtros pulsando en el botón Reiniciar filtro.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación mostrará en la lista únicamente las calidades que coincidan con los parámetros de la búsqueda introducidos. \\ \midrule
+		\textbf{Excepciones} & - \\ \midrule
+		\textbf{Importancia} & Baja \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 27 - Filtrar calidades}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu28}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 28}   & \textbf{Insertar calidades} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir una nueva calidad. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nueva calidad. Después rellenará el nombre y pulsará en el botón confirmar del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la calidad añadida. \\ \midrule
+		\textbf{Excepciones} & Si la calidad ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 28 - Insertar calidades}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu29}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 29}   & \textbf{Editar calidades} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.6 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar las calidades existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará rellenará el nombre y pulsará en el botón de confirmar del modal. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la calidad editada. \\ \midrule
+		\textbf{Excepciones} & Si la calidad ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 29 - Editar calidades}
+\end{table}
+
+%Gestion de marcas -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu30}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 30}   & \textbf{Visualizar marcas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar las marcas existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		\begin{compactitem}
+			\item El gestor se dirige a la página de marcas 
+		\end{compactitem}
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 30 - Visualizar marcas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu31}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 31}   & \textbf{Filtrar marcas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.6 \\ \midrule
+		\textbf{Descripción}     & Permite filtrar las marcas en función del nombre. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario rellena el nombre en la columna de filtrado de la izquierda. En cuanto inserte un carácter el filtrado se producirá automáticamente sin pulsar ningún botón. También puede borrar todos los filtros pulsando en el botón Reiniciar filtro.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación mostrará en la lista únicamente las marcas que coincidan con los parámetros de la búsqueda introducidos. \\ \midrule
+		\textbf{Excepciones} & - \\ \midrule
+		\textbf{Importancia} & Baja \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 31 - Filtrar marcas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu32}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 32}   & \textbf{Insertar marcas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir una nueva marca. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nueva marca. Después rellenará el nombre, teléfono, dirección y proveedores y pulsará en el botón confirmar del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la marca añadida. \\ \midrule
+		\textbf{Excepciones} & Si la marca ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 32 - Insertar marcas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu33}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 33}   & \textbf{Editar marcas} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.6 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar las marcas existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará el nombre, teléfono, dirección y proveedores y pulsará en el botón de confirmar del modal. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la marca editada. \\ \midrule
+		\textbf{Excepciones} & Si la marca ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 33 - Editar marcas}
+\end{table}
+
+%Gestion de proveedores -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:cu34}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 34}   & \textbf{Visualizar proveedores} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar los proveedores existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		\begin{compactitem}
+			\item El gestor se dirige a la página de proveedores 
+		\end{compactitem}
+		\\ \midrule
+		\textbf{Postcondiciones} & -  \\ \midrule
+		\textbf{Excepciones} &   - \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 34 - Visualizar proveedores}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu35}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 35}   & \textbf{Filtrar proveedores} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.6 \\ \midrule
+		\textbf{Descripción}     & Permite filtrar los proveedores en función del nombre. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario rellena el nombre en la columna de filtrado de la izquierda. En cuanto inserte un carácter el filtrado se producirá automáticamente sin pulsar ningún botón. También puede borrar todos los filtros pulsando en el botón Reiniciar filtro.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación mostrará en la lista únicamente los proveedores que coincidan con los parámetros de la búsqueda introducidos. \\ \midrule
+		\textbf{Excepciones} & - \\ \midrule
+		\textbf{Importancia} & Baja \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 35 - Filtrar proveedores}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu36}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 36}   & \textbf{Insertar proveedores} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-4.7 \\ \midrule
+		\textbf{Descripción}     & Permite añadir una nueva proveedor. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el botón de Nueva proveedor. Después rellenará el nombre, teléfono, dirección y proveedores y pulsará en el botón confirmar del modal.
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el proveedor añadido. \\ \midrule
+		\textbf{Excepciones} & Si el proveedor ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Alta \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 36 - Insertar proveedores}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:cu37}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de uso 37}   & \textbf{Editar proveedores} \\ \midrule
+		\textbf{Versión}     & 2.0 \\ \midrule
+		\textbf{Requisitos}	&  RF-2.4, RF-2.6 \\ \midrule
+		\textbf{Descripción}     & Permite al administrador editar los proveedores existentes. \\ \midrule
+		\textbf{Precondiciones}  & 
+		\begin{compactitem}
+			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Acciones} & 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará el nombre, teléfono, dirección y proveedores y pulsará en el botón de confirmar del modal. 
+		\\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el proveedor editado. \\ \midrule
+		\textbf{Excepciones} & Si el proveedor ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
+		\textbf{Importancia}     & Media \\ \bottomrule
+	\end{tabular}
+	\caption{Caso de uso 37 - Editar proveedores}
+\end{table}

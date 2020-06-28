@@ -2,10 +2,52 @@
 
 \section{Introducción}
 
+En la siguiente sección se muestran los diseños elaborados para llevar acabo los objetivos previamente detallados.
+
 \section{Diseño de datos}
+
+La estructura del proyecto se puede dividir en dos partes, por un lado la estructura de la base de datos relacional MySQL, y por otro lado la estructura java de todos los jsp y servlets pertinentes.
+
+\subsection{Base de datos}
+
+Para construir La estructura de la base de datos se ha analizado la estructura existente en la versión anterior de la aplicación y se ha traducido a lenguaje MySQL haciendo una serie de cambios para renovar múltiples aspectos del sistema.
+
+Se ha \textbf{añadido una tabla de usuarios}. En la nueva versión, el usuario administrador podrá crear los usuarios de manera más dinámica, sin tener que acceder manualmente a la base de datos, por lo que es necesaria una tabla para poder almacenar los usuarios existentes.
+
+Se ha \textbf{eliminado la tabla area-centro}, al resultar esta redundante con la tabla ubicación, que ya dispone de toda la información necesaria.
+
+Se ha \textbf{centrada la importancia de las existencias en la tabla ficha}, y no en las tablas entrada y salida. Por ello, casi todos los parámetros que existían en las tablas entrada y salida se han traspasado a la tabla ficha.
+
+El \textbf{campo nombre de producto se ha separado una sola tabla}, para poder almacenar todos los sinónimos que puede tener un nombre, y evitar así fichas repetidas.
+
+Se han \textbf{creado las tablas peligro, prudencia y pictograma}, con sus respectivas tablas intermedias entre ellas y la tabla de producto. Estas tablas almacenan diferentes tipos de valores que son comunes a todos los productos.
+
+De manera general hay que indicar que \textbf{se han añadido múltiples campos por todas las tablas}, que tras el uso de la primera versión, se ha visto que eran necesarios.
+
+La base de datos ha ido sufriendo múltiples cambios según avanzaba el proyecto, y se han ido generando los correspondientes diagramas entidad relación. En la imagen \ref{fig:diagrama-ER} se puede ver el diagrama E-R del resultado final.
+
+\imagen{diagrama-ER}{Diagrama entidad relación} {0.9}
 
 \section{Diseño procedimental}
 
+En esta sección se mostrarán los diagramas de secuencia para el proceso de login y para el proceso de añadir una nueva ficha de producto. El resto de acciones que puede realizar un usuario ya logueado, son muy  parecidas al funcionamiento de añadir una ficha de producto, por lo que, para resumir, solo se mostrará esta. 
+
+\subsection{Proceso de login}
+
+Cuando un usuario accede al login de la aplicación, esta puede aceptar peticiones de inicio de sesión. Solicitara el nombre de usuario y la contraseña, y tras encriptar la contraseña consulta con la base de datos si el usuario existe, y en caso afirmativo si la contraseña es la correcta comparando los hash. Si el usuario no existe o la contraseña es incorrecta se redirige a la página de login junto con un mensaje de credenciales incorrectas. Si el usuario existe y la contraseña es correcta, el servlet del login comprueba el rol del usuario en cuestión y lo redirige a la página correspondiente. Se puede ver el diagrama  de secuencia en la imagen \ref{fig:Login}.
+
+\imagen{Login}{Diagrama de secuencia del login} {0.9}
+
+
+\subsection{Proceso insertar ficha de producto}
+
+Cuando el usuario se encuentra en la página de existencias (o index) se le permite insertar una nueva ficha de producto. Cuando pulsa en el botón, se abre un modal que le solicita los datos necesarios para crear la ficha. Cuando el usuario los rellena y pulsa en añadir se manda una petición post al IndexSevlet con una variable que indica cual es la acción que se va a realizar (insertar o editar) y con todos los campos necesarios de la ficha. El servlet crea la conexión con la base de datos, comprueba que los campos no estén vacíos y sean válidos, crea un nuevo objeto Ficha y llama al método insertar ficha de la clase conexión. este método comprueba que la ficha no exista ya y realiza en insert en la base de datos. Si algo ha salido mal, el método devuelve una excepción que captura el servlet, cierra la conexión y recarga la página mostrando la excepción. Si todo ha salido bien, el servlet  cierra la conexión y se devuelve a la misma página.
+
+Se muestra el diagrama en la imagen \ref{fig:InsertarFicha}
+
+\imagen{InsertarFicha}{Diagrama de secuencia de insertar ficha} {0.9}
+
+ 
 \section{Diseño arquitectónico}
 
 

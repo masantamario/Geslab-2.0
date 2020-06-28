@@ -103,6 +103,98 @@ En el siguiente apartado se analizarán todos los parámetros que pueden estar i
 
 \subsection{Viabilidad económica}
 
+En el siguiente apartado se realizará un estudio de la viabilidad económica del proyecto, suponiendo que el proyecto se ha realizado en el mundo laboral y no en el plan de estudios del grado.
+
+\subsubsection{Coste de personal}
+Por un lado hay que contar los recursos humanos empleados en el desarrollo de nuestro proyecto, que serían el alumno desarrollador y el tutor.
+
+El alumno ha empleado un total de 17 semanas a jornada completa (40 horas semanales). Suponiendo que el alumno tiene un sueldo mensual bruto de 1200€ , a lo que hay que restarle los gastos de seguridad social \footnote{\url{http://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537}}:
+
+\begin{itemize}
+	\item Desempleo: 1.55\%
+	\item Formación Profesional: 0.10\%
+	\item Contingencias Comunes: 4.7\%
+\end{itemize}
+
+Por lo que si hacemos la cuenta:
+
+\[1200\euro - 1200\euro \times \left (\frac{1.55 + 0.10 + 4.7}{100}\right ) = 1123.8\euro \]
+
+Así que, multiplicando por el número de meses que ha durado el proyecto 4 x 1123.8\euro hace un total de \textbf{4495.2€} con respecto al alumno.
+
+Además del alumno, hay que tener en cuenta el trabajo realizado por parte del tutor. Para ello contaremos con que una hora de trabajo son 50€ brutos la hora incluyendo instalaciones, costes laborales y otros indirectos como gastos generales, equipamiento, espacios, etc.
+
+Teniendo en cuenta que se han realizado entre una y dos reuniones semanales de 45 minutos, otras tres reuniones con la facultad de 45 minutos, y sumando además unas 10 horas extra para revisar documentación, mediación con el rector y consultas procedentes del desarrollador, nos sale un total de:
+
+\[ \left (  \left ( 17\: sem. \times \frac{1.5\, reu.\times 45\, mins}{60} \right )+\left ( 3\, reu. \times \frac{45\, mins}{60} \right ) + 10\right )\times\, 50\euro/h = 1568.75\euro \]
+
+
+\subsubsection{Coste de hardware}
+
+Para calcular el gasto de hardware, hay que valorar el material utilizado durante el proyecto por el alumno:
+\begin{itemize}
+	\item Ordenador potátil: 900€
+	\item Monitor: 100€
+	\item Teclado y ratón: 25€
+\end{itemize}
+
+En total tenemos un gasto de 1025€. Según la agencia tributaria este tipo de material tiene una vida útil de 10 años \footnote{\url{https://www.agenciatributaria.es/AEAT.internet/Inicio/_Segmentos_/Empresas_y_profesionales/Empresas/Impuesto_sobre_Sociedades/Periodos_impositivos_a_partir_de_1_1_2015/Base_imponible/Amortizacion/Tabla_de_coeficientes_de_amortizacion_lineal_.shtml}}, y nuestro proyecto ha durado un total de 17 semanas por lo que el coste de amortización sería:
+
+\[\frac{1025\euro}{10\, a\textit{ñ}os} \times \frac{1\, a\textit{ñ}o}{52\, semanas} \times 17\, semanas \approx  34\euro \]
+
+\subsubsection{Coste de software}
+
+Para calcular los gastos de software contamos con que practicamente todos los programas utilizados son de licencia gratuita, a excepción de Adobe Illustrator, por lo que hay que contar con un coste por su licencia de 29.99€ al mes (sin iva). Hay que tener en cuenta que la licencia se paga por mes completo, por lo que se realizará el cálculo sobre 20 semanas en vez de 17.
+
+\[ (29.99 \euro + 21\% \, iva) \times 5\, meses = 181.45 \euro\]
+
+A esto habría que añadirle el coste del Office 365, que eligiendo el paquete "Microsoft 365 Empresa Estándar" nos sale a 10.50€ al mes por usuario (sin iva), pero con una suscripción anual.
+
+\[ ((10.50 \euro + 21\% \, iva) \times 12\, meses) \times 2\, usuarios = 305.04 \euro\]
+
+\subsubsection{Coste total}
+
+Con todos los costes mencionados, podemos ver todos los gastos y su suma total en la tabla~\ref{tabla:costes}
+
+\begin{table}[h]
+	\centering
+	\caption{Coste total del proyecto}
+	\label{tabla:costes}
+	\rowcolors {2}{gray!20}{}
+	\begin{tabular}{p{6cm} r}
+		\toprule
+		Costes & Importe \\ \midrule
+		Desarrollador			     & 4495.2\euro   						\\
+		Tutor  				         & 1568.75\euro							\\
+		Hardware				     & 34\euro								\\
+		Software 				     & 486.49\euro 							\\
+		\textbf{Total} 			     & 6584.44\euro 						\\  
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
 \subsection{Viabilidad legal}
+ Para la viabilidad legal hay que analizar las librerías que se han utilizado, buscando sus licencias, analizando las compatibilidades y buscando las más restrictiva.
+ 
+En la tabla~\ref{tabla:licencias} se muestra el listado de todas las licencias.
+
+Al ser la licencia \textit{GNU General Public Licence} la más restrictiva, hay que calificar a Geslab 2.0 bajo una licencia \textit{GNU General Public Licence}.
+
+\begin{table}[h]
+	\centering
+	\caption{Herramientas utilizadas y sus licencias}
+	\label{tabla:licencias}
+	\rowcolors {2}{gray!20}{}
+	\begin{tabular}{p{4cm} p{6cm}}
+		\toprule
+		Herramienta & Licencia \\ \midrule
+		Bootstrap 4				     & MIT   								\\
+		Animation.js		         & MIT   								\\
+		jQuery				         & MIT   								\\
+		Font Awesome			     & MIT 									\\ 
+		MySQL Connector				 & GNU General Public Licence			\\ \bottomrule
+	\end{tabular}
+\end{table}
 
 

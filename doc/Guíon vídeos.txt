@@ -1,0 +1,56 @@
+
+
+INTRODUCCIÓN
+
+Actualmente la facultad de ciencias de la universidad de burgos maneja una gran cantidad de productos que estan repartidos entres sus muchas áreas y departamentos. Llevar una buena gestión  del material puede ser un aspecto vital, ya que puede derivar una périda de tiempo y dinero para la organización.
+
+Es por ello que en 1999 Álvaro Luis de Miguel desarrollo como proyecto de fin de grado una aplicación de gestión de inventario para hacer más fácil la tarea a los técnicos de laboratorio. Mi trabajo ha consistido en una actualización de su aplicación para ajustarla a los medios actuales existentes.
+
+OBJETIVOS
+
+El objetivo principal del proyecto, como ya he mencionado es recrear la actual aplicación junto con todas sus funcionalidades ya existentes, además de añadir nuevas funcionalidades que los propios usuarios han solicitado.
+
+Las más importantes son:
+
+La creación de distintos roles de usuario, con diferentes accesos al contenido de la aplicación
+
+Una solución al problema de los nombres de producto duplicados (distintas nomenclaturas, español, inglés).
+
+Almacenar los consejos de seguridad que los distintos reactivos pueden tener.
+
+Añadir nuevos campos a las tablas que han resultado necesarios tras el uso de la aplicación.
+
+Desarrollar una aplicación atractiva visualmente y sencilla de usar, que ayude a que el usuario se encuentre a gusto usando la aplicación, y no abandone su uso con el tiempo.
+
+
+CONCEPTOS TEÓRICOS
+
+Para comprender el funcionamiento de la aplicación es importante entender por separada las partes principales de las que se compone.
+
+MYSQL: es un sistema de gestión de base de datos relacionales de código abierto con un modelo cliente servidor. La versión original utiliza SQL Server, por lo que hay que realizar un proceso de adaptación a la nueva versión.
+
+JSP: es una tecnología que ayuda a los desarrolladores a crear páginas web dinámicas basadas en html. JSP se basa en servlets, que son programas que se ejecutan en el lado del servidor, de forma que permite ampliar las capacidades del mismo.
+
+
+TÉCNICAS Y HERRAMIENTAS
+
+Modelo de gestión: el proyecto sufrió complicaciones desde el primer momento, por lo que se optó por utilizar una metodología ágil basada en la programación extrema, dando una mayor importancia a la adaptabilidad que a la previsibilidad, teniendo en cuenta todos los factores que nos rodeaban.
+
+Gestion del proyecto: pararealizar el seguimiento del proyecto se ha usado la herramienta github, donde se pueden observar todos los cambios que se han ido realizando.
+
+Para la construcción de la aplicación se han utilizado multiples herramientas, de las que se pueden destacar las más importantes:
+
+ECLIPSE: es una plataforma de software compuesta por un conjunto de herramientas de programación de código abierto multiplataforma. Gracias a eclipse se puede trabajar en un entorno muy cómodo y atractivo, con el que ya me encuentro familizarizado gracias a los conocimientos adquiridos durante el curso.
+
+BOOTSTRAP 4: es un framework front-end gratuito que nos ayuda a conseguir un desarrollo web de manera muy rápida y sencilla. Incluye plantillas basadas en html y css que ayudan a desarrollar un entorno web atractivo sin la necesidad de crear todo desde 0.
+
+ADOBE ILLUSTRATOR: para el diseño gráfico de la aplicación se ha utilizado illustrator, una aplicación de la suit de adobe que consiste en un editor de gráficos vectoriales destinada a la creación artítica.
+
+
+ASPECTOS RELEVANTES
+
+
+LÍNEAS FUTURAS
+
+
+CONCLUSIONES
