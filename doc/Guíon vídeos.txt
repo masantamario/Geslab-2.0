@@ -1,4 +1,5 @@
 
+VIDEO PRESENTACION ------------------------------------------------
 
 INTRODUCCIÓN
 
@@ -49,8 +50,62 @@ ADOBE ILLUSTRATOR: para el diseño gráfico de la aplicación se ha utilizado il
 
 ASPECTOS RELEVANTES
 
+COVID-19: si hay algo relevante que hay que destacar sobre el proyecto, es la irrupcion del covid-19 al poco de haber comenzado el proyecto. Esto nos supuso una gran cantidad de problemos, debidas a la inposibilidad de comunicarnos con la universidad cuando más lo necesitabamos. 
+
+OBTENCIÓN DE REQUISITOS: una de las cosas a las que peor afecto el estado de alarma, fue la obtencion de los requisitos funcionales. Dependíamos totalmente de las opiniones de los usuarios de la aplicación, y esto se convirtió en una tarea muy complicada, por lo que tuvimos que avanzar como pudimos, planteando en todo momento que lo que hacíamos podría acabar siendo cambiado totalmente.
+
+NUEVO PLANTEAMIENTO UI: una parte muy importante de la aplicación ha consistido en la creación de una interfaz de usuario con una usabilidad muy intutiva y adaptada a los estandares actuales. La aplicación trabaja con multitud de datos a la vez, unos más relevantes que otros en según que situaciones. Ha sido una labor muy complicada la de mostrar datos de importancia real y componer una vista atractiva.
+
 
 LÍNEAS FUTURAS
 
+IMPLEMENTACIÓN SOBRE SERVIDOR EN LA UNIVERSIDAD: la aplicación por el momento corre sobre un localhost en la máquina del usuario. Para que el usuario final pueda utilizar la aplicación es necesaria su correcta implementación en un servidor de la universidad.
+
+IMPORTAR Y EXPORTAR DATOS: en la actualidad, los datos de productos no solo se encuentran en la base de datos de la aplicación, los usuarios disponen de sus propios documentos en los que han ido guardando la información. Por ello, una herramienta que pueda facilitar la tarea tanto de importar como de exportar datos sería muy útil en la realidad.
+
+HERRAMIENTA EXPORTAR ETIQUETAS: los productos del laboratorio en ocasiones requieren de ser acompañados por una etiqueta de seguridad. Toda esta información esta alamecenada en la aplicación, por lo que una herramienta para poder imprimir las etiquetas con un mismo formato, y pudiendo editar los valores sería de gran valor. 
+
+VERSIÓN MOVIL: hoy día la tecnología esta cada vez más enfocada a los dispositivos móviles, por lo que hay que pensar en una forma de adecuarlo a este tipos de dispositivos. El aspecto gráfico de la aplicación esta creado con bootstrap, lo cual permite crear un diseño responsive. Actualmente solo esta optimzado para dispositivos de escritorio, pero queda la opción de actualizarlo para que sea responsive, o por otro lado, también se puede implementar una API para convertirlo en una aplicación móvil. 
+
 
 CONCLUSIONES
+
+Geslab es una aplicación con mucho potencial y de mucha ayuda para los miembros del laboratorio. La actualización ha sabido traer a nuestra época una aplicación que fue creada en 1999, consiguiendo una estética atractiva y un funcionamiento sencillo e intuitivo que ayudará a los usuarios a familiarizarse rapidamente. 
+
+
+
+
+VIDEO DEMOSTRACIÓN ------------------------------------------------
+
+Página de login: diseño gráfico
+
+Tipos de usuario: administrador, gestor de inventario y usuario.
+
+Usuario incorrecto: mensaje de error
+
+Usuario correcto: administrador
+
+Administrador gestiona centros, áreas, departamentos y usuarios: relacion entre ellos
+
+Crear nuevo usuario.
+
+Loguear con usuario nuevo: página de registro
+
+Existencias: explicar ficha de producto y mostrar productos.
+
+Página de productos.
+
+Consultar existencias: solo se muestran las que corresponden a su área
+
+Filtrar existencias.
+
+Crear una nueva ficha.
+
+Añadir entradas.
+
+Añadir salidas.
+
+Consultar otros datos: calidades, ubicaciones, productos,
+
+
+
