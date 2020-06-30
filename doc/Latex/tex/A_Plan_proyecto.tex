@@ -36,9 +36,9 @@ Para montar la imagen utilizamos Virtual Vox NT4, pero por alguna razón la maqu
 
 Con todo listo se pudo ejecutar la imagen, y a través de admin SQL exportamos los datos que necesitábamos.
 
-Una vez obtenidas las tablas extraidas, se realizó la instalación de MYSQL descagando el software de su página oficial. Desde la página buscaremos el "MySQL Comunnity Server" y después seleccionar la plataforma en la que lo vamos a instalar.
+Una vez obtenidas las tablas extraidas, se realizó la instalación de MYSQL descagando el software de su página oficial. Desde la página buscaremos el MySQL Comunnity Server y después seleccionar la plataforma en la que lo vamos a instalar.
 
-Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En mi caso se seleccionó "Developer Default" ya que se quería instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
+Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En mi caso se seleccionó Developer Default ya que se quería instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
 
 \subsection{Requisitos funcionales}
 
@@ -55,13 +55,13 @@ Al no recibir respuesta por parte de la universidad (de nuevo por razones del co
 
 Para realizar el diseño de la aplicación se comenzó por crear un logotipo, elegir unos colores y una tipografía. Con todo ello, se creo un primer prototipo de la página de inicio (login). Para la creación tanto del logotipo como del primer diseño de la página de login se ha utilizado la herramienta Illustrator. 
 
-Con un diseño gráfico ya establecido, se creó inicialmente la página de login utilizando bootstrap. Inicialmente solo se implementó la parte gráfica de la aplicación, sirviendo a modo de "práctica" en la utilización de bootstrap. Para ello se realizó una formación en bootstrap a través de la documentación de su página web, y de diversos tutoriales de los que disponen \cite{doc:Bootstrap4}.
+Con un diseño gráfico ya establecido, se creó inicialmente la página de login utilizando bootstrap. Inicialmente solo se implementó la parte gráfica de la aplicación, sirviendo a modo de práctica en la utilización de bootstrap. Para ello se realizó una formación en bootstrap a través de la documentación de su página web, y de diversos tutoriales de los que disponen \cite{doc:Bootstrap4}.
 
 Se descargaron todos los archivos pertinentes (css's y javascripts) y se importaron en el proyecto. Para trasladar el diseño creado en illustrator, se ha utilizado una herramienta intermedia llamada Figma.
 
 Con el proyecto ya más avanzado, se creó todo el diseño gráfico del resto de ventanas a utilizar. También se refactorizó el código CSS para ajustarse a una metodología BEM, con el fin de mejorar su legibilidad y reutilización.
 
-También se añadió una libreria javascript llamada "animation.js". Esta librería es una biblioteca de animación JavaScript que funciona con propiedades CSS, transformaciones CSS individuales, SVG o cualquier atributo DOM y objetos JavaScript.
+También se añadió una libreria javascript llamada animation.js. Esta librería es una biblioteca de animación JavaScript que funciona con propiedades CSS, transformaciones CSS individuales, SVG o cualquier atributo DOM y objetos JavaScript.
 
 Con ella se creó una animación muy simple para la página de login a modo de prueba.
 
@@ -70,13 +70,13 @@ Con ella se creó una animación muy simple para la página de login a modo de p
 
 La fase desarrollo de la aplicación fue la que más tiempo llevó, y la que mas actualizaciones en el proyecto supuso. Lo primero que se realizó fue la conexión de Java con MySQL. Se importó en el proyecto el conector java-mysql, que permite realizar consultas en la base de datos desde java y se creo la clase conexión para realizar todas las configuraciones pertinentes a la conexión. Esta misma clase Conexión, es la que termino albergando todos los métodos  que realizan alguna comunicación con la base de datos.
 
-Con ello se creó la página de login, que al ser la primera, sirvió a modo de practica con los lenguajes y herramientas. Después se implemento todo el sistema de mantenimiento de la web, el cual va enfocado solamente al usuario administrador. Se creó un paquete "admin" para contener todas las clases implicadas en estas tareas. 
+Con ello se creó la página de login, que al ser la primera, sirvió a modo de practica con los lenguajes y herramientas. Después se implemento todo el sistema de mantenimiento de la web, el cual va enfocado solamente al usuario administrador. Se creó un paquete admin para contener todas las clases implicadas en estas tareas. 
 
 Se crearon los objetos Area, Centro, Departamento y Usuario para poder almacenar toda la información que se lee de las respectivas tablas de la base de datos. Además se creo una clase enumeración para el Rol. De esta manera el rol pasa a ser una variable estática definida por la aplicación, ya que no interesa que un usuario administrador pueda crear roles.
 
 Con cada página JSP que se crea, se crea también su correspondiente Servlet, de forma que de primeras se creo el servlet del login y de admin.
 
-Una vez terminadas las funcionalidades de administración y mantenimiento,  se pasó a crear el paquete "usuario", que contendría todas las clases pertenecientes a las tablas a las que el usuario puede tener acceso.
+Una vez terminadas las funcionalidades de administración y mantenimiento,  se pasó a crear el paquete usuario, que contendría todas las clases pertenecientes a las tablas a las que el usuario puede tener acceso.
 
 Se comenzó por la que denominamos página de gestión, es decir, la página que mostrará todas las entradas y salidas de productos, y que será la primera página que verá el usuario al acceder. Con ella se crearon los objetos java de Ficha, Entrada y Salida, con su correspondiente página JSP y su servlet.
 
@@ -148,7 +148,7 @@ Para calcular los gastos de software contamos con que practicamente todos los pr
 
 \[ (29.99 \euro + 21\% \, iva) \times 5\, meses = 181.45 \euro\]
 
-A esto habría que añadirle el coste del Office 365, que eligiendo el paquete "Microsoft 365 Empresa Estándar" nos sale a 10.50€ al mes por usuario (sin iva), pero con una suscripción anual.
+A esto habría que añadirle el coste del Office 365, que eligiendo el paquete Microsoft 365 Empresa Estándar nos sale a 10.50€ al mes por usuario (sin iva), pero con una suscripción anual.
 
 \[ ((10.50 \euro + 21\% \, iva) \times 12\, meses) \times 2\, usuarios = 305.04 \euro\]
 
