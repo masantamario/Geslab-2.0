@@ -2,10 +2,970 @@
 
 \section{Introducción}
 
+En este apartado se explica todo lo que debe conocer el desarrollador a la hora de instalar el entorno de trabajo y poder continuar con el desarrollo de la aplicación.
+
 \section{Estructura de directorios}
+
+\dirtree{%
+ .1 /.
+ .2 design \desc{Aquí se encuentran los recursos destinados al diseño gráfico de la aplicación}.
+ .2 doc \desc{Directorio de los documentos relativos a la documentación}.
+ .2 MySQL \desc{Diagrama entidad-relacion y scripts para inicializar la base de datos}.
+ .2 src \desc{Directorio donde encontramos la lógica de la aplicación}.
+ .3 lib \desc{Directorio de librerías}.
+ .3 main.
+ .4 java \desc{Contenedor de los paquetes java}.
+ .5 geslab \desc{Paquete padre}.
+ .6 database \desc{Contiene las clases y objetos que conectan de alguna forma con la base de datos}.
+ .7 admin \desc{Contiene las clases y objetos que se usan en la página de administración}.
+ .7 user \desc{Contiene las clases y objetos que se usan en la página de mantenimiento}.
+ .6 servlets \desc{Contiene todos los servlets}.
+ .4 resources.
+ .4 webapp \desc{Directorio que contiene toda la lógica de la parte web}.
+ .5 css \desc{Hojas de estilo}.
+ .5 images \desc{Imágenes utilizadas en la web}.
+ .5 js \desc{Javascripts de cada archivo jsp}.
+ .5 WEB-INF \desc{Contiene las vistas jsp}.
+ .2 target \desc{Carpeta contenedora de los documentos de las dependencias del proyecto}.
+}
 
 \section{Manual del programador}
 
+En este apartado se se explicará como configurar todo el entorno de trabajo para poder en un futuro si es necesario, continuar con el desarrollo de la aplicación.
+
+El desarrollo del proyecto se realizó sobre un sistema operativo Windows, por lo que todos los programas a los que se hará referencia serán en su versión para este sistema operativo.
+
+\subsection{MySQL y MySQL Workbench}
+
+El primer paso para instalar MYSQL es descargar el software de su página oficial \href{https://dev.mysql.com/downloads/mysql/}{\textit{MySql}}\footnote{\textit{MySql}: \url{https://dev.mysql.com/downloads/mysql/}}. Desde la página buscaremos el "MySQL Comunnity Server" y después seleccionar la plataforma en la que lo vamos a instalar, en nuestro caso windows.
+
+Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En nuestro caso selecciono "Developer Default" ya que quiero instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
+
+En cierto punto de la instalación puede que el sistema nos diga que necesitamos el paquete de Microsoft Visual C++, solo tenemos que continuar para que se instale automáticamente.
+
+Finalizada la instalación, solo nos faltaría establecer una configuración inicial antes de ejecutar los correspondientes servicios. En la primera ventana seleccionaremos \textit{Standalone MySQL Server/Classic MySQL Replication}. En Type and Networking dejamos todos los parámetros por defecto, a no ser que quisieramos establecer la conexión en otro puerto distinto al 3306. En caso de cambiar el puerto es importante recordarlo para futuras configuraciones.
+
+Después debemos elegir una contraseña para poder conectarnos al servidor SQL. No es necesario que definamos un usuario para administrar la base de datos, ya que podemos utilizar el usuario por defecto \textit{root}.
+
+Por último definimos un nombre para el servicio MySQL y las preferencias generales y pulsamos en execute para ejecutar las acciones y activar todos los servicios
+
+\subsection{Java}
+
+Para la instalación de Java en el equipo solamente tenemos que ir a la página de descarga de la propia web de \href{https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html}{\textit{Oracle}}\footnote{\textit{JDK}: \url{https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html}}. Desde ahí nos descargaremos el archivo \textit{Windows x64 Installer}. Ejecutamos el archivo y pulsamos en siguiente hasta completar la instalación. Para asegurarnos que se ha instalado podemos irnos a la ventana de comando y ejecutar \textit{java -version}
+
+\subsection{Eclipse IDE}
+
+Para la instalación de eclipse, nos iremos en primer lugar a su página para descargar el instalador de \href{https://www.eclipse.org/downloads/}{\textit{Eclipse IDE}}\footnote{\textit{Eclipse}: \url{https://www.eclipse.org/downloads/}}.
+
+Una vez con el ejecutable, lo abrimos y seleccionamos \textit{Eclipse IDE for Enterprise Java Developers}. Dejamos las rutas por defecto y pulsamos en INSTALL. 
+
 \section{Compilación, instalación y ejecución del proyecto}
 
+Con todo ya instalado, para poder ejecutar nuestra aplicación deberemos de seguir los pasos que se indican a continuación.
+
+\subsection{Inicializar base de datos}
+
+Abrimos MySQL Workbench y nos conectamos a la instancia que anteriormente creamos. Una vez conectados, debemos de crear un nuevo schema con el nombre de \textbf{dbo}. Para ello en la barra de herramientas superior buscamos el icono pertinente y lo pulsamos.
+
+Una vez creado el schema, abriremos el archivo sql que se encuentra en la carpeta \textit{MySQL} llamado \textit{script-create-tables} y lo ejecutaremos. 
+
+Con esto, ya se nos habrán creado todas las tablas necesarias, junto con el usuario administrador y otros datos inicializados.
+
+\subsection{Importar proyecto en Eclipse}
+
+Para importar el proyecto en Eclipse, tan solo tenemos que abrir el programa y dirigirnos a \textit{File/Import}. Desde aquí buscaremos la opción de \textit{Existing Maven Projects} dentro del apartado de Maven.
+
+desde ahí seleccionaremos la ruta de origen de nuestro proyecto, y seleccionaremos el proyecto una vez que aparezca en la lista de disponibles. Con esto ya tendremos nuestro proyecto importado junto con todas sus dependencias.
+
+\subsection{Configurar conexión con la base de datos}
+
+Por último, para que la conexión con la base de datos sea satisfactoria, tenemos que dirigirnos a la clase \textit{Conexion}, dentro del paquete \textit{geslab.database}. 
+
+En los atributos de la clase tendremos que editar una serie de valores en función de los datos con los que configuramos la base de datos.
+
+En la imagen \ref{fig:configurarConexion} se pueden ver los campos que habría que editar marcados en rojo en cursiva y entre asteriscos.
+
+\imagen{configurarConexion}{Configurar conexión con la base de datos} 
+
 \section{Pruebas del sistema}
+
+Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\textbf{ pruebas de cada caso de uso} de una manera manual. Para mostrar sus resultados se ha utilizado una plantilla provista por la junta de Andalucía \cite{doc:pruebas}. En las siguientes tablas se pueden encontrar todos los casos de prueba para cada caso de uso.
+
+%Gestion de centros -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba1}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 1} & \textbf{Visualizar centros} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de los centros \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de centros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de centros
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de centros\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 1 - Visualizar centros}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba2}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 2}   & \textbf{Editar centros} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización del centro \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de centros
+			\item Pinchar el icono de la derecha del centro a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el centro con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El centro muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 2 - Editar centros}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba3}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 3}   & \textbf{Insertar centros} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del centro \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de centros
+			\item Pinchar el botón de Nuevo centro
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo centro en la lista de centros
+		\\ \midrule
+		\textbf{Resultado obtenido} & El centro se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 3 - Insertar centros}
+\end{table}
+
+%Gestion de departamentos -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba4}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 4}   & \textbf{Visualizar departamentos} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de los departamentos \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de departamentos
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de departamentos
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de departamentos\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 4 - Visualizar departamentos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba5}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 5}   & \textbf{Editar departamentos} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización del departamento \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de departamentos
+			\item Pinchar el icono de la derecha del departamento a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el departamento con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El departamento muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 5 - Editar departamentos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba6}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 6}   & \textbf{Insertar departamentos} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del departamento \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de departamentos
+			\item Pinchar el botón de Nuevo departamento
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo departamento en la lista de departamentos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El departamento se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 6 - Insertar departamentos}
+\end{table}
+
+
+%Gestion de áreas -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba7}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 7}   & \textbf{Visualizar áreas} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de las áreas \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de áreas
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de áreas
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de áreas\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 7 - Visualizar áreas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba8}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 8}   & \textbf{Editar áreas} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización del área \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de áreas
+			\item Pinchar el icono de la derecha del área a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el área con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El área muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 8 - Editar áreas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba9}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 9}   & \textbf{Insertar áreas} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del área \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de áreas
+			\item Pinchar el botón de Nuevo área
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo área en la lista de áreas
+		\\ \midrule
+		\textbf{Resultado obtenido} & El área se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 9 - Insertar áreas}
+\end{table}
+
+%Gestion de usuarios -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba10}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 10}   & \textbf{Visualizar usuarios} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de los usuarios \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de usuarios
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de usuarios
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de usuarios\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 10 - Visualizar usuarios}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba11}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 11}   & \textbf{Editar usuarios} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización del usuario \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de usuarios
+			\item Pinchar el icono de la derecha del usuario a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el usuario con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El usuario muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 11 - Editar usuarios}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba12}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 12}   & \textbf{Insertar usuarios} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del usuario \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como administrador \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de usuarios
+			\item Pinchar el botón de Nuevo usuario
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo usuario en la lista de usuarios
+		\\ \midrule
+		\textbf{Resultado obtenido} & El usuario se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 12 - Insertar usuarios}
+\end{table}
+
+
+%Gestion de existencias -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba13}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 13}   & \textbf{Visualizar existencias} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de las fichas \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de existencias
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de fichas
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de existencias\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 13 - Visualizar existencias}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba14}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 14}   & \textbf{Filtrar existencias} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el sistema de filtrado de fichas \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de existencias desde el menu
+			\item Establecer parámetros en la columna de filtros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		La lista de fichas solo muestra las filas que cumplen los parámetros indicados
+		\\ \midrule
+		\textbf{Resultado obtenido} & Solo se pueden ver fichas con los parámetros filtrados. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 14 - Filtrar existencias}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba15}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 15}   & \textbf{Insertar fichas} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del centro \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de existencias
+			\item Pinchar el botón de Nuevo centro
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo centro en la lista de existencias
+		\\ \midrule
+		\textbf{Resultado obtenido} & El centro se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 15 - Insertar fichas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba16}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 16}   & \textbf{Añadir entradas} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el incremento del stock al añadir existencias \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de existencias desde el menu
+			\item Pinchar en el botón con un + a la derecha de la ficha
+			\item Rellenar los datos solicitados
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		El stock a aumentado y la entrada se muestra en la lista de entradas
+		\\ \midrule
+		\textbf{Resultado obtenido} & El stock se ha incrementado correctamente, y la entrada aparece en la lista de entradas de la ficha \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 16 - Añadir entradas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba17}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 17}   & \textbf{Añadir salidas} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el incremento del stock al añadir existencias \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de existencias desde el menu
+			\item Pinchar en el botón con un - a la derecha de la ficha
+			\item Rellenar los datos solicitados
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		El stock a disminuido y la salida se muestra en la lista de salidas
+		\\ \midrule
+		\textbf{Resultado obtenido} & El stock se ha disminuido correctamente, y la salida aparece en la lista de salidas de la ficha \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 17 - Añadir salidas}
+\end{table}
+
+
+%Gestion de productos -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba18}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 18}   & \textbf{Visualizar productos} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de los productos \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de productos
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de productos
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de productos\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 18 - Visualizar productos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba19}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 19}   & \textbf{Filtrar productos} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el sistema de filtrado de productos \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de productos desde el menu
+			\item Establecer parámetros en la columna de filtros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		La lista de productos solo muestra las filas que cumplen los parámetros indicados
+		\\ \midrule
+		\textbf{Resultado obtenido} & Solo se pueden ver productos con los parámetros filtrados. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 19 - Filtrar productos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba20}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 20}   & \textbf{Insertar productos} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del producto \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de productos
+			\item Pinchar el botón de Nuevo producto
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo producto en la lista de productos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El producto se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 20 - Insertar productos}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba21}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 21}   & \textbf{Editar productos} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización del producto \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de productos
+			\item Pinchar el icono de la derecha del producto a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el producto con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El producto muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 21 - Editar productos}
+\end{table}
+
+%Gestion de ubicaciones -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba22}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 22}   & \textbf{Visualizar ubicaciones} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de las ubicaciones \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de ubicaciones
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de ubicaciones
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de ubicaciones\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 22 - Visualizar ubicaciones}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba23}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 23}   & \textbf{Filtrar ubicaciones} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el sistema de filtrado de ubicaciones \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de ubicaciones desde el menu
+			\item Establecer parámetros en la columna de filtros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		La lista de ubicaciones solo muestra las filas que cumplen los parámetros indicados
+		\\ \midrule
+		\textbf{Resultado obtenido} & Solo se pueden ver ubicaciones con los parámetros filtrados. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 23 - Filtrar ubicaciones}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba24}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 24}   & \textbf{Insertar ubicaciones} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción de la ubicación\\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de ubicaciones
+			\item Pinchar el botón de Nueva ubicación
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra la nueva ubicación en la lista de ubicaciones
+		\\ \midrule
+		\textbf{Resultado obtenido} & La ubicación se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 24 - Insertar ubicaciones}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba25}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 25}   & \textbf{Editar ubicaciones} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización de la ubicación \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de ubicaciones
+			\item Pinchar el icono de la derecha de la ubicación a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra la ubicación con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & La ubicación muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 25 - Editar ubicaciones}
+\end{table}
+
+%Gestion de calidades -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba26}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 26}   & \textbf{Visualizar calidades} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de las calidades \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de centros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de centros
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de centros\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 26 - Visualizar calidades}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba27}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 27}   & \textbf{Filtrar calidades} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el sistema de filtrado de calidades \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de calidades desde el menu
+			\item Establecer parámetros en la columna de filtros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		La lista de calidades solo muestra las filas que cumplen los parámetros indicados
+		\\ \midrule
+		\textbf{Resultado obtenido} & Solo se pueden ver calidades con los parámetros filtrados. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 27 - Filtrar calidades}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba28}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 28}   & \textbf{Insertar calidades} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción de la calidad \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de centros
+			\item Pinchar el botón de Nuevo centro
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo centro en la lista de centros
+		\\ \midrule
+		\textbf{Resultado obtenido} & la calidad se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 28 - Insertar calidades}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba29}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 29}   & \textbf{Editar calidades} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización de la calidad \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de centros
+			\item Pinchar el icono de la derecha de la calidad a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra la calidad con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & la calidad muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 29 - Editar calidades}
+\end{table}
+
+%Gestion de marcas -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba30}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 30}   & \textbf{Visualizar marcas} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de las marcass \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de marcas
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de marcas
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de marcas\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 30 - Visualizar marcas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba31}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 31}   & \textbf{Filtrar marcas} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el sistema de filtrado de marcas \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de marcas desde el menu
+			\item Establecer parámetros en la columna de filtros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		La lista de marcas solo muestra las filas que cumplen los parámetros indicados
+		\\ \midrule
+		\textbf{Resultado obtenido} & Solo se pueden ver marcas con los parámetros filtrados. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 31 - Filtrar marcas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba32}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 32}   & \textbf{Insertar marcas} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción de la marca \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de marcas
+			\item Pinchar el botón de Nuevo marca
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra la nuevo marca en la lista de marcas
+		\\ \midrule
+		\textbf{Resultado obtenido} & la marca se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 32 - Insertar marcas}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba33}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 33}   & \textbf{Editar marcas} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización de la marca \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de marcas
+			\item Pinchar el icono de la derecha de la marca a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra la marca con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & la marca muestra los datos actualizados correctamente\\ \midrule
+		\\ \midrule
+		\textbf{Resultado obtenido} & La aplicación volverá a mostrar la lista con la marca editada. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 33 - Editar marcas}
+\end{table}
+
+%Gestion de proveedores -----------------------------
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba34}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 34}   & \textbf{Visualizar proveedores} \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de los proveedores \\ \midrule
+		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item  Desplazarse a la pestaña de proveedores
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & Ver la lista de proveedores
+		\\ \midrule
+		\textbf{Resultado obtenido} & Visualizada lista de proveedores\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 34 - Visualizar proveedores}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba35}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 35}   & \textbf{Filtrar proveedores} \\ \midrule
+		\textbf{Descripción}	&  Comprobar el sistema de filtrado de proveedores \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la ventana de proveedores desde el menu
+			\item Establecer parámetros en la columna de filtros
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		La lista de proveedores solo muestra las filas que cumplen los parámetros indicados
+		\\ \midrule
+		\textbf{Resultado obtenido} & Solo se pueden ver proveedores con los parámetros filtrados. \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 35 - Filtrar proveedores}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba36}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 36}   & \textbf{Insertar proveedores} \\ \midrule
+		\textbf{Descripción}	&  Comprobar la correcta inserción del proveedor \\ \midrule
+		\textbf{Prerrequisitos}   & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de proveedores
+			\item Pinchar el botón de Nuevo proveedor
+			\item Insertar los campos
+			\item Pulsar en confirmar  
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el nuevo proveedor en la lista de proveedores
+		\\ \midrule
+		\textbf{Resultado obtenido} & El proveedor se muestra correctamente \\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 36 - Insertar proveedores}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\label{tabla:prueba37}
+	\begin{tabular}{@{}
+		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
+		\toprule
+		\textbf{Caso de prueba 37}   & \textbf{Editar proveedores} \\ \midrule
+		\textbf{Descripción}	& Comprobar la correcta actualización del proveedor \\ \midrule
+		\textbf{Prerrequisitos} & Loguearse como gestor de inventario \\ \midrule
+		\textbf{Pasos}  & 
+		\begin{compactitem}
+			\item Desplazarse a la pestaña de proveedores
+			\item Pinchar el icono de la derecha del proveedor a editar
+			\item Editar los campos 
+		\end{compactitem}
+		 \\ \midrule
+		\textbf{Resultado esperado} & 
+		Se muestra el proveedor con los nuevos datos introducidos
+		\\ \midrule
+		\textbf{Resultado obtenido} & El proveedor muestra los datos actualizados correctamente\\ \midrule
+	\end{tabular}
+	\caption{Caso de prueba 37 - Editar proveedores}
+\end{table}
+
+Por otro lado, también se han desarrollado unas pruebas \textbf{alpha}. Estas pruebas se realizaron de manera telemática junto con los miembros de laboratorio que serán los usuarios de la aplicación.

@@ -9,6 +9,10 @@
 \usepackage{microtype}
 \usepackage{placeins}
 \usepackage{paralist}
+\usepackage{dirtree}
+\usepackage{listings}
+
+
 
 
 \RequirePackage{booktabs}
@@ -44,6 +48,13 @@
 
 % Evitar solapes en el header
 \nouppercaseheads
+
+% Muestra un directorio en el árbol
+\newcommand{\desc}[1]{
+	\ldots{} \begin{minipage}[t]{8cm}
+		#1{.}
+	\end{minipage}
+}
 
 % Imagenes
 \usepackage{graphicx}

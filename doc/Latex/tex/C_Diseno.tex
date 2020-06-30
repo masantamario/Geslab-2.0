@@ -26,7 +26,7 @@ De manera general hay que indicar que \textbf{se han añadido múltiples campos 
 
 La base de datos ha ido sufriendo múltiples cambios según avanzaba el proyecto, y se han ido generando los correspondientes diagramas entidad relación. En la imagen \ref{fig:diagrama-ER} se puede ver el diagrama E-R del resultado final.
 
-\imagen{diagrama-ER}{Diagrama entidad relación} {0.9}
+\imagen{diagrama-ER}{Diagrama entidad relación} 
 
 \section{Diseño procedimental}
 
@@ -36,7 +36,7 @@ En esta sección se mostrarán los diagramas de secuencia para el proceso de log
 
 Cuando un usuario accede al login de la aplicación, esta puede aceptar peticiones de inicio de sesión. Solicitara el nombre de usuario y la contraseña, y tras encriptar la contraseña consulta con la base de datos si el usuario existe, y en caso afirmativo si la contraseña es la correcta comparando los hash. Si el usuario no existe o la contraseña es incorrecta se redirige a la página de login junto con un mensaje de credenciales incorrectas. Si el usuario existe y la contraseña es correcta, el servlet del login comprueba el rol del usuario en cuestión y lo redirige a la página correspondiente. Se puede ver el diagrama  de secuencia en la imagen \ref{fig:Login}.
 
-\imagen{Login}{Diagrama de secuencia del login} {0.9}
+\imagen{Login}{Diagrama de secuencia del login} 
 
 
 \subsection{Proceso insertar ficha de producto}
@@ -45,16 +45,24 @@ Cuando el usuario se encuentra en la página de existencias (o index) se le perm
 
 Se muestra el diagrama en la imagen \ref{fig:InsertarFicha}
 
-\imagen{InsertarFicha}{Diagrama de secuencia de insertar ficha} {0.9}
+\imagen{InsertarFicha}{Diagrama de secuencia de insertar ficha} 
 
  
 \section{Diseño arquitectónico}
 
-En la figura \ref{fig:diagramaClases} podemos encontrar el diagrama de clases de toda la estructura de Java correspondiente a JSP y los servlets.
+En las figuras \ref{fig:Diagrama-clases-small}, \ref{fig:Diagrama-conexion}, \ref{fig:Diagrama-admin}, \ref{fig:Diagrama-user}, \ref{fig:Diagrama-servlets} podemos encontrar los diagrama de clases de toda la estructura de Java correspondiente a JSP y los servlets.
 
 Se han creado tres paquetes diferentes dentro del directorio java, un paquete llamado database, que contendrá todas las clases que tienen relación y se conectan con la base de datos; un paquete llamado admin que contiene todos los objetos y las clases que corresponden a la página de administración; un paquete user que guarda todos los objetos y las clases de la página de mantenimiento (rol de gestor de usuario) y por último un paquete llamado servlets que contiene todos los servlets correspondientes a los JSP`s.
 
-\imagen{Diagrama-clases}{Diagrama de clases} {0.9}
+\imagen{Diagrama-clases-small}{Diagrama de clases general} 
+
+\imagen{Diagrama-conexion}{Diagrama de clases - Paquete geslab.database} 
+
+\imagen{Diagrama-admin}{Diagrama de clases - Paquete geslab.admin} 
+
+\imagen{Diagrama-user}{Diagrama de clases - Paquete geslab.user}
+
+\imagen{Diagrama-servlets}{Diagrama de clases - Paquete geslab.servlets}
 
 
 Por otro lado, dentro de la carpeta webapp se encuentran todos los recursos para la construcción del apartado web. Está la carpeta CSS con todos los archivos css pertinentes, la carpeta js que contiene los javascripts de cada jsp, la carpeta images con los recursos de imagen y la carpeta WEB-INF con todos los jsp necesarios.

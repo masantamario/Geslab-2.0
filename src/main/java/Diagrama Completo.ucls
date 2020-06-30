@@ -7,223 +7,223 @@
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="2" language="java" name="geslab.database.admin.Departamento" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/admin/Departamento.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="868" y="-490"/>    
+    <position height="-1" width="-1" x="380" y="-29"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="3" language="java" name="geslab.database.admin.Usuario" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/admin/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1176" y="-332"/>    
+    <position height="-1" width="-1" x="759" y="-79"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="4" language="java" name="geslab.database.admin.Area" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/admin/Area.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="869" y="-250"/>    
+    <position height="-1" width="-1" x="470" y="-160"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="5" language="java" name="geslab.database.admin.Centro" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/admin/Centro.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="879" y="62"/>    
+    <position height="-1" width="-1" x="604" y="-167"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <enumeration id="6" language="java" name="geslab.database.admin.Rol" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/admin/Rol.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1465" y="-445"/>    
+    <position height="-1" width="-1" x="1077" y="-85"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </enumeration>  
   <class id="7" language="java" name="geslab.database.user.Producto" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Producto.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="639" width="474" x="1650" y="177"/>    
+    <position height="256" width="175" x="1427" y="181"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="8" language="java" name="geslab.database.user.Ficha" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Ficha.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2406" y="470"/>    
+    <position height="-1" width="-1" x="1788" y="312"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="9" language="java" name="geslab.database.user.Calidad" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Calidad.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2742" y="895"/>    
+    <position height="-1" width="-1" x="1946" y="852"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="10" language="java" name="geslab.database.user.Entrada" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Entrada.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2273" y="976"/>    
+    <position height="-1" width="-1" x="1913" y="633"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="11" language="java" name="geslab.database.user.Salida" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Salida.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2527" y="975"/>    
+    <position height="-1" width="-1" x="2167" y="632"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="12" language="java" name="geslab.database.user.Marca" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Marca.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2808" y="659"/>    
+    <position height="-1" width="-1" x="1776" y="868"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="13" language="java" name="geslab.database.user.Peligro" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Peligro.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1711" y="1000"/>    
+    <position height="-1" width="-1" x="1351" y="657"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="14" language="java" name="geslab.database.user.Pictograma" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Pictograma.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1901" y="994"/>    
+    <position height="-1" width="-1" x="1541" y="651"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="15" language="java" name="geslab.database.user.Prudencia" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Prudencia.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2071" y="994"/>    
+    <position height="-1" width="-1" x="1711" y="651"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="16" language="java" name="geslab.database.user.Ubicacion" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/database/user/Ubicacion.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2809" y="345"/>    
+    <position height="-1" width="-1" x="2058" y="218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="17" language="java" name="geslab.servlets.AdminServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/AdminServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1434" y="89"/>    
+    <position height="-1" width="-1" x="1085" y="186"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="18" language="java" name="geslab.servlets.CalidadesServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/CalidadesServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1169" y="367"/>    
+    <position height="-1" width="-1" x="1081" y="376"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="19" language="java" name="geslab.servlets.IndexServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/IndexServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1924" y="-342"/>    
+    <position height="-1" width="-1" x="1458" y="-76"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="20" language="java" name="geslab.servlets.LoginServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/LoginServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="854" y="617"/>    
+    <position height="-1" width="-1" x="1288" y="290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="21" language="java" name="geslab.servlets.MarcasServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/MarcasServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1358" y="787"/>    
+    <position height="-1" width="-1" x="864" y="435"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="22" language="java" name="geslab.servlets.ProductosServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/ProductosServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1540" y="1362"/>    
+    <position height="-1" width="-1" x="1242" y="982"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="23" language="java" name="geslab.servlets.ProveedoresServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/ProveedoresServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="297" width="288" x="796" y="850"/>    
+    <position height="-1" width="-1" x="1092" y="586"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="24" language="java" name="geslab.servlets.RegistroServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/RegistroServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1541" y="-209"/>    
+    <position height="-1" width="-1" x="1269" y="64"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="25" language="java" name="geslab.servlets.UbicacionesServlet" project="Geslab-2.0" 
     file="/Geslab-2.0/src/main/java/geslab/servlets/UbicacionesServlet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="979" y="1370"/>    
+    <position height="-1" width="-1" x="601" y="509"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <association id="26">    
