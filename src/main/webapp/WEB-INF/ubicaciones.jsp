@@ -143,18 +143,20 @@
 										 <tbody class="tabla-body">
 											 	<%for (Ubicacion u : ubicaciones) {%>
 											 		<tr data-fila=<%=u.getCodubicacion()%>>
-												      <td class="tabla-body--row" id="nombre-<%=u.getCodubicacion()%>"><%=u.getNombre()%></td>
-												      <td class="tabla-body--row" id="area-<%=u.getCodubicacion()%>"><%=u.getArea()%></td>
-												      <td class="tabla-body--row" id="dpto-<%=u.getCodubicacion()%>"><%=u.getDpto()%></td>
-												      <td class="tabla-body--row" id="centro-<%=u.getCodubicacion()%>"><%=u.getCentro()%></td>
-												      <td class="tabla-body--row" id="oculta-<%=u.getCodubicacion()%>"><%=u.esOculta()%></td>
-	
-												      <td class="tabla-body--row" style="text-align: right;">
-												      <%if(usuario.getArea().equals(u.getArea())){%>
-												      	<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=u.getCodubicacion()%>)">
-												      		<i class="fas fa-pen"></i></button>
-												      <%} %>
-												      </td>
+												    	<td class="tabla-body--row" id="nombre-<%=u.getCodubicacion()%>"><%=u.getNombre()%></td>
+												      	<td class="tabla-body--row" id="area-<%=u.getCodubicacion()%>"><%=u.getArea()%></td>
+												      	<td class="tabla-body--row" id="dpto-<%=u.getCodubicacion()%>"><%=u.getDpto()%></td>
+												      	<td class="tabla-body--row" id="centro-<%=u.getCodubicacion()%>"><%=u.getCentro()%></td>
+												      	<td class="tabla-body--row" id="oculta-<%=u.getCodubicacion()%>"><%=u.esOculta()%></td>
+													
+														<%if(usuario.getRol() != Rol.USUARIO){ %>
+													     	<td class="tabla-body--row" style="text-align: right;">
+													      	<%if(usuario.getArea().equals(u.getArea())){%>
+													      		<button type="button" id="" class="boton-tabla__accion" onclick="editar(<%=u.getCodubicacion()%>)">
+													      			<i class="fas fa-pen"></i></button>
+													      	<%} %>
+													      	</td>
+													    <%} %>
 												    </tr>
 											 	<%} %>
 									    </tbody>
@@ -176,7 +178,9 @@
 									</div>
 									
 									<div class="col-4">
+										<%if(usuario.getRol() != Rol.USUARIO){ %>
 										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva ubicación</button>
+										<%}%>
 									</div>
 								</div>
 						

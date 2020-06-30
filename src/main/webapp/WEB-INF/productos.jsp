@@ -158,10 +158,12 @@
 									                    	<%}%>
 			                    						</select>
 													</td>
-
-											      <td class="tabla-body--row info" style="text-align: right;">
-											      	<button type="button" id="" class="boton-tabla__accion" onclick="editar('<%=p.getCas()%>')">
-											      		<i class="fas fa-pen"></i></button></td>
+												
+													<%if(usuario.getRol() != Rol.USUARIO){ %>
+												        <td class="tabla-body--row info" style="text-align: right;">
+												      		<button type="button" id="" class="boton-tabla__accion" onclick="editar('<%=p.getCas()%>')">
+												      			<i class="fas fa-pen"></i></button></td>
+											      	<%} %>
 											    </tr>
 										 	<%} %>
 								    </tbody>
@@ -274,7 +276,9 @@
 									</div>
 									
 									<div class="col-4">
+										<%if(usuario.getRol() != Rol.USUARIO){ %>
 										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nuevo producto</button>
+										<%} %>
 									</div>
 								</div>
 							

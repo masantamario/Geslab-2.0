@@ -213,34 +213,36 @@
 										
 										 <tbody class="tabla-body">
 											 	<%for (Ficha f : fichas) {%>
-											 		<tr data-filtro=true data-fila=<%=f.getCodficha()%>>
-												      <td class="tabla-body--row" id="producto-<%=f.getCodficha()%>"><%=f.getProducto().getNombre()%></td>
-												      <td class="tabla-body--row" id="cpcd-gml-<%=f.getCodficha()%>"><%=f.getCapacidad()%> <%=f.getG_ml()%>.</td>
-												      <td class="tabla-body--row" id="uds-<%=f.getCodficha()%>"><%=f.getStock()%></td>
-												      <td class="tabla-body--row" id="calidad-<%=f.getCodficha()%>"><%=f.getCalidad()%></td>
-												      <td class="tabla-body--row" id="ubicacion-<%=f.getCodficha()%>"><%=f.getUbicacion().getNombre()%></td>
-												      <td class="tabla-body--row" id="dpto-<%=f.getCodficha()%>"><%=f.getUbicacion().getDpto()%></td>
-												      <td class="tabla-body--row" id="marca-<%=f.getCodficha()%>"><%=f.getMarca()%></td>
+										 			<tr data-filtro=true data-fila=<%=f.getCodficha()%>>
+												      	<td class="tabla-body--row" id="producto-<%=f.getCodficha()%>"><%=f.getProducto().getNombre()%></td>
+												      	<td class="tabla-body--row" id="cpcd-gml-<%=f.getCodficha()%>"><%=f.getCapacidad()%> <%=f.getG_ml()%>.</td>
+												      	<td class="tabla-body--row" id="uds-<%=f.getCodficha()%>"><%=f.getStock()%></td>
+												      	<td class="tabla-body--row" id="calidad-<%=f.getCodficha()%>"><%=f.getCalidad()%></td>
+												      	<td class="tabla-body--row" id="ubicacion-<%=f.getCodficha()%>"><%=f.getUbicacion().getNombre()%></td>
+												      	<td class="tabla-body--row" id="dpto-<%=f.getCodficha()%>"><%=f.getUbicacion().getDpto()%></td>
+												      	<td class="tabla-body--row" id="marca-<%=f.getCodficha()%>"><%=f.getMarca()%></td>
 
-												      <td id="caducidad-<%=f.getCodficha()%>" style="display: none"><%=f.getCaducidadCal()%></td>											      
-												      <td id="lote-<%=f.getCodficha()%>" style="display: none"><%=f.getLote()%></td>										      
-												      <td id="residuo-<%=f.getCodficha()%>" style="display: none"><%=f.esResiduo()%></td>
+												      	<td id="caducidad-<%=f.getCodficha()%>" style="display: none"><%=f.getCaducidadCal()%></td>											      
+												      	<td id="lote-<%=f.getCodficha()%>" style="display: none"><%=f.getLote()%></td>										      
+												      	<td id="residuo-<%=f.getCodficha()%>" style="display: none"><%=f.esResiduo()%></td>
 												      
-												      <td id="cas-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getCas()%></td>	
-												      <td id="formula-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getFormula()%></td>											      
-												      <td id="proveedor-<%=f.getCodficha()%>" style="display: none"><%=f.getProveedor()%></td>											      
-												      <td id="area-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getArea()%></td>											      
-												      <td id="centro-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getCentro()%></td>											      
-												      <td id="oculto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().esOculta()%></td>											      
+												      	<td id="cas-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getCas()%></td>	
+												      	<td id="formula-<%=f.getCodficha()%>" style="display: none"><%=f.getProducto().getFormula()%></td>											      
+												      	<td id="proveedor-<%=f.getCodficha()%>" style="display: none"><%=f.getProveedor()%></td>											      
+												      	<td id="area-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getArea()%></td>											      
+												      	<td id="centro-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().getCentro()%></td>											      
+												      	<td id="oculto-<%=f.getCodficha()%>" style="display: none"><%=f.getUbicacion().esOculta()%></td>											      
 	
-												      <td class="tabla-body--row info" style="text-align: right;">
-												      <%if(usuario.getArea().equals(f.getUbicacion().getArea())){%>
-												      	<button type="button" id="boton-entrada" class="boton-tabla__accion boton-tabla__accion--add" onclick="entSal(<%=f.getCodficha()%>, 'entrada')">
-												      		<i class="fas fa-plus"></i></button>
-												      	<button type="button" id="boton-salida" class="boton-tabla__accion" onclick="entSal(<%=f.getCodficha()%>, 'salida')">
-												      		<i class="fas fa-minus"></i></i></button>
-												      <%}%>
-												      </td>
+														<%if(usuario.getRol() != Rol.USUARIO){ %>
+												      		<td class="tabla-body--row info" style="text-align: right;">
+												      			<%if(usuario.getArea().equals(f.getUbicacion().getArea())){%>
+												      				<button type="button" id="boton-entrada" class="boton-tabla__accion boton-tabla__accion--add" onclick="entSal(<%=f.getCodficha()%>, 'entrada')">
+												      					<i class="fas fa-plus"></i></button>
+												      				<button type="button" id="boton-salida" class="boton-tabla__accion" onclick="entSal(<%=f.getCodficha()%>, 'salida')">
+												      					<i class="fas fa-minus"></i></i></button>
+												      			<%}%>
+												      		</td>
+												      	<%} %>
 												    </tr>
 											 	<%} %>
 											 	
@@ -337,7 +339,9 @@
 									</div>
 									
 									<div class="col-3">
+										<%if(usuario.getRol() != Rol.USUARIO){ %>
 										<button type="button" id="boton-tabla__insertar" class="btn boton-tabla__añadir float-right" onclick="insertar()">Nueva ficha</button>
+										<%} %>
 									</div>
 								</div>
 								

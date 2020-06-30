@@ -300,6 +300,36 @@ public class Conexion {
 		return usuario;
 
 	}
+	
+	public Usuario leerUsuario(int id) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Usuario usuario = null;
+
+		try {
+			pstm = conexion.prepareStatement(
+					"SELECT usuarios.idusuario, usuarios.usuario, usuarios.nombre, usuarios.mail, usuarios.rol, area.nombre AS area, usuarios.federada, usuarios.activo, usuarios.fecha_creacion "
+							+ "FROM usuarios left JOIN area ON usuarios.area = area.codarea WHERE idusuario = ?;");
+
+			pstm.setInt(1, id);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				usuario = new Usuario(rs.getInt("idusuario"), rs.getString("usuario"), rs.getString("nombre"),
+						rs.getString("mail"), Boolean.valueOf(rs.getString("federada")),
+						Boolean.valueOf(rs.getString("activo")), rs.getInt("rol"), rs.getString("area"),
+						rs.getDate("fecha_creacion"));
+			}
+			cerrarRsPstm(rs, pstm, "leerUsuario");
+		} catch (SQLException e) {
+			printSQLException(e, "LEER USUARIO");
+		} finally {
+			cerrarRsPstm(rs, pstm, "leerUsuario");
+		}
+
+		return usuario;
+
+	}
 
 	public Producto leerProducto(String cas) {
 		PreparedStatement pstm = null;
@@ -1181,7 +1211,10 @@ public class Conexion {
 				cerrarRsPstm(null, pstm, "insertarUsuario");
 			}
 		} else {
-			correcto = updateUsuario(u);
+			Usuario viejo = leerUsuario(u.getIdusuario());
+			Usuario nuevo = new Usuario(u.getIdusuario(), u.getUsuario(), viejo.getNombre(), viejo.getMail(), u.getFederada(), u.getActivo(), u.getRol().getId(), u.getArea(), null);
+			correcto = updateUsuario(nuevo);
+
 		}
 		return correcto;
 	}
@@ -1261,7 +1294,7 @@ public class Conexion {
 		if (s.getCodsalida() == 0) {
 			try {
 				pstm = conexion
-						.prepareStatement("INSERT INTO salida (ficha, fecha, unidades, nota, usuario) values (?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO salida (ficha, fecha, unidades, nota, usuario) values (?, ?, ?, ?, ?)");
 				pstm.setInt(1, s.getFicha().getCodficha());
 				pstm.setDate(2, new Date(s.getFechaIns().getTime()));
 				pstm.setInt(3, s.getUnidades());
