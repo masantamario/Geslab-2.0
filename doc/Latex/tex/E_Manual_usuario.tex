@@ -6,10 +6,117 @@ En este apartado se realizará una guía detallada para que el usuario sepa como
 
 \section{Requisitos de usuarios}
 
-Al ser una aplicación web, el cliente únicamente necesita tener instalado un navegador web que soporte \textit{javascript}, \textit{jQuery} y \textit{hojas de estilo CSS}
+Al ser una aplicación web, el cliente únicamente necesita tener instalado un navegador web que soporte \textit{javascript}, \textit{jQuery} y \textit{hojas de estilo CSS}. 
+
+La aplicación funciona en cualquier navegador, pero se recomienda su uso en Google Chrome.
 
 \section{Instalación}
 
+El cliente no necesita realizar ninguna instalación, únicamente ha de acceder a la dirección web en la que se aloja la aplicación.
+
 \section{Manual del usuario}
 
+En este apartado se explicara cada una de las acciones que puede realizar el cliente sobre nuestra aplicación. Lo dividiremos en diferentes acciones segun cada uno de los contextos de la aplicación.
 
+\begin{itemize}
+	\item Login
+	\item Página de administración (Administrador)
+	\item Página de gestión (Gestor de inventario)
+\end{itemize}
+
+\subsection{Login}
+
+La primera página que nos encontramos es la página de login \ref{fig:pantallaLogin}. Desde aquí el usuario puede acceder a su página de usuario correspondiente en función de su rol (administrador, gestor de inventario o usuario).
+
+\imagen{pantallaLogin}{Pantalla de login} 
+
+\subsection{Página de administración}
+
+Si el usuario tiene rol de administrador accede a la página de administración. En ella se puede mover por las distintas pestañas que pertenecen a los centros \ref{fig:administracion-centros}, departamentos \ref{fig:administracion-dptos}, áreas \ref{fig:administracion-areas} o usuarios.
+
+\imagen{administracion-centros}{Pantalla administración - Pestaña centros} 
+\imagen{administracion-dptos}{Pantalla administración - Pestaña departamentos} 
+\imagen{administracion-areas}{Pantalla administración - Pestaña áreas} 
+\imagen{administracion-usuarios}{Pantalla administración - Pestaña usuarios} 
+
+Desde cualquiera de estas pestañas el usuario puede hacer varias acciones, puede insertar un elemento o editar un elemento. A continuación mostraremos unos ejemplos, añadiendo un área y editando un usuario. El resto de procesos no se muestran ya que son exactamente iguales, con la diferencia de algún parámetro.
+
+\subsubsection{Insertar}
+
+Para insertar un elemento solo hay que pulsar en el botón verde de abajo a la derecha donde dice "Nuevo área", por ejemplo. Hecho esto se creará una nueva línea en la lista de áreas en la que podremos añadir los datos \ref{fig:administracion-insertar}. Con los datos ya introducidos solo hay que pulsar en confirmar (verde) o en cancelar (rosa), en los botones de abajo.
+
+\imagen{administracion-insertar}{Pantalla administración - Insertar área}
+
+\subsubsection{Editar}
+
+Para editar un elemento hay que pulsar en el botón rosa con un lapicero en la columna de la derecha de la fila que deseamos editar. Hecho esto se habilitará la edición de los valores de la fila y podremos editar los datos \ref{fig:administracion-editar}. Con los datos ya introducidos solo hay que pulsar en confirmar (verde) o en cancelar (rosa), en los botones la derecha donde antes pulsamos en editar.
+
+En el caso de usuario aparece además un botón azul, que sirve para resetear la contraseña del usuario.
+
+\imagen{administracion-editar}{Pantalla administración - Editar usuario}
+
+\subsubsection{Cerrar sesión}
+
+Si el usuario desea cerrar sesión solamente ha de pinchar en su nombre arriba a la derecha para mostrar el menú, donde le aparecerá la opción de cerrar sesión \ref{fig:administracion-cerrarSesion} 
+
+\imagen{administracion-cerrarSesion}{Pantalla administración - Cerrar sesión}
+
+\subsection{Página de gestión}
+
+Si el usuario tiene un rol de gestión de inventario accede directamente a la página de gestión \ref{fig:gestion-existencias}. Desde aquí el usuario puede moverse al resto de páginas desde el menu, pulsando arriba a la derecha sobre su nombre \ref{fig:administracion-menu}
+
+\imagen{gestion-existencias}{Página de existencias}
+\imagen{gestion-menu}{Menú}
+
+Si queremos ver más información sobre alguna ficha en cuestión, solo tenemos que pinchar sobre su fila y se abrirá una pequeña ventana con información complementaria \ref{fig:gestion-existencias-info}.
+
+\imagen{gestion-existencias-info}{Extra info existencias}
+
+\subsubsection{Insertar / Editar}
+
+Si queremos insertar un elemento solamente hay que pulsar en el boton verde de abajo a la derecha y se abrirá un modal \ref{fig:gestion-insertar-editar} con todos los datos a rellenar. Si lo queremos es editar, hay que pulsar en el botón rosa con icono de un lapicero en la columna de la derecha de la fila del elemento que queremos editar. Al pinchar se abrirá la misma ventana modal que al insertar \ref{fig:gestion-insertar-editar}, pero con los datos ya rellenados. Ahí podemos editar los datos necesarios y pulsar en confirmar.  
+Para insertar o editar un elemento en cualquiera de las páginas el proceso es muy parecido, únicamente cambiando los datos que aparecen. 
+
+\imagen{gestion-insertar-editar}{Modal insertar nueva ficha}
+
+\subsubsection{Página productos}
+
+Si se accede a la página de productos se muestra la lista con los productos que existen en el sistema \ref{fig:gestion-productos}.
+
+\imagen{gestion-productos}{Página de productos}
+
+Si queremos ver más información sobre algun producto en cuestión, solo tenemos que pinchar sobre su fila y se abrirá una pequeña ventana con información complementaria \ref{fig:gestion-productos-info}.
+
+\imagen{gestion-productos-info}{Extra info productos}
+
+\subsubsection{Página ubicaciones}
+
+Si se accede a la página de productos se muestra la lista con las ubicaciones que existen en el sistema \ref{fig:gestion-ubicaciones}.
+
+\imagen{gestion-ubicaciones}{Página de ubicaciones}
+
+\subsubsection{Página calidades}
+
+Si se accede a la página de productos se muestra la lista con las ubicaciones que existen en el sistema \ref{fig:gestion-ubicaciones}.
+
+\imagen{gestion-calidades}{Página de calidades}
+
+\subsubsection{Página marcas}
+
+Si se accede a la página de productos se muestra la lista con las marcas que existen en el sistema \ref{fig:gestion-marcas}.
+
+\imagen{gestion-marcas}{Página de marcas}
+
+Si queremos ver más información sobre alguna marca en cuestión, solo tenemos que pinchar sobre su fila y se abrirá una pequeña ventana con información complementaria \ref{fig:gestion-marcas-info}.
+
+\imagen{gestion-marcas-info}{Extra info marcas}
+
+\subsubsection{Página proveedores}
+
+Si se accede a la página de productos se muestra la lista con los proveedores que existen en el sistema \ref{fig:gestion-proveedores}.
+
+\imagen{gestion-proveedores}{Página de proveedores}
+
+Si queremos ver más información sobre algun proveedor en cuestión, solo tenemos que pinchar sobre su fila y se abrirá una pequeña ventana con información complementaria \ref{fig:gestion-proveedores-info}.
+
+\imagen{gestion-proveedores-info}{Extra info proveedores}
