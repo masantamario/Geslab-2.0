@@ -1,11 +1,5 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
-
 Si hay algo importante a destacar en el desarrollo del proyecto, es sin duda alguna el como ha afectado la irrupción del \textbf{COVID-19} en nuestro país, y como el posterior estado de alarma hizo que todo el proyecto se estableciera en el limbo durante varias semanas.
 
 \section{COVID-19}
@@ -33,7 +27,7 @@ Con todo listo se pudo ejecutar la imagen, y a través de admin SQL exportamos l
 
 \section{Cambios en la base de datos}
 
-Es importante mencionar como la base de datos original ha sufrido una serie de cambios,  aparte de el propio paso de SQL Server a MySQL, por supuesto. Con el análisis del funcionamiento original de la aplicación y de los nuevos requisitos funcionales, se plantearon multitud de cambios en las tablas, que incluyen la creación de nuevas, la eliminación de otras, y el cambio dtanto de formato como de ubicación de los campos de las mismas.
+Es importante mencionar como la base de datos original ha sufrido una serie de cambios,  aparte de el propio paso de SQL Server a MySQL, por supuesto. Con el análisis del funcionamiento original de la aplicación y de los nuevos requisitos funcionales, se plantearon multitud de cambios en las tablas, que incluyen la creación de nuevas, la eliminación de otras, y el cambio tanto de formato como de ubicación de los campos de las mismas.
 
 \section{Nuevo planteamiento de la UI}
 
@@ -42,3 +36,8 @@ Un apartado muy importante para el proyecto ha consistido en la creación de una
 La aplicación ha de trabajar con multitud de datos a la vez, unos más relevantes en unas situaciones y otros en otras, teniendo que encontrar en cada vista un punto medio entre mostrar datos de importancia real y componer una vista atractiva visualmente, evitando que la página se sobrecargue de información.
 
 También es importante destacar, el hecho de como las tecnologías actuales cada vez están más enfocadas a los dispositivos móviles, de forma que es muy importante pensar en su portabilidad entre dispositivos. Al trabajar con bootsrap, se deja abierta una puerta a una posible modificación del diseño que haga que todo el sistema se pueda comportar de la misma manera en cualquier dispositivo.  
+
+\section{Implantación}
+
+La implantación del sistema en un servidor es una parte vital para que los usuarios puedan llegar a utilizar la aplicación. Todo el proceso de implantación estaba previsto en un principio para Junio, se solicito el servidor a la universidad para poder comenzarlo antes de la entrega, pero los trámites en una situación como la que estamos pasando, con todo el problema de la cuarentena y el estado de alarma, terminaron por alargarse más de lo previsto, y finalmente la implantación ha quedado pospuesta hasta Julio de 2020. 
+Esta prevista sobre un servidor de la propia Universidad, con una URL de laUniversidad de Burgos y con un certificado de seguril SSL.

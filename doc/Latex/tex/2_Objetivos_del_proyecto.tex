@@ -1,6 +1,6 @@
 \capitulo{2}{Objetivos del proyecto}
 
-El objetivo principal del proyecto es la recreación de la aplicación ya existente en una aplicación web así como la importación de todos los datos que posee el sistema actual al nuevo. También se han de añadir distintos requisitos que con el uso de la aplicación, los usuarios han marcado como necesarios. Entre ellos se puede destacar un sistema que permita almacenar las medidas de seguridad necesarias para la conservación de los productos, así como un sistema capaz de unificar todos los posibles nombres que puede tener un producto, y evitar así problemas de elementos duplicados.
+El objetivo principal del proyecto es la renovación de la aplicación ya existente en una aplicación web así como la importación de todos los datos que posee el sistema actual al nuevo. También se han de añadir distintos requisitos que con el uso de la aplicación, los usuarios han marcado como necesarios. Entre ellos se puede destacar un sistema que permita almacenar las medidas de seguridad necesarias para la conservación de los productos, así como un sistema capaz de unificar todos los posibles nombres que puede tener un producto, y evitar así problemas de elementos duplicados.
 
 Antes de analizar en profundidad los nuevos requisitos, es importante explicar el funcionamiento actual de la aplicación.
 
@@ -26,16 +26,27 @@ Por otro lado se almacenan los datos de \textbf{departamentos}, \textbf{áreas} 
 Con todos estos datos, el usuario al logearse en la aplicación puede consultar las existencias, pudiendo ver las entradas y las salidas de cada ficha, y puede realizar una búsqueda filtrando en función de los muchos campos de los que disponen las tablas.
 
 
+\section{Nuevo paradigma}
+
+Antes de continuar con el análisis es importante mencionar como se ha realizado un cambio de paradigma en el uso de los objetos de la base de datos.
+
+En la primera versión de Geslab se trata con una mayor importancia a las tablas de entradas y salidas, teniendo estas muchos campos para después poder calcular el stock de manera dinámica restando las salidas a las entradas. 
+
+En la nueva versión esto cambia, pasando a tener mayor importancia la ficha de producto. Esta se lleva prácticamente todos los atributos que tenían las entradas y salidas además de un campo nuevo para almacenar el stock real.
+
+De esta forma el stock siempre estará actualizado, y solamente se actualizará cada vez que haya una entrada o una salida. 
+
+
 \section{Nuevas funcionalidades}
 
-La actualización de la aplicación va a recibir nuevas funcionalidades, unas requeridas por el propio planteamiento de la actualización, otras requeridas por parte de los usuarios de la aplicación y otras resultantes del análisis de la aplicación por parte del alumno desarrollador.
+La actualización de la aplicación va a recibir nuevas funcionalidades, unas requeridas por el propio planteamiento de la actualización, otras requeridas por parte de los usuarios de la aplicación y otros funcionalidades no funcionales que también merece la pena destacar. 
+
+Antes de nada hay que explicar que todos los requisitos mostrados a continuación son un resumen de los requisitos más destacados, y los que se diferencian de la versión anterior de la aplicación. La relación detallada de todos ellos se puede encontrar en los anexos.
 
 \subsection{Requisitos del proyecto}
 
 \begin{itemize}
 \item El proyecto ha de mantener todos los requisitos actuales de la aplicación.
-
-\item La actualización ha de permitir la integración de todos los datos actuales de la base de datos.
 
 \item También se requiere un sistema que permita almacenar las medidas de seguridad necesarias para la conservación de los productos.
 
@@ -51,17 +62,11 @@ La actualización de la aplicación va a recibir nuevas funcionalidades, unas re
 
 \item El sistema debe de permitir una búsqueda simplificada y una búsqueda avanzada. La búsqueda avanzada deberá de incluir los campos marca, fórmula, CAS, caducidad, fecha adquisición, nombre y localización. El sistema no deberá distinguir entre mayúsculas y minúsculas.
 
-\item El sistema deberá de tener un sistema de exportación de datos a Excel, que deje elegir los campos que se desean exportar.
-
-\item El sistema deberá de tener un sistema de exportación de etiquetas a la carta, para poder añadir los pictogramas de seguridad y la distinta información necesaria.
-
 \item El sistema debe de contemplar los distintos sinónimos que poseen los productos, así como identificar el compuesto tanto por su nombre en español como en inglés.
   
-\item La aplicación debe de permitir solicitar reactivos entre los laboratorios que tengan existencias.
-
 \end{itemize}
 
-\subsection{Requisitos del alumno}
+\subsection{Requisitos no funcionales}
 
 \begin{itemize}
 
