@@ -31,23 +31,23 @@ En este apartado se explica todo lo que debe conocer el desarrollador a la hora 
 
 \section{Manual del programador}
 
-En este apartado se se explicará como configurar todo el entorno de trabajo para poder en un futuro si es necesario, continuar con el desarrollo de la aplicación.
+En este apartado se explicará como configurar todo el entorno de trabajo para poder en un futuro si es necesario, continuar con el desarrollo de la aplicación.
 
 El desarrollo del proyecto se realizó sobre un sistema operativo Windows, por lo que todos los programas a los que se hará referencia serán en su versión para este sistema operativo.
 
 \subsection{MySQL y MySQL Workbench}
 
-El primer paso para instalar MYSQL es descargar el software de su página oficial \href{https://dev.mysql.com/downloads/mysql/}{\textit{MySql}}\footnote{\textit{MySql}: \url{https://dev.mysql.com/downloads/mysql/}}. Desde la página buscaremos el MySQL Comunnity Server y después seleccionar la plataforma en la que lo vamos a instalar, en nuestro caso windows.
+El primer paso para instalar MYSQL es descargar el software de su página oficial \href{https://dev.mysql.com/downloads/mysql/}{\textit{MySql}}\footnote{\textit{MySql}: \url{https://dev.mysql.com/downloads/mysql/}}. Desde la página buscaremos el MySQL Comunnity Server y después seleccionar la plataforma en la que lo vamos a instalar, en nuestro caso Windows.
 
-Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En nuestro caso selecciono Developer Default ya que quiero instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administraciónde de bases de datos relacionales así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
+Una vez tengamos el ejecutable solo hay que abrirlo y seleccionar el modo de instalación. En nuestro caso selecciono Developer Default ya que quiero instalar tanto MySQL Server como MySql Workbech, un software que proporciona diversas opciones de administración de de bases de datos relacionales, así como herramientas que nos permiten utilizar consultas SQL mediante un entorno visual.
 
 En cierto punto de la instalación puede que el sistema nos diga que necesitamos el paquete de Microsoft Visual C++, solo tenemos que continuar para que se instale automáticamente.
 
-Finalizada la instalación, solo nos faltaría establecer una configuración inicial antes de ejecutar los correspondientes servicios. En la primera ventana seleccionaremos \textit{Standalone MySQL Server/Classic MySQL Replication}. En Type and Networking dejamos todos los parámetros por defecto, a no ser que quisieramos establecer la conexión en otro puerto distinto al 3306. En caso de cambiar el puerto es importante recordarlo para futuras configuraciones.
+Finalizada la instalación, solo nos faltaría establecer una configuración inicial antes de ejecutar los correspondientes servicios. En la primera ventana seleccionaremos \textit{Standalone MySQL Server/Classic MySQL Replication}. En Type and Networking dejamos todos los parámetros por defecto, a no ser que quisiéramos establecer la conexión en otro puerto distinto al 3306. En caso de cambiar el puerto es importante recordarlo para futuras configuraciones.
 
 Después debemos elegir una contraseña para poder conectarnos al servidor SQL. No es necesario que definamos un usuario para administrar la base de datos, ya que podemos utilizar el usuario por defecto \textit{root}.
 
-Por último definimos un nombre para el servicio MySQL y las preferencias generales y pulsamos en execute para ejecutar las acciones y activar todos los servicios
+Por último, definimos un nombre para el servicio MySQL y las preferencias generales y pulsamos en execute para ejecutar las acciones y activar todos los servicios
 
 \subsection{Java}
 
@@ -85,11 +85,11 @@ En los atributos de la clase tendremos que editar una serie de valores en funci�
 
 En la imagen \ref{fig:configurarConexion} se pueden ver los campos que habría que editar marcados en rojo en cursiva y entre asteriscos.
 
-\imagen{configurarConexion}{Configurar conexión con la base de datos} 
+\imagen{configurarConexion}{Configurar conexión con la base de datos}{1} 
 
 \section{Pruebas del sistema}
 
-Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\textbf{ pruebas de cada caso de uso} de una manera manual. Para mostrar sus resultados se ha utilizado una plantilla provista por la junta de Andalucía \cite{doc:pruebas}. En las siguientes tablas se pueden encontrar todos los casos de prueba para cada caso de uso.
+Se han realizado dos tipos de pruebas. Por un lado, se han llevado a cabo las\textbf{ pruebas de cada caso de uso} de una manera manual. Para mostrar sus resultados se ha utilizado una plantilla provista por la junta de Andalucía \cite{doc:pruebas}. En las siguientes tablas se pueden encontrar todos los casos de prueba para cada caso de uso.
 
 %Gestion de centros -----------------------------
 \begin{table}[h]
@@ -458,7 +458,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de existencias desde el menu
+			\item Desplazarse a la ventana de existencias desde el menú
 			\item Pinchar en el botón con un + a la derecha de la ficha
 			\item Rellenar los datos solicitados
 		\end{compactitem}
@@ -482,7 +482,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de existencias desde el menu
+			\item Desplazarse a la ventana de existencias desde el menú
 			\item Pinchar en el botón con un - a la derecha de la ficha
 			\item Rellenar los datos solicitados
 		\end{compactitem}
@@ -529,7 +529,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de productos desde el menu
+			\item Desplazarse a la ventana de productos desde el menú
 			\item Establecer parámetros en la columna de filtros
 		\end{compactitem}
 		 \\ \midrule
@@ -623,7 +623,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de ubicaciones desde el menu
+			\item Desplazarse a la ventana de ubicaciones desde el menú
 			\item Establecer parámetros en la columna de filtros
 		\end{compactitem}
 		 \\ \midrule
@@ -717,7 +717,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de calidades desde el menu
+			\item Desplazarse a la ventana de calidades desde el menú
 			\item Establecer parámetros en la columna de filtros
 		\end{compactitem}
 		 \\ \midrule
@@ -786,7 +786,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		>{\columncolor[HTML]{FFFFFF}}p {.25\textwidth} p {.75\textwidth}@{}}
 		\toprule
 		\textbf{Caso de prueba 30}   & \textbf{Visualizar marcas} \\ \midrule
-		\textbf{Descripción}     & Comprobar la correcta visualización de las marcass \\ \midrule
+		\textbf{Descripción}     & Comprobar la correcta visualización de las marcas \\ \midrule
 		\textbf{Prerrequisitos}	&  Loguearse como gestor de inventario \\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
@@ -811,7 +811,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de marcas desde el menu
+			\item Desplazarse a la ventana de marcas desde el menú
 			\item Establecer parámetros en la columna de filtros
 		\end{compactitem}
 		 \\ \midrule
@@ -841,9 +841,9 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Resultado esperado} & 
-		Se muestra la nuevo marca en la lista de marcas
+		Se muestra la nueva marca en la lista de marcas
 		\\ \midrule
-		\textbf{Resultado obtenido} & la marca se muestra correctamente \\ \midrule
+		\textbf{Resultado obtenido} & La marca se muestra correctamente \\ \midrule
 	\end{tabular}
 	\caption{Caso de prueba 32 - Insertar marcas}
 \end{table}
@@ -907,7 +907,7 @@ Se han realizado dos tipos de pruebas. Por un lado se han llevado a cabo las\tex
 		\textbf{Prerrequisitos} & Loguearse como gestor de inventario\\ \midrule
 		\textbf{Pasos}  & 
 		\begin{compactitem}
-			\item Desplazarse a la ventana de proveedores desde el menu
+			\item Desplazarse a la ventana de proveedores desde el menú
 			\item Establecer parámetros en la columna de filtros
 		\end{compactitem}
 		 \\ \midrule

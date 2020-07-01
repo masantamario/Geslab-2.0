@@ -2,7 +2,7 @@
 
 \section{Introducción}
 
-En el siguiente apartado se presentaran los diferentes objetivos a cumplir así como los requisitos funcionales que han dado funcionalidad a nuestra aplicación.
+En el siguiente apartado se presentarán los diferentes objetivos a cumplir así como los requisitos funcionales que han dado funcionalidad a nuestra aplicación.
 
 \section{Objetivos generales}
 
@@ -12,13 +12,13 @@ los objetivos principales del proyecto son:
 	\item Recrear la aplicación Geslab 1.0 como una aplicación web.
 	\item Mantener todas las funcionalidades que ya poseía.
 	\item Añadir distintos tipos de usuarios: administrador, gestor y usuario.
-	\item Añadir nuevos campos a la base de datos tales como: pureza, peso molecular, nº CAS, ...
+	\item Añadir nuevos campos a la base de datos tales como: pureza, peso molecular, N.º CAS, ...
 	\item Implementar un sistema de búsqueda intuitivo y funcional
 	\item La aplicación utilizará lenguaje Java
 	\item La base de datos utilizará MySql
 \end{itemize}
 
-\section{Catalogo de requisitos}
+\section{Catálogo de requisitos}
 
 Los requisitos que debe de satisfacer la aplicación son los siguientes.
 
@@ -37,13 +37,13 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 	
 	\item \textbf{RF-2.4} El administrador puede gestionar los usuarios, las áreas, los departamentos y los centros.
 	
-	\item \textbf{RF-2.5} Los usuarios tienen que tener asignado un rol, una área a la que pertenecen, si es un usuario con cuenta federada o no, y si la cuenta esta activa.
+	\item \textbf{RF-2.5} Los usuarios tienen que tener asignado un rol, un área a la que pertenecen, si es un usuario con cuenta federada o no, y si la cuenta esta activa.
 	
-	\item \textbf{RF-2.6} El administrador puede añadir y editar usuarios, pero no eliminar, por seguridad. Para ello esta la opción de dejar al usuario inactivo.
+	\item \textbf{RF-2.6} El administrador puede añadir y editar usuarios, pero no eliminar, por seguridad. Para ello está la opción de dejar al usuario inactivo.
 	
 	\item \textbf{RF-2.7} Cada área debe de gestionar solamente sus propios productos.
 	
-	\item \textbf{RF-2.8} Cada área puede tener varias ubicaciones donde se pueden guardar los productos (armarios, estanterías..)
+	\item \textbf{RF-2.8} Cada área puede tener varias ubicaciones donde se pueden guardar los productos (armarios, estanterías...)
 	
 	\item \textbf{RF-2.9} Cada área puede ocultar sus ubicaciones o no al resto de áreas, de forma que las otras áreas no puedan conocer las existencias de los productos almacenados en esas ubicaciones.
 	
@@ -51,13 +51,13 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 	
 \item \textbf{RF-3 Gestión de productos}
 	\begin{itemize}
-	\item\textbf{ RF-3.1} Se almacenarán los productos con su Nº Cas, fórmula, fórmula desarrollada, peso molecular, pureza, Nº EINECS, Nº EC, precauciones y su hoja de seguridad(MSDS). De estos campos solamente serán obligatorios el nº cas y la fórmula.
+	\item\textbf{ RF-3.1} Se almacenarán los productos con su N.º Cas, fórmula, fórmula desarrollada, peso molecular, pureza, N.º EINECS, N.º EC, precauciones y su hoja de seguridad(MSDS). De estos campos solamente serán obligatorios el nº cas y la fórmula.
 	
 	\item\textbf{ RF-3.2} Los productos serán comunes a todas las áreas.
 	
 	\item\textbf{ RF-3.3} Cada producto puede tener varios nombres (distintas nomenclaturas, en inglés, en español), por lo que se deberán almacenar también.
 	
-	\item\textbf{ RF-3.4} Al tener varios nombres, cada producto se diferenciará por su Nº CAS, al ser este único.
+	\item\textbf{ RF-3.4} Al tener varios nombres, cada producto se diferenciará por su N.º CAS, al ser este único.
 	
 	\item\textbf{ RF-3.5} Cada producto además almacenará una serie de peligros, prudencias y pictogramas de seguridad asociados al mismo. Estos peligros prudencias y pictogramas han de ser comunes a todos los productos.
 	
@@ -65,7 +65,7 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 	
 \item \textbf{RF-4 Gestión de fichas}
 	\begin{itemize}
-	\item\textbf{ RF-4.1} Las existencias de los productos se gestiona a través de fichas. Cada ficha corresponde a un producto, de una capacidad (en gramos o mililitros), guardado en una 	ubicación, de una marca y un proveedor, con una calidad determinada, un nº de lote y una caducidad. Además se podrá indicar si cada ficha corresponde a un residuo o no. 
+	\item\textbf{ RF-4.1} Las existencias de los productos se gestiona a través de fichas. Cada ficha corresponde a un producto, de una capacidad (en gramos o mililitros), guardado en una 	ubicación, de una marca y un proveedor, con una calidad determinada, un N.º de lote y una caducidad. Además, se podrá indicar si cada ficha corresponde a un residuo o no. 
 	
 	\item\textbf{ RF-4.2} Todos los atributos de la ficha son obligatorios, ya que es la manera de diferenciarlos (no es lo mismo un bote de Helio que caduca en 2025 que un bote de Helio que caduca en 2022, por ejemplo).
 
@@ -73,7 +73,7 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 	
 	\item\textbf{ RF-4.4} Cada ficha tiene un stock, que es actualizado cada vez que se realiza una entrada o una salida.
 	
-	\item\textbf{ RF-4.5} Los usuarios pueden consultar el stock de todos las fichas de otras áreas siempre y cuando no se encuentren en una ubicación oculta.
+	\item\textbf{ RF-4.5} Los usuarios pueden consultar el stock de todas las fichas de otras áreas siempre y cuando no se encuentren en una ubicación oculta.
 	
 	\item\textbf{ RF-4.6} Se podrá realizar un filtrado de las fichas para poder realizar una búsqueda más rápida.
 	
@@ -84,7 +84,7 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 	\begin{itemize}
 	\item\textbf{ RF-5.1} Se almacenarán las marcas y los proveedores, junto con información como el nombre, la dirección, el teléfono, el fax y el email. Las marcas y los proveedores son comunes a todos los usuarios.
 	
-	\item\textbf{ RF-5.2} También se almacenará la relación entre estos. Una proveedor puede llevar varias marcas, y una marca puede ser llevada por varios proveedores.
+	\item\textbf{ RF-5.2} También se almacenará la relación entre estos. Un proveedor puede llevar varias marcas, y una marca puede ser llevada por varios proveedores.
 	
 	\item\textbf{ RF-5.3} Cualquier área puede añadir o editar los proveedores y las marcas, así como la relación entre estas.
 	\end{itemize}
@@ -99,7 +99,7 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 	
 	\item \textbf{RF-7 Gestión de ubicaciones}
 	\begin{itemize}
-	\item\textbf{ RF-7.1} Se almacenarán las ubicaciones junto con su nombre, su area, su centro y si es oculta o no.
+	\item\textbf{ RF-7.1} Se almacenarán las ubicaciones junto con su nombre, su área, su centro y si es oculta o no.
 	
 	\item\textbf{ RF-7.2} Cada área podrá gestionar sus propias ubicaciones, pero no las de las demás áreas. Las ubicaciones se pueden añadir o editar.
 	
@@ -113,7 +113,7 @@ Los requisitos que debe de satisfacer la aplicación son los siguientes.
 \begin{itemize}
 \item \textbf{RNF-1 Usabilidad:} La aplicación debe de ser intuitiva y cómoda de utilizar, usando elementos visuales conocidos para el usuario medio
 
-\item \textbf{RNF-2 Rendimiento:} El rendimiento de la aplicación ha de ser lo más óptimo posible, haciendo que su navegación sea fluida.
+\item \textbf{RNF-2 Rendimiento:} El rendimiento de la aplicación ha de ser óptimo, haciendo que su navegación sea fluida.
 
 \item \textbf{RNF-3 Mantenibilidad:} La aplicación debe de facilitar el mantenimiento y la posible incorporación de nuevas características.
 
@@ -132,9 +132,9 @@ En nuestro caso existen cuatro actores, el administrador, el gestor de inventari
 
 Veamos a continuación el diagrama de casos de uso de nuestro proyecto por niveles en las siguientes figuras.
 
-\imagen{Nivel-1}{Nivel 1 del diagrama de casos de uso.} {0.9}
-\imagen{Nivel-1A}{Nivel 1A del diagrama de casos de uso.} {0.9}
-\imagen{Nivel-1B}{Nivel 1B del diagrama de casos de uso.} {0.9}
+\imagen{Nivel-1}{Nivel 1 del diagrama de casos de uso.} {1.2}
+\imagen{Nivel-1A}{Nivel 1A del diagrama de casos de uso.} {1.1}
+\imagen{Nivel-1B}{Nivel 1B del diagrama de casos de uso.} {1.2}
 \imagen{Nivel-1C}{Nivel 1C del diagrama de casos de uso.} {0.9}
 
 %Gestion de centros -----------------------------
@@ -150,7 +150,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador visualizar los centros existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -175,7 +175,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar los centros existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -200,7 +200,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir un nuevo centro. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -226,7 +226,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador visualizar los departamentos existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -251,7 +251,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar los departamentos existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -276,7 +276,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir un nuevo departamento. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -303,7 +303,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador visualizar las áreas existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -328,7 +328,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar las áreas existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -353,7 +353,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir un nuevo área. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -379,7 +379,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador visualizar los usuarios existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -404,11 +404,11 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar los usuarios existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
-		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después escribirá el nombre que quiere poner, el rol, el área, si es federada y si esta activo y pulsará en el botón de confirmar que aparece al lado del de editar. 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después escribirá el nombre que quiere poner, el rol, el área, si es federada y si está activo y pulsará en el botón de confirmar que aparece al lado del de editar. 
 		\\ \midrule
 		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el usuario  editado. \\ \midrule
 		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un usuario existente o algún dato es inválido, el sistema mostrará un mensaje de error. \\ \midrule
@@ -429,11 +429,11 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir un nuevo usuario. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de administrador. 
+			\item El usuario se ha logueado en la aplicación con rol de administrador. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
-		El usuario tiene que clickar sobre el botón de Nuevo usuario. Después escribirá el nombre que desea ponerle, el rol, el área, si es federada y si esta activo y pulsará en el botón de confirmar que aparece a la derecha de la fila.
+		El usuario tiene que clickar sobre el botón de Nuevo usuario. Después escribirá el nombre que desea ponerle, el rol, el área, si es federada y si está activo y pulsará en el botón de confirmar que aparece a la derecha de la fila.
 		\\ \midrule
 		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con el usuario  añadido. \\ \midrule
 		\textbf{Excepciones} & Si el nombre que inserta ya es igual al de un usuario existente o algún dato es inválido, el sistema mostrará un mensaje de error. \\ \midrule
@@ -453,7 +453,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Caso de uso 13}   & \textbf{Visualizar existencias} \\ \midrule
 		\textbf{Versión}     & 2.0 \\ \midrule
 		\textbf{Requisitos}	&  RF-4.1, RF-4.5\\ \midrule
-		\textbf{Descripción}     & Permite al administrador visualizar las existencias de fichas existentes, siempre y cuando no esten en una ubicación oculta de otro área. \\ \midrule
+		\textbf{Descripción}     & Permite al administrador visualizar las existencias de fichas existentes, siempre y cuando no estén en una ubicación oculta de otra área. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
 			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
@@ -508,13 +508,13 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir una nueva ficha. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
 		El usuario tiene que clickar sobre el botón de Nueva ficha. Después elegirá el producto, su capacidad, g o ml, su ubicación, su marca, su proveedor, su calidad, el nº de lote, su caducidad y si es residuo o no y pulsará en el botón añadir del modal.
 		\\ \midrule
-		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con las ficha añadida. \\ \midrule
+		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la ficha añadida. \\ \midrule
 		\textbf{Excepciones} & Si la ficha que inserta ya existe o algún dato es inválido, el sistema mostrará un mensaje de error. \\ \midrule
 		\textbf{Importancia}     & Alta \\ \bottomrule
 	\end{tabular}
@@ -533,7 +533,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir entradas de una ficha. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario.
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
 			\item La ficha debe de estar en una ubicación del mismo área a la que pertenece el usuario
 		\end{compactitem}
 		 \\ \midrule
@@ -559,8 +559,8 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir salidas de una ficha. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario.
-			\item La ficha debe de estar en una ubicación del mismo área a la que pertenece el usuario
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario.
+			\item La ficha debe de estar en una ubicación de la misma área a la que pertenece el usuario
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -639,7 +639,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir un nuevo producto. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -664,7 +664,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar los productos existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -691,7 +691,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
 			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
-			\item La ubicación ha de estar en el mismo área de la que es el usuario
+			\item La ubicación ha de estar en la misma área a la que pertenece el usuario
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -743,7 +743,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir una nueva ubicación. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -768,11 +768,11 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar las ubicaciones existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
-		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará rellenará el nombre, el área el centro, si es oculta o no y pulsará en el botón de confirmar del modal. 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará el nombre, el área el centro, si es oculta o no y pulsará en el botón de confirmar del modal. 
 		\\ \midrule
 		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la ubicación editada. \\ \midrule
 		\textbf{Excepciones} & Si la ubicación ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
@@ -846,7 +846,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir una nueva calidad. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -871,11 +871,11 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar las calidades existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
-		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará rellenará el nombre y pulsará en el botón de confirmar del modal. 
+		El usuario tiene que clickar sobre el icono de la derecha de la fila del usuario que quiera editar. Después rellenará el nombre y pulsará en el botón de confirmar del modal. 
 		\\ \midrule
 		\textbf{Postcondiciones} & La aplicación volverá a mostrar la lista con la calidad editada. \\ \midrule
 		\textbf{Excepciones} & Si la calidad ya existe, algún dato es inválido o no ha introducido uno de los campos obligatorios el sistema mostrará un mensaje de error. \\ \midrule
@@ -949,7 +949,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir una nueva marca. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -974,7 +974,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar las marcas existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -1052,7 +1052,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite añadir una nueva proveedor. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
@@ -1077,7 +1077,7 @@ Veamos a continuación el diagrama de casos de uso de nuestro proyecto por nivel
 		\textbf{Descripción}     & Permite al administrador editar los proveedores existentes. \\ \midrule
 		\textbf{Precondiciones}  & 
 		\begin{compactitem}
-			\item El usuarios se ha logueado en la aplicación con rol de Gestor de inventario. 
+			\item El usuario se ha logueado en la aplicación con rol de Gestor de inventario. 
 		\end{compactitem}
 		 \\ \midrule
 		\textbf{Acciones} & 
